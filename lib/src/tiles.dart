@@ -7,6 +7,23 @@ class AnswerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Draggable(
+      feedback: InnerAnswerTile(child: child),
+      child: InnerAnswerTile(child: child),
+    );
+  }
+}
+
+class InnerAnswerTile extends StatelessWidget {
+  const InnerAnswerTile({
+    super.key,
+    required this.child,
+  });
+
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -17,7 +34,7 @@ class AnswerTile extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.bottomRight,
-          colors: [CupertinoColors.activeGreen, CupertinoColors.systemBlue],
+          colors: [CupertinoColors.systemCyan, CupertinoColors.systemGreen],
         ),
       ),
       child: child,

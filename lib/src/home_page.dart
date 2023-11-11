@@ -15,66 +15,107 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              children: [
-                const PlayerTile(
-                  child: Text('CarlGPT'),
-                ),
-                const PlayerTile(
-                  child: Text('Shelley'),
-                ),
-                const PlayerTile(
-                  child: Text('Brian'),
-                ),
-                const PlayerTile(
-                  child: Text('Kathy'),
-                ),
-                const PlayerTile(
-                  child: Text('Chip'),
-                ),
-                const Spacer(),
-                CupertinoButton(
-                  onPressed: () {},
-                  child: const Icon(CupertinoIcons.add),
-                ),
-              ],
+            SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const PlayerTile(
+                    child: Text('Brian'),
+                  ),
+                  const PlayerTile(
+                    child: Text('Chip'),
+                  ),
+                  const PlayerTile(
+                    child: Text('Kathy'),
+                  ),
+                  const PlayerTile(
+                    child: Text('Lex'),
+                  ),
+                  const PlayerTile(
+                    child: Text('Shelley'),
+                  ),
+                  const PlayerTile(
+                    child: Text('CarlGPT'),
+                  ),
+                  const Spacer(),
+                  CupertinoButton(
+                    onPressed: () {},
+                    child: const Icon(CupertinoIcons.add),
+                  ),
+                ],
+              ),
             ),
-            const Column(
-              children: [
-                AnswerTile(
-                  child: Text('aaa'),
-                ),
-                AnswerTile(
-                  child: Text('aaa'),
-                ),
-                AnswerTile(
-                  child: Text('aaa'),
-                ),
-                AnswerTile(
-                  child: Text('aaa'),
-                ),
-              ],
+            Expanded(
+              child: Wrap(
+                children: [
+                  const AnswerTile(
+                    child: Text('Steve Martin'),
+                  ),
+                  const AnswerTile(
+                    child: Text('Taylor Swift'),
+                  ),
+                  const AnswerTile(
+                    child: Text('Eddie Murphy'),
+                  ),
+                  const AnswerTile(
+                    child: Text('Chevy Chase'),
+                  ),
+                  ...[
+                    'Robert Downey Jr.',
+                    'Lin-Manuel Miranda',
+                    'Paul Giamatti',
+                    'Justin Timberlake',
+                    'Steve Martin',
+                    'Tina Fey',
+                    'Paul Simon',
+                    'Tom Hanks',
+                    'Taylor Swift',
+                    'Taylor Lautner',
+                    'Britney Spears',
+                    'Hugh Jackman',
+                    'Elon Musk',
+                    'Ruth Gordon',
+                    'Charles Barkley',
+                    'Magnus Carlsen',
+                  ].map(
+                    (s) => AnswerTile(
+                      child: Text(s),
+                    ),
+                  ),
+                  CupertinoButton(
+                    onPressed: () {},
+                    child: const Icon(CupertinoIcons.add),
+                  ),
+                  CupertinoButton(
+                    onPressed: () {},
+                    child: const Icon(CupertinoIcons.clear),
+                  ),
+                ],
+              ),
             ),
-            Column(
-              children: [
-                const RuleTile(
-                  child: Text('aaa'),
-                ),
-                const RuleTile(
-                  child: Text('aaa'),
-                ),
-                const RuleTile(
-                  child: Text('aaa'),
-                ),
-                const RuleTile(
-                  child: Text('aaa'),
-                ),
-                const Spacer(),
-                CupertinoButton(
-                  onPressed: () {},
-                  child: const Icon(CupertinoIcons.add),
-                ),
-              ],
+            SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  ...[
+                    'Buck Henry',
+                    'Alec Baldwin',
+                    'Steve Martin',
+                    'Athlete',
+                  ].map(
+                    (s) => RuleTile(
+                      child: Text(s),
+                    ),
+                  ),
+                  const Spacer(),
+                  CupertinoButton(
+                    onPressed: () {},
+                    child: const Icon(CupertinoIcons.add),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

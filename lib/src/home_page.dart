@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/tiles.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,10 +17,21 @@ class HomePage extends StatelessWidget {
           children: [
             Column(
               children: [
-                const Text('aaa'),
-                const Text('aaa'),
-                const Text('aaa'),
-                const Text('aaa'),
+                const PlayerTile(
+                  child: Text('CarlGPT'),
+                ),
+                const PlayerTile(
+                  child: Text('Shelley'),
+                ),
+                const PlayerTile(
+                  child: Text('Brian'),
+                ),
+                const PlayerTile(
+                  child: Text('Kathy'),
+                ),
+                const PlayerTile(
+                  child: Text('Chip'),
+                ),
                 const Spacer(),
                 CupertinoButton(
                   onPressed: () {},
@@ -29,18 +41,34 @@ class HomePage extends StatelessWidget {
             ),
             const Column(
               children: [
-                Text('aaa'),
-                Text('aaa'),
-                Text('aaa'),
-                Text('aaa'),
+                AnswerTile(
+                  child: Text('aaa'),
+                ),
+                AnswerTile(
+                  child: Text('aaa'),
+                ),
+                AnswerTile(
+                  child: Text('aaa'),
+                ),
+                AnswerTile(
+                  child: Text('aaa'),
+                ),
               ],
             ),
             Column(
               children: [
-                const Text('aaa'),
-                const Text('aaa'),
-                const Text('aaa'),
-                const Text('aaa'),
+                const RuleTile(
+                  child: Text('aaa'),
+                ),
+                const RuleTile(
+                  child: Text('aaa'),
+                ),
+                const RuleTile(
+                  child: Text('aaa'),
+                ),
+                const RuleTile(
+                  child: Text('aaa'),
+                ),
                 const Spacer(),
                 CupertinoButton(
                   onPressed: () {},

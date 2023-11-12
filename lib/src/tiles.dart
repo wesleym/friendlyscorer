@@ -16,22 +16,39 @@ class AnswerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Draggable(
-      feedback: InnerAnswerTile(child: child),
+      feedback: InnerAnswerTile(
+        floating: true,
+        child: child,
+      ),
       child: InnerAnswerTile(child: child),
     );
   }
 }
 
 class InnerAnswerTile extends StatelessWidget {
+  final bool floating;
+
   const InnerAnswerTile({
     super.key,
     required this.child,
+    this.floating = false,
   });
 
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
+    List<BoxShadow>? shadows;
+    if (floating) {
+      shadows = const [
+        BoxShadow(
+          blurRadius: 4,
+          offset: Offset(0, 2),
+          color: CupertinoColors.systemGrey,
+        ),
+      ];
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -40,6 +57,7 @@ class InnerAnswerTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         color: CupertinoColors.white,
+        shadows: shadows,
       ),
       child: child,
     );

@@ -1,8 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/tiles.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late final AnswerRepository _answerRepository;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _answerRepository = AnswerRepository.instance;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,52 +62,29 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Wrap(
-                children: [
-                  const AnswerTile(
-                    child: Text('Steve Martin'),
-                  ),
-                  const AnswerTile(
-                    child: Text('Taylor Swift'),
-                  ),
-                  const AnswerTile(
-                    child: Text('Eddie Murphy'),
-                  ),
-                  const AnswerTile(
-                    child: Text('Chevy Chase'),
-                  ),
-                  ...[
-                    'Robert Downey Jr.',
-                    'Lin-Manuel Miranda',
-                    'Paul Giamatti',
-                    'Justin Timberlake',
-                    'Steve Martin',
-                    'Tina Fey',
-                    'Paul Simon',
-                    'Tom Hanks',
-                    'Taylor Swift',
-                    'Taylor Lautner',
-                    'Britney Spears',
-                    'Hugh Jackman',
-                    'Elon Musk',
-                    'Ruth Gordon',
-                    'Charles Barkley',
-                    'Magnus Carlsen',
-                  ].map(
-                    (s) => AnswerTile(
-                      child: Text(s),
-                    ),
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    child: const Icon(CupertinoIcons.add),
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    child: const Icon(CupertinoIcons.clear),
-                  ),
-                ],
-              ),
+              child: StreamBuilder(
+                  initialData: _answerRepository.answers,
+                  stream: _answerRepository.answerStream,
+                  builder: (context, snapshot) {
+                    return Wrap(
+                      children: [
+                        ...snapshot.data!.map(
+                          (s) => AnswerTile(
+                            key: ValueKey(s.id),
+                            child: Text(s.text),
+                          ),
+                        ),
+                        CupertinoButton(
+                          onPressed: () {},
+                          child: const Icon(CupertinoIcons.add),
+                        ),
+                        CupertinoButton(
+                          onPressed: () {},
+                          child: const Icon(CupertinoIcons.clear),
+                        ),
+                      ],
+                    );
+                  }),
             ),
             SizedBox(
               width: 120,

@@ -3,7 +3,12 @@ class Answer {
   final tagIds = [];
   final authorIds = [];
 
-  Answer({required this.id});
+  String text;
+
+  Answer({
+    required this.id,
+    this.text = '',
+  });
 }
 
 class Author {

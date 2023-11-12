@@ -1,45 +1,63 @@
 import 'package:flutter/cupertino.dart';
 
 import 'data/models.dart';
+import 'data/repository.dart';
 
 class _AnswerTileKey extends ValueKey {
   const _AnswerTileKey(super.value);
 }
 
 class AnswerTile extends StatelessWidget {
-  final Widget? child;
+  final Answer _answer;
 
   static Key keyFor(String answerId) => _AnswerTileKey(answerId);
 
-  const AnswerTile({super.key, this.child});
+  const AnswerTile({super.key, required Answer answer}) : _answer = answer;
 
   @override
   Widget build(BuildContext context) {
     return Draggable(
       feedback: InnerAnswerTile(
         floating: true,
-        child: child,
+        answer: _answer,
       ),
-      child: InnerAnswerTile(child: child),
+      child: InnerAnswerTile(answer: _answer),
     );
   }
 }
 
-class InnerAnswerTile extends StatelessWidget {
+class InnerAnswerTile extends StatefulWidget {
   final bool floating;
+  final Answer _answer;
 
   const InnerAnswerTile({
     super.key,
-    required this.child,
+    required Answer answer,
     this.floating = false,
-  });
+  }) : _answer = answer;
 
-  final Widget? child;
+  @override
+  State<InnerAnswerTile> createState() => _InnerAnswerTileState();
+}
+
+class _InnerAnswerTileState extends State<InnerAnswerTile> {
+  late final PlayerRepository _playerRepository;
+  late final PlayerAnswerAssociationRepository
+      _playerAnswerAssociationRepository;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _playerRepository = PlayerRepository.instance;
+    _playerAnswerAssociationRepository =
+        PlayerAnswerAssociationRepository.getInstance(_playerRepository);
+  }
 
   @override
   Widget build(BuildContext context) {
     List<BoxShadow>? shadows;
-    if (floating) {
+    if (widget.floating) {
       shadows = const [
         BoxShadow(
           blurRadius: 4,
@@ -62,25 +80,20 @@ class InnerAnswerTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          child!,
-          Wrap(
-            spacing: 2,
-            children: [
-              PlayerCircle(
-                player: Player(
-                    id: 'a', name: 'Brian', color: CupertinoColors.activeBlue),
-              ),
-              PlayerCircle(
-                player: Player(
-                    id: 'b', name: 'Chip', color: CupertinoColors.activeGreen),
-              ),
-              PlayerCircle(
-                player: Player(
-                    id: 'c',
-                    name: 'Kathy',
-                    color: CupertinoColors.activeOrange),
-              ),
-            ],
+          Text(widget._answer.text),
+          StreamBuilder(
+            initialData: _playerAnswerAssociationRepository
+                .getPlayersWhoHaveChosenAnswer(widget._answer.id),
+            stream: _playerAnswerAssociationRepository
+                .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
+            builder: (context, snapshot) {
+              return Wrap(
+                spacing: 2,
+                children: snapshot.data!
+                    .map((p) => PlayerCircle(player: p))
+                    .toList(growable: false),
+              );
+            },
           ),
         ],
       ),

@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 class Answer {
   final String id;
   final tagIds = [];
-  final authorIds = [];
 
   String text;
 

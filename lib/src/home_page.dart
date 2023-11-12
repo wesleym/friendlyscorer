@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                         ...snapshot.data!.map(
                           (s) => AnswerTile(
                             key: ValueKey(s.id),
-                            child: Text(s.text),
+                            answer: s,
                           ),
                         ),
                         CupertinoButton(

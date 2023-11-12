@@ -79,7 +79,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
-      constraints: const BoxConstraints(minHeight: 100),
+      constraints: const BoxConstraints(minHeight: 140),
       decoration: ShapeDecoration(
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -92,6 +92,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget._answer.text, style: tileTextStyle),
+          const SizedBox(height: 8),
           StreamBuilder(
             initialData: _playerAnswerAssociationRepository
                 .getPlayersWhoHaveChosenAnswer(widget._answer.id),
@@ -108,6 +109,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
               );
             },
           ),
+          const SizedBox(height: 8),
           StreamBuilder(
             initialData: _answerRuleAssociationRepository
                 .getRulesAffectingAnswer(widget._answer.id),

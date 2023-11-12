@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
+class _AnswerTileKey extends ValueKey {
+  const _AnswerTileKey(super.value);
+}
+
 class AnswerTile extends StatelessWidget {
   final Widget? child;
+
+  static Key keyFor(String answerId) => _AnswerTileKey(answerId);
 
   const AnswerTile({super.key, this.child});
 
@@ -31,11 +37,7 @@ class InnerAnswerTile extends StatelessWidget {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.bottomRight,
-          colors: [CupertinoColors.systemCyan, CupertinoColors.systemGreen],
-        ),
+        color: CupertinoColors.white,
       ),
       child: child,
     );

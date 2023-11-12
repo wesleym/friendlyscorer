@@ -41,9 +41,10 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         ...snapshot.data!.map(
-                          (p) => PlayerTile(player: p),
+                          (p) => Expanded(
+                            child: PlayerTile(player: p),
+                          ),
                         ),
-                        const Spacer(),
                         CupertinoButton(
                           onPressed: () {},
                           child: const Icon(CupertinoIcons.add),
@@ -57,23 +58,25 @@ class _HomePageState extends State<HomePage> {
                   initialData: _answerRepository.answers,
                   stream: _answerRepository.answerStream,
                   builder: (context, snapshot) {
-                    return Wrap(
-                      children: [
-                        ...snapshot.data!.map(
-                          (s) => AnswerTile(
-                            key: ValueKey(s.id),
-                            answer: s,
+                    return SingleChildScrollView(
+                      child: Wrap(
+                        children: [
+                          ...snapshot.data!.map(
+                            (s) => AnswerTile(
+                              key: ValueKey(s.id),
+                              answer: s,
+                            ),
                           ),
-                        ),
-                        CupertinoButton(
-                          onPressed: () {},
-                          child: const Icon(CupertinoIcons.add),
-                        ),
-                        CupertinoButton(
-                          onPressed: () {},
-                          child: const Icon(CupertinoIcons.clear),
-                        ),
-                      ],
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: const Icon(CupertinoIcons.add),
+                          ),
+                          CupertinoButton(
+                            onPressed: () {},
+                            child: const Icon(CupertinoIcons.clear),
+                          ),
+                        ],
+                      ),
                     );
                   }),
             ),
@@ -88,11 +91,12 @@ class _HomePageState extends State<HomePage> {
                     'Steve Martin',
                     'Athlete',
                   ].map(
-                    (s) => RuleTile(
-                      child: Text(s),
+                    (s) => Expanded(
+                      child: RuleTile(
+                        child: Text(s),
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   CupertinoButton(
                     onPressed: () {},
                     child: const Icon(CupertinoIcons.add),

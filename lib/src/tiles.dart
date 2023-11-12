@@ -17,6 +17,7 @@ class AnswerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Draggable(
+      data: _answer,
       feedback: InnerAnswerTile(
         floating: true,
         answer: _answer,
@@ -70,6 +71,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
+      constraints: const BoxConstraints(minHeight: 100),
       decoration: ShapeDecoration(
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -79,6 +81,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(widget._answer.text),
           StreamBuilder(
@@ -114,6 +117,13 @@ class PlayerCircle extends StatelessWidget {
     final textTheme = CupertinoTheme.of(context).textTheme;
     final textStyle = textTheme.textStyle;
 
+    final String displayName;
+    if (_player.name.length > 2) {
+      displayName = _player.name.substring(0, 2);
+    } else {
+      displayName = _player.name;
+    }
+
     return Container(
       decoration: ShapeDecoration(
         shape: const CircleBorder(),
@@ -121,40 +131,68 @@ class PlayerCircle extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       child: Text(
-        _player.name[0],
+        displayName,
         style: textStyle,
       ),
     );
   }
 }
 
-class PlayerTile extends StatelessWidget {
+class PlayerTile extends StatefulWidget {
   final Player _player;
 
   const PlayerTile({super.key, required Player player}) : _player = player;
 
   @override
+  State<PlayerTile> createState() => _PlayerTileState();
+}
+
+class _PlayerTileState extends State<PlayerTile> {
+  late final PlayerRepository _playerRepository;
+  late final PlayerAnswerAssociationRepository
+      _playerAnswerAssociationRepository;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _playerRepository = PlayerRepository.instance;
+    _playerAnswerAssociationRepository =
+        PlayerAnswerAssociationRepository.getInstance(_playerRepository);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(2),
-      decoration: ShapeDecoration(
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            HSLColor.fromColor(_player.color)
-                .withLightness(
-                    HSLColor.fromColor(_player.color).lightness + 0.1)
-                .toColor(),
-            _player.color
-          ],
-        ),
-      ),
-      child: Text(_player.name),
+    return DragTarget<Answer>(
+      onWillAccept: (data) {
+        _playerAnswerAssociationRepository.toggleAssociation(
+            playerId: widget._player.id, answerId: data!.id);
+        return false;
+      },
+      builder: (context, candidateData, rejectedData) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(2),
+          decoration: ShapeDecoration(
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                HSLColor.fromColor(widget._player.color)
+                    .withLightness(
+                        HSLColor.fromColor(widget._player.color).lightness +
+                            0.1)
+                    .toColor(),
+                widget._player.color
+              ],
+            ),
+          ),
+          child: Text(widget._player.name),
+        );
+      },
     );
   }
 }

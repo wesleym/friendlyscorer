@@ -100,4 +100,36 @@ class PlayerAnswerAssociationRepository {
           .toList(growable: false);
     });
   }
+
+  void addAssociation({
+    required String playerId,
+    required String answerId,
+  }) {
+    _associations.add(PlayerAnswerAssociation(
+      playerId: playerId,
+      answerId: answerId,
+    ));
+    _streamController.add(_associations);
+  }
+
+  void removeAssociation({
+    required String playerId,
+    required String answerId,
+  }) {
+    _associations
+        .removeWhere((a) => a.playerId == playerId && a.answerId == answerId);
+    _streamController.add(_associations);
+  }
+
+  void toggleAssociation({
+    required String playerId,
+    required String answerId,
+  }) {
+    if (_associations
+        .any((a) => a.playerId == playerId && a.answerId == answerId)) {
+      removeAssociation(playerId: playerId, answerId: answerId);
+    } else {
+      addAssociation(playerId: playerId, answerId: answerId);
+    }
+  }
 }

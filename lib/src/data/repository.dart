@@ -1,11 +1,10 @@
 import 'dart:async';
-
-import 'package:friendlyscorer/src/rule_vendor.dart';
+import 'dart:developer';
 
 import '../player/palette.dart';
 import 'models.dart';
 
-final _playerColorVendor = PlayerColorVendor();
+final _playerIdVendor = PlayerIdVendor();
 final _ruleIdVendor = RuleIdVendor();
 
 class AnswerRepository {
@@ -52,9 +51,14 @@ class PlayerRepository {
     'Lex',
     'Shelley',
     'CarlGPT',
-  ]
-      .map((n) => Player(id: n, name: n, color: _playerColorVendor.next()))
-      .toList();
+  ].map((n) {
+    final nextId = _playerIdVendor.next();
+    return Player(
+      id: nextId.toString(),
+      name: n,
+      color: playerColors[nextId],
+    );
+  }).toList();
   List<Player> get players => _players;
   Stream<List<Player>> get playerStream => _streamController.stream;
 
@@ -72,7 +76,11 @@ class RuleRepository {
     'Buck Henry',
     'Alec Baldwin or Steve Martin',
     'Athlete',
-  ].map((r) => Rule(id: _ruleIdVendor.next(), text: r)).toList();
+  ].map((r) {
+    final id = _ruleIdVendor.next();
+    final color = playerColors[id];
+    return Rule(id: id.toString(), text: r, color: color);
+  }).toList();
   List<Rule> get rules => _rules;
   Stream<List<Rule>> get ruleStream => _streamController.stream;
 
@@ -91,9 +99,7 @@ class PlayerAnswerAssociationRepository {
   static getInstance(PlayerRepository playerRepository) =>
       _instance ??= PlayerAnswerAssociationRepository(playerRepository);
 
-  final _associations = [
-    PlayerAnswerAssociation(playerId: 'Shelley', answerId: 'Britney Spears'),
-  ];
+  final _associations = <PlayerAnswerAssociation>[];
   final _streamController =
       StreamController<List<PlayerAnswerAssociation>>.broadcast();
   final PlayerRepository _playerRepository;
@@ -162,9 +168,7 @@ class AnswerRuleAssociationRepository {
   static getInstance(RuleRepository ruleRepository) =>
       _instance ??= AnswerRuleAssociationRepository(ruleRepository);
 
-  final _associations = [
-    AnswerRuleAssociation(ruleId: 'A', answerId: 'Britney Spears'),
-  ];
+  final _associations = <AnswerRuleAssociation>[];
   final _streamController =
       StreamController<List<AnswerRuleAssociation>>.broadcast();
   final RuleRepository _ruleRepository;
@@ -192,6 +196,7 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
+    log('add called');
     _associations.add(AnswerRuleAssociation(
       ruleId: ruleId,
       answerId: answerId,
@@ -203,6 +208,7 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
+    log('remove called');
     _associations
         .removeWhere((a) => a.ruleId == ruleId && a.answerId == answerId);
     _streamController.add(_associations);
@@ -212,6 +218,7 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
+    log('toggle called');
     if (_associations
         .any((a) => a.ruleId == ruleId && a.answerId == answerId)) {
       removeAssociation(ruleId: ruleId, answerId: answerId);

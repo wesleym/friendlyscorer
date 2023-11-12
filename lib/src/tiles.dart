@@ -98,9 +98,11 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
             stream: _playerAnswerAssociationRepository
                 .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
             builder: (context, snapshot) {
+              final data = snapshot.data!;
+              data.sort((a, b) => a.id.compareTo(b.id));
               return Wrap(
-                spacing: 2,
-                children: snapshot.data!
+                spacing: 4,
+                children: data
                     .map((p) => PlayerCircle(player: p))
                     .toList(growable: false),
               );
@@ -112,10 +114,12 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
             stream: _answerRuleAssociationRepository
                 .getStreamOfRulesAffectingAnswer(widget._answer.id),
             builder: (context, snapshot) {
-              return Wrap(
-                spacing: 2,
-                children: snapshot.data!
-                    .map((r) => RuleCircle(rule: r))
+              final data = snapshot.data!;
+              data.sort((a, b) => a.id.compareTo(b.id));
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: data
+                    .map((r) => Text('• ${r.text}'))
                     .toList(growable: false),
               );
             },
@@ -140,16 +144,21 @@ class PlayerCircle extends StatelessWidget {
     final textStyle = textTheme.textStyle;
 
     final String displayName;
-    if (_player.name.length > 2) {
-      displayName = _player.name.substring(0, 2);
-    } else {
-      displayName = _player.name;
-    }
+    // if (_player.name.length > 2) {
+    //   displayName = _player.name.substring(0, 2);
+    // } else {
+    displayName = _player.name;
+    // }
+
+    final hslColor = HSLColor.fromColor(_player.color);
+    final color = hslColor.withLightness(hslColor.lightness + 0.2).toColor();
 
     return Container(
       decoration: ShapeDecoration(
-        shape: const StadiumBorder(),
-        color: _player.color,
+        shape: StadiumBorder(
+          side: BorderSide(color: _player.color),
+        ),
+        color: color,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
@@ -246,7 +255,7 @@ class _RuleTileState extends State<RuleTile> {
 
     _ruleRepository = RuleRepository.instance;
     _answerRuleAssociationRepository =
-        AnswerRuleAssociationRepository(_ruleRepository);
+        AnswerRuleAssociationRepository.getInstance(_ruleRepository);
   }
 
   @override
@@ -271,7 +280,7 @@ class _RuleTileState extends State<RuleTile> {
               borderRadius: BorderRadius.circular(16),
             ),
             gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
+              begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 CupertinoColors.systemTeal,
@@ -295,37 +304,6 @@ class _RuleTileState extends State<RuleTile> {
           ),
         );
       },
-    );
-  }
-}
-
-class RuleCircle extends StatelessWidget {
-  final Rule _rule;
-
-  const RuleCircle({
-    super.key,
-    required Rule rule,
-  }) : _rule = rule;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = CupertinoTheme.of(context).textTheme;
-    final textStyle = textTheme.textStyle;
-
-    return Container(
-      decoration: const ShapeDecoration(
-        shape: CircleBorder(),
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.bottomRight,
-          colors: [CupertinoColors.systemTeal, CupertinoColors.systemPurple],
-        ),
-      ),
-      padding: const EdgeInsets.all(8),
-      child: Text(
-        _rule.id,
-        style: textStyle,
-      ),
     );
   }
 }

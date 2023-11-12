@@ -290,19 +290,9 @@ class _RuleTileState extends State<RuleTile> {
               ],
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget._rule.id,
-                style: tileTextStyle,
-              ),
-              const Spacer(),
-              Text(
-                widget._rule.text,
-                style: tileTextStyle,
-              ),
-            ],
+          child: Text(
+            widget._rule.text,
+            style: tileTextStyle,
           ),
         );
       },

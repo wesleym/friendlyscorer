@@ -120,9 +120,7 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 8),
                         ...snapshot.data!.map(
                           (r) => Expanded(
-                            child: RuleTile(
-                              rule: r,
-                            ),
+                            child: RuleTile(rule: r),
                           ),
                         ),
                         CupertinoButton(

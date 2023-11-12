@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
       child: SafeArea(
+        minimum: const EdgeInsets.all(8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,6 +41,9 @@ class _HomePageState extends State<HomePage> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        const Icon(CupertinoIcons.person_3_fill,
+                            color: CupertinoColors.inactiveGray),
+                        const SizedBox(height: 8),
                         ...snapshot.data!.map(
                           (p) => Expanded(
                             child: PlayerTile(player: p),
@@ -53,38 +57,62 @@ class _HomePageState extends State<HomePage> {
                     );
                   }),
             ),
+            const SizedBox(width: 16),
             Expanded(
               child: StreamBuilder(
                   initialData: _answerRepository.answers,
                   stream: _answerRepository.answerStream,
                   builder: (context, snapshot) {
                     return SingleChildScrollView(
-                      child: Wrap(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ...snapshot.data!.map(
-                            (s) => AnswerTile(
-                              key: ValueKey(s.id),
-                              answer: s,
-                            ),
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Icon(CupertinoIcons.text_bubble,
+                                color: CupertinoColors.inactiveGray),
                           ),
-                          CupertinoButton(
-                            onPressed: () {},
-                            child: const Icon(CupertinoIcons.add),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            children: [
+                              ...snapshot.data!.map(
+                                (s) => AnswerTile(
+                                  key: ValueKey(s.id),
+                                  answer: s,
+                                ),
+                              ),
+                            ],
                           ),
-                          CupertinoButton(
-                            onPressed: () {},
-                            child: const Icon(CupertinoIcons.clear),
+                          // const Spacer(),
+                          Row(
+                            children: [
+                              CupertinoButton(
+                                onPressed: () {},
+                                child: const Icon(CupertinoIcons.add),
+                              ),
+                              CupertinoButton(
+                                onPressed: () {},
+                                child: const Icon(CupertinoIcons.clear),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     );
                   }),
             ),
+            const SizedBox(width: 16),
             SizedBox(
               width: 120,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Align(
+                    alignment: Alignment.center,
+                    child: Icon(CupertinoIcons.exclamationmark_square,
+                        color: CupertinoColors.inactiveGray),
+                  ),
+                  const SizedBox(height: 8),
                   ...[
                     'Buck Henry',
                     'Alec Baldwin',

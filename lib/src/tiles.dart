@@ -59,7 +59,58 @@ class InnerAnswerTile extends StatelessWidget {
         color: CupertinoColors.white,
         shadows: shadows,
       ),
-      child: child,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          child!,
+          Wrap(
+            spacing: 2,
+            children: [
+              PlayerCircle(
+                player: Player(
+                    id: 'a', name: 'Brian', color: CupertinoColors.activeBlue),
+              ),
+              PlayerCircle(
+                player: Player(
+                    id: 'b', name: 'Chip', color: CupertinoColors.activeGreen),
+              ),
+              PlayerCircle(
+                player: Player(
+                    id: 'c',
+                    name: 'Kathy',
+                    color: CupertinoColors.activeOrange),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class PlayerCircle extends StatelessWidget {
+  final Player _player;
+
+  const PlayerCircle({
+    super.key,
+    required Player player,
+  }) : _player = player;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = CupertinoTheme.of(context).textTheme;
+    final textStyle = textTheme.textStyle;
+
+    return Container(
+      decoration: ShapeDecoration(
+        shape: const CircleBorder(),
+        color: _player.color,
+      ),
+      padding: const EdgeInsets.all(8),
+      child: Text(
+        _player.name[0],
+        style: textStyle,
+      ),
     );
   }
 }

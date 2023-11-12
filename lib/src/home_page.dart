@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final AnswerRepository _answerRepository;
   late final PlayerRepository _playerRepository;
+  late final RuleRepository _ruleRepository;
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
     _answerRepository = AnswerRepository.instance;
     _playerRepository = PlayerRepository.instance;
+    _ruleRepository = RuleRepository.instance;
   }
 
   @override
@@ -74,16 +76,15 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const SizedBox(height: 8),
                           Wrap(
-                            children: [
-                              ...snapshot.data!.map(
-                                (s) => AnswerTile(
-                                  key: ValueKey(s.id),
-                                  answer: s,
-                                ),
-                              ),
-                            ],
+                            children: snapshot.data!
+                                .map(
+                                  (s) => AnswerTile(
+                                    key: ValueKey(s.id),
+                                    answer: s,
+                                  ),
+                                )
+                                .toList(growable: false),
                           ),
-                          // const Spacer(),
                           Row(
                             children: [
                               CupertinoButton(
@@ -104,33 +105,33 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(width: 16),
             SizedBox(
               width: 120,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Align(
-                    alignment: Alignment.center,
-                    child: Icon(CupertinoIcons.exclamationmark_square,
-                        color: CupertinoColors.inactiveGray),
-                  ),
-                  const SizedBox(height: 8),
-                  ...[
-                    'Buck Henry',
-                    'Alec Baldwin',
-                    'Steve Martin',
-                    'Athlete',
-                  ].map(
-                    (s) => Expanded(
-                      child: RuleTile(
-                        child: Text(s),
-                      ),
-                    ),
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    child: const Icon(CupertinoIcons.add),
-                  ),
-                ],
-              ),
+              child: StreamBuilder(
+                  initialData: _ruleRepository.rules,
+                  stream: _ruleRepository.ruleStream,
+                  builder: (context, snapshot) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Icon(CupertinoIcons.exclamationmark_square,
+                              color: CupertinoColors.inactiveGray),
+                        ),
+                        const SizedBox(height: 8),
+                        ...snapshot.data!.map(
+                          (r) => Expanded(
+                            child: RuleTile(
+                              rule: r,
+                            ),
+                          ),
+                        ),
+                        CupertinoButton(
+                          onPressed: () {},
+                          child: const Icon(CupertinoIcons.add),
+                        ),
+                      ],
+                    );
+                  }),
             ),
           ],
         ),

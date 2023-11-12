@@ -24,8 +24,9 @@ class Player {
   });
 }
 
-class Tag {
+class Rule {
   final String id;
+  final String text;
 
-  Tag({required this.id});
+  Rule({required this.id, this.text = ''});
 }

@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:friendlyscorer/src/rule_vendor.dart';
+
 import '../player/palette.dart';
 import 'models.dart';
 
 final _playerColorVendor = PlayerColorVendor();
+final _ruleIdVendor = RuleIdVendor();
 
 class AnswerRepository {
   static AnswerRepository? _instance;
@@ -60,7 +63,20 @@ class PlayerRepository {
 }
 
 class RuleRepository {
-  final _rules = [];
+  static RuleRepository? _instance;
+  static get instance => _instance ??= RuleRepository();
+
+  final _streamController = StreamController<List<Rule>>.broadcast();
+
+  final _rules = [
+    'Buck Henry',
+    'Alec Baldwin or Steve Martin',
+    'Athlete',
+  ].map((r) => Rule(id: _ruleIdVendor.next(), text: r)).toList();
+  List<Rule> get rules => _rules;
+  Stream<List<Rule>> get ruleStream => _streamController.stream;
+
+  Rule getRuleById(String ruleId) => _rules.singleWhere((r) => r.id == ruleId);
 }
 
 class PlayerAnswerAssociation {
@@ -130,6 +146,77 @@ class PlayerAnswerAssociationRepository {
       removeAssociation(playerId: playerId, answerId: answerId);
     } else {
       addAssociation(playerId: playerId, answerId: answerId);
+    }
+  }
+}
+
+class AnswerRuleAssociation {
+  final String ruleId;
+  final String answerId;
+
+  AnswerRuleAssociation({required this.ruleId, required this.answerId});
+}
+
+class AnswerRuleAssociationRepository {
+  static AnswerRuleAssociationRepository? _instance;
+  static getInstance(RuleRepository ruleRepository) =>
+      _instance ??= AnswerRuleAssociationRepository(ruleRepository);
+
+  final _associations = [
+    AnswerRuleAssociation(ruleId: 'A', answerId: 'Britney Spears'),
+  ];
+  final _streamController =
+      StreamController<List<AnswerRuleAssociation>>.broadcast();
+  final RuleRepository _ruleRepository;
+
+  AnswerRuleAssociationRepository(RuleRepository ruleRepository)
+      : _ruleRepository = ruleRepository;
+
+  List<Rule> getRulesAffectingAnswer(String answerId) {
+    return _associations
+        .where((a) => a.answerId == answerId)
+        .map((a) => _ruleRepository.getRuleById(a.ruleId))
+        .toList(growable: false);
+  }
+
+  Stream<List<Rule>> getStreamOfRulesAffectingAnswer(String answerId) {
+    return _streamController.stream.map((asses) {
+      return asses
+          .where((a) => a.answerId == answerId)
+          .map((a) => _ruleRepository.getRuleById(a.ruleId))
+          .toList(growable: false);
+    });
+  }
+
+  void addAssociation({
+    required String ruleId,
+    required String answerId,
+  }) {
+    _associations.add(AnswerRuleAssociation(
+      ruleId: ruleId,
+      answerId: answerId,
+    ));
+    _streamController.add(_associations);
+  }
+
+  void removeAssociation({
+    required String ruleId,
+    required String answerId,
+  }) {
+    _associations
+        .removeWhere((a) => a.ruleId == ruleId && a.answerId == answerId);
+    _streamController.add(_associations);
+  }
+
+  void toggleAssociation({
+    required String ruleId,
+    required String answerId,
+  }) {
+    if (_associations
+        .any((a) => a.ruleId == ruleId && a.answerId == answerId)) {
+      removeAssociation(ruleId: ruleId, answerId: answerId);
+    } else {
+      addAssociation(ruleId: ruleId, answerId: answerId);
     }
   }
 }

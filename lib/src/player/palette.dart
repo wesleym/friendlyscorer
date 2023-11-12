@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 const playerColors = [
-  CupertinoColors.systemBlue,
-  CupertinoColors.systemBrown,
-  CupertinoColors.systemCyan,
-  CupertinoColors.systemGreen,
-  CupertinoColors.systemIndigo,
-  CupertinoColors.systemMint,
+  CupertinoColors.systemRed,
   CupertinoColors.systemOrange,
+  CupertinoColors.systemYellow,
+  CupertinoColors.systemGreen,
+  CupertinoColors.systemTeal,
+  CupertinoColors.systemBlue,
   CupertinoColors.systemPink,
   CupertinoColors.systemPurple,
-  CupertinoColors.systemRed,
-  CupertinoColors.systemTeal,
-  CupertinoColors.systemYellow,
+  CupertinoColors.systemBrown,
+  // CupertinoColors.systemCyan,
+  // CupertinoColors.systemIndigo,
+  // CupertinoColors.systemMint,
 ];
 
 class PlayerColorVendor {

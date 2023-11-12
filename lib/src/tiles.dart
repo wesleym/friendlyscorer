@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import 'data/models.dart';
+
 class _AnswerTileKey extends ValueKey {
   const _AnswerTileKey(super.value);
 }
@@ -45,9 +47,9 @@ class InnerAnswerTile extends StatelessWidget {
 }
 
 class PlayerTile extends StatelessWidget {
-  final Widget? child;
+  final Player _player;
 
-  const PlayerTile({super.key, this.child});
+  const PlayerTile({super.key, required Player player}) : _player = player;
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +60,19 @@ class PlayerTile extends StatelessWidget {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [CupertinoColors.systemYellow, CupertinoColors.systemOrange],
+          colors: [
+            HSLColor.fromColor(_player.color)
+                .withLightness(
+                    HSLColor.fromColor(_player.color).lightness + 0.1)
+                .toColor(),
+            _player.color
+          ],
         ),
       ),
-      child: child,
+      child: Text(_player.name),
     );
   }
 }

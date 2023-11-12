@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
-import 'package:friendlyscorer/src/tiles.dart';
+
+import 'data/repository.dart';
+import 'tiles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,12 +12,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final AnswerRepository _answerRepository;
+  late final PlayerRepository _playerRepository;
 
   @override
   void initState() {
     super.initState();
 
     _answerRepository = AnswerRepository.instance;
+    _playerRepository = PlayerRepository.instance;
   }
 
   @override
@@ -33,34 +36,24 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(
               width: 120,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const PlayerTile(
-                    child: Text('Brian'),
-                  ),
-                  const PlayerTile(
-                    child: Text('Chip'),
-                  ),
-                  const PlayerTile(
-                    child: Text('Kathy'),
-                  ),
-                  const PlayerTile(
-                    child: Text('Lex'),
-                  ),
-                  const PlayerTile(
-                    child: Text('Shelley'),
-                  ),
-                  const PlayerTile(
-                    child: Text('CarlGPT'),
-                  ),
-                  const Spacer(),
-                  CupertinoButton(
-                    onPressed: () {},
-                    child: const Icon(CupertinoIcons.add),
-                  ),
-                ],
-              ),
+              child: StreamBuilder(
+                  initialData: _playerRepository.players,
+                  stream: _playerRepository.playerStream,
+                  builder: (context, snapshot) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ...snapshot.data!.map(
+                          (p) => PlayerTile(player: p),
+                        ),
+                        const Spacer(),
+                        CupertinoButton(
+                          onPressed: () {},
+                          child: const Icon(CupertinoIcons.add),
+                        ),
+                      ],
+                    );
+                  }),
             ),
             Expanded(
               child: StreamBuilder(

@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import '../player/palette.dart';
 import 'models.dart';
+
+final _playerColorVendor = PlayerColorVendor();
 
 class AnswerRepository {
   static AnswerRepository? _instance;
@@ -35,7 +38,23 @@ class AnswerRepository {
 }
 
 class PlayerRepository {
-  final _players = [];
+  static PlayerRepository? _instance;
+  static get instance => _instance ??= PlayerRepository();
+
+  final _streamController = StreamController<List<Player>>.broadcast();
+
+  final _players = [
+    'Brian',
+    'Chip',
+    'Kathy',
+    'Lex',
+    'Shelley',
+    'CarlGPT',
+  ]
+      .map((n) => Player(id: n, name: n, color: _playerColorVendor.next()))
+      .toList();
+  List<Player> get players => _players;
+  Stream<List<Player>> get playerStream => _streamController.stream;
 }
 
 class RuleRepository {

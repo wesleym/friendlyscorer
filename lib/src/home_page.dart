@@ -65,40 +65,55 @@ class _HomePageState extends State<HomePage> {
                   initialData: _answerRepository.answers,
                   stream: _answerRepository.answerStream,
                   builder: (context, snapshot) {
-                    return SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Align(
-                            alignment: Alignment.center,
-                            child: Icon(CupertinoIcons.text_bubble,
-                                color: CupertinoColors.inactiveGray),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Align(
+                          alignment: Alignment.center,
+                          child: Icon(CupertinoIcons.text_bubble,
+                              color: CupertinoColors.inactiveGray),
+                        ),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Wrap(
+                              children: snapshot.data!
+                                  .map(
+                                    (s) => AnswerTile(
+                                      key: ValueKey(s.id),
+                                      answer: s,
+                                    ),
+                                  )
+                                  .toList(growable: false),
+                            ),
                           ),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            children: snapshot.data!
-                                .map(
-                                  (s) => AnswerTile(
-                                    key: ValueKey(s.id),
-                                    answer: s,
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 200,
+                                  child: CupertinoTextField(),
+                                ),
+                                CupertinoButton(
+                                  onPressed: () {},
+                                  child: const Icon(CupertinoIcons.add),
+                                ),
+                                CupertinoButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Clear',
+                                    style: TextStyle(
+                                        color: CupertinoColors.destructiveRed),
                                   ),
-                                )
-                                .toList(growable: false),
-                          ),
-                          Row(
-                            children: [
-                              CupertinoButton(
-                                onPressed: () {},
-                                child: const Icon(CupertinoIcons.add),
-                              ),
-                              CupertinoButton(
-                                onPressed: () {},
-                                child: const Icon(CupertinoIcons.clear),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     );
                   }),
             ),

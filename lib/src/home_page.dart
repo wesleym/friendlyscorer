@@ -109,15 +109,6 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Row(
                                         children: [
-                                          const SizedBox(
-                                            width: 200,
-                                            child: CupertinoTextField(),
-                                          ),
-                                          CupertinoButton(
-                                            onPressed: () {},
-                                            child:
-                                                const Icon(CupertinoIcons.add),
-                                          ),
                                           CupertinoButton(
                                             onPressed: () {},
                                             child: const Text(

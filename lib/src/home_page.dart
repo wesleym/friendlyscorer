@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 
 import 'data/repository.dart';
@@ -14,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   late final AnswerRepository _answerRepository;
   late final PlayerRepository _playerRepository;
   late final RuleRepository _ruleRepository;
+  late final DraggableScrollableController _draggableScrollableController;
 
   @override
   void initState() {
@@ -22,132 +25,215 @@ class _HomePageState extends State<HomePage> {
     _answerRepository = AnswerRepository.instance;
     _playerRepository = PlayerRepository.instance;
     _ruleRepository = RuleRepository.instance;
+
+    _draggableScrollableController = DraggableScrollableController();
+  }
+
+  @override
+  void dispose() {
+    _draggableScrollableController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: CupertinoColors.systemGroupedBackground,
-      child: SafeArea(
-        minimum: const EdgeInsets.all(8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              width: 120,
-              child: StreamBuilder(
-                  initialData: _playerRepository.players,
-                  stream: _playerRepository.playerStream,
-                  builder: (context, snapshot) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Icon(CupertinoIcons.person_3_fill,
-                            color: CupertinoColors.inactiveGray),
-                        const SizedBox(height: 8),
-                        ...snapshot.data!.map(
-                          (p) => Expanded(
-                            child: PlayerTile(player: p),
-                          ),
-                        ),
-                        CupertinoButton(
-                          onPressed: () {},
-                          child: const Icon(CupertinoIcons.add),
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: StreamBuilder(
-                  initialData: _answerRepository.answers,
-                  stream: _answerRepository.answerStream,
-                  builder: (context, snapshot) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Icon(CupertinoIcons.text_bubble,
-                              color: CupertinoColors.inactiveGray),
-                        ),
-                        const SizedBox(height: 8),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Wrap(
-                              children: snapshot.data!
-                                  .map(
-                                    (s) => AnswerTile(
-                                      key: ValueKey(s.id),
-                                      answer: s,
+      child: Stack(
+        children: [
+          SafeArea(
+            minimum: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        width: 120,
+                        child: StreamBuilder(
+                            initialData: _playerRepository.players,
+                            stream: _playerRepository.playerStream,
+                            builder: (context, snapshot) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const Icon(CupertinoIcons.person_3_fill,
+                                      color: CupertinoColors.inactiveGray),
+                                  const SizedBox(height: 8),
+                                  ...snapshot.data!.map(
+                                    (p) => Expanded(
+                                      child: PlayerTile(player: p),
                                     ),
-                                  )
-                                  .toList(growable: false),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 200,
-                                  child: CupertinoTextField(),
-                                ),
-                                CupertinoButton(
-                                  onPressed: () {},
-                                  child: const Icon(CupertinoIcons.add),
-                                ),
-                                CupertinoButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    'Clear',
-                                    style: TextStyle(
-                                        color: CupertinoColors.destructiveRed),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  }),
+                                  CupertinoButton(
+                                    onPressed: () {},
+                                    child: const Icon(CupertinoIcons.add),
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: StreamBuilder(
+                            initialData: _answerRepository.answers,
+                            stream: _answerRepository.answerStream,
+                            builder: (context, snapshot) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Align(
+                                    alignment: Alignment.center,
+                                    child: Icon(CupertinoIcons.text_bubble,
+                                        color: CupertinoColors.inactiveGray),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Wrap(
+                                        children: snapshot.data!
+                                            .map(
+                                              (s) => AnswerTile(
+                                                key: ValueKey(s.id),
+                                                answer: s,
+                                              ),
+                                            )
+                                            .toList(growable: false),
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 200,
+                                            child: CupertinoTextField(),
+                                          ),
+                                          CupertinoButton(
+                                            onPressed: () {},
+                                            child:
+                                                const Icon(CupertinoIcons.add),
+                                          ),
+                                          CupertinoButton(
+                                            onPressed: () {},
+                                            child: const Text(
+                                              'Clear',
+                                              style: TextStyle(
+                                                  color: CupertinoColors
+                                                      .destructiveRed),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
+                      const SizedBox(width: 16),
+                      SizedBox(
+                        width: 120,
+                        child: StreamBuilder(
+                            initialData: _ruleRepository.rules,
+                            stream: _ruleRepository.ruleStream,
+                            builder: (context, snapshot) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const Align(
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                        CupertinoIcons.exclamationmark_square,
+                                        color: CupertinoColors.inactiveGray),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  ...snapshot.data!.map(
+                                    (r) => Expanded(
+                                      child: RuleTile(rule: r),
+                                    ),
+                                  ),
+                                  CupertinoButton(
+                                    onPressed: () {},
+                                    child: const Icon(CupertinoIcons.add),
+                                  ),
+                                ],
+                              );
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+                const Flexible(
+                  flex: 1,
+                  child: SizedBox(),
+                ),
+              ],
             ),
-            const SizedBox(width: 16),
-            SizedBox(
-              width: 120,
-              child: StreamBuilder(
-                  initialData: _ruleRepository.rules,
-                  stream: _ruleRepository.ruleStream,
-                  builder: (context, snapshot) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Align(
-                          alignment: Alignment.center,
-                          child: Icon(CupertinoIcons.exclamationmark_square,
-                              color: CupertinoColors.inactiveGray),
-                        ),
-                        const SizedBox(height: 8),
-                        ...snapshot.data!.map(
-                          (r) => Expanded(
-                            child: RuleTile(rule: r),
+          ),
+          DraggableScrollableSheet(
+            minChildSize: 0.1,
+            initialChildSize: 0.1,
+            controller: _draggableScrollableController,
+            builder: (context, scrollController) {
+              return CupertinoPopupSurface(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          const Align(
+                            child: Text('⬬'),
                           ),
-                        ),
-                        CupertinoButton(
-                          onPressed: () {},
-                          child: const Icon(CupertinoIcons.add),
-                        ),
-                      ],
-                    );
-                  }),
-            ),
-          ],
-        ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: CupertinoButton(
+                                onPressed: () {
+                                  if (_draggableScrollableController.size <=
+                                      0.1) {
+                                    _draggableScrollableController.animateTo(
+                                      1,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.decelerate,
+                                    );
+                                  } else {
+                                    _draggableScrollableController.animateTo(
+                                      0.1,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.decelerate,
+                                    );
+                                  }
+                                  unawaited(scrollController.animateTo(
+                                    1,
+                                    curve: Curves.decelerate,
+                                    duration: const Duration(milliseconds: 500),
+                                  ));
+                                },
+                                child: !_draggableScrollableController
+                                            .isAttached ||
+                                        _draggableScrollableController.size <=
+                                            0.2
+                                    ? const Icon(CupertinoIcons.chevron_up)
+                                    : const Icon(CupertinoIcons.chevron_down)),
+                          ),
+                        ],
+                      ),
+                      const Text('hello'),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

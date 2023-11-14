@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 
 import 'data/repository.dart';
+import 'input_sheet.dart';
 import 'tiles.dart';
 
 class HomePage extends StatefulWidget {
@@ -181,56 +180,9 @@ class _HomePageState extends State<HomePage> {
             initialChildSize: 0.1,
             controller: _draggableScrollableController,
             builder: (context, scrollController) {
-              return CupertinoPopupSurface(
-                child: SingleChildScrollView(
-                  controller: scrollController,
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          const Align(
-                            child: Text('⬬'),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: CupertinoButton(
-                                onPressed: () {
-                                  if (_draggableScrollableController.size <=
-                                      0.1) {
-                                    _draggableScrollableController.animateTo(
-                                      1,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.decelerate,
-                                    );
-                                  } else {
-                                    _draggableScrollableController.animateTo(
-                                      0.1,
-                                      duration:
-                                          const Duration(milliseconds: 500),
-                                      curve: Curves.decelerate,
-                                    );
-                                  }
-                                  unawaited(scrollController.animateTo(
-                                    1,
-                                    curve: Curves.decelerate,
-                                    duration: const Duration(milliseconds: 500),
-                                  ));
-                                },
-                                child: !_draggableScrollableController
-                                            .isAttached ||
-                                        _draggableScrollableController.size <=
-                                            0.2
-                                    ? const Icon(CupertinoIcons.chevron_up)
-                                    : const Icon(CupertinoIcons.chevron_down)),
-                          ),
-                        ],
-                      ),
-                      const Text('hello'),
-                    ],
-                  ),
-                ),
-              );
+              return InputSheet(
+                  draggableScrollableController: _draggableScrollableController,
+                  scrollController: scrollController);
             },
           ),
         ],

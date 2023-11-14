@@ -170,11 +170,8 @@ class _HomePageState extends State<HomePage> {
             minChildSize: 0.1,
             initialChildSize: 0.1,
             controller: _draggableScrollableController,
-            builder: (context, scrollController) {
-              return InputSheet(
-                  draggableScrollableController: _draggableScrollableController,
-                  scrollController: scrollController);
-            },
+            builder: (context, scrollController) =>
+                InputSheet(scrollController: scrollController),
           ),
         ],
       ),

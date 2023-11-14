@@ -299,3 +299,37 @@ class _RuleTileState extends State<RuleTile> {
     );
   }
 }
+
+class AnswerCircle extends StatelessWidget {
+  final String answer;
+
+  const AnswerCircle({
+    super.key,
+    required this.answer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = CupertinoTheme.of(context).textTheme;
+    final textStyle = textTheme.textStyle;
+
+    return Container(
+      decoration: const ShapeDecoration(
+        shape: StadiumBorder(),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            CupertinoColors.systemGreen,
+            CupertinoColors.activeOrange,
+          ],
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Text(
+        answer,
+        style: textStyle,
+      ),
+    );
+  }
+}

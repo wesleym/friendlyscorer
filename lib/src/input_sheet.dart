@@ -1,19 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 
+import 'answerizer/result_display.dart';
 import 'data/repository.dart';
 
 class InputSheet extends StatefulWidget {
-  final DraggableScrollableController _draggableScrollableController;
   final ScrollController _scrollController;
 
   const InputSheet({
     super.key,
-    required DraggableScrollableController draggableScrollableController,
     required ScrollController scrollController,
-  })  : _draggableScrollableController = draggableScrollableController,
-        _scrollController = scrollController;
+  }) : _scrollController = scrollController;
 
   @override
   State<InputSheet> createState() => _InputSheetState();
@@ -37,46 +33,31 @@ class _InputSheetState extends State<InputSheet> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Stack(
+              const Stack(
                 alignment: AlignmentDirectional.center,
                 children: [
-                  const Text('◖■◗'),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: CupertinoButton(
-                        onPressed: () {
-                          if (widget._draggableScrollableController.size <=
-                              0.1) {
-                            unawaited(
-                                widget._draggableScrollableController.animateTo(
-                              1,
-                              duration: const Duration(milliseconds: 200),
-                              curve: Curves.easeOut,
-                            ));
-                          } else {
-                            unawaited(
-                                widget._draggableScrollableController.animateTo(
-                              0.1,
-                              duration: const Duration(milliseconds: 200),
-                              curve: Curves.easeOut,
-                            ));
-                          }
-                        },
-                        child: !widget._draggableScrollableController
-                                    .isAttached ||
-                                widget._draggableScrollableController.size <=
-                                    0.2
-                            ? const Icon(CupertinoIcons.chevron_up)
-                            : const Icon(CupertinoIcons.chevron_down)),
+                  SizedBox(
+                    width: 24,
+                    height: 4,
+                    child: DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: CupertinoColors.systemFill,
+                        shape: StadiumBorder(),
+                      ),
+                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
               const CupertinoTextField(
                   maxLines: 6,
                   placeholder:
                       'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy'),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
+              const ResultDisplay(),
+              const SizedBox(height: 16),
               StreamBuilder(
                 initialData: _playerRepository.players,
                 stream: _playerRepository.playerStream,
@@ -96,15 +77,17 @@ class _InputSheetState extends State<InputSheet> {
                       ),
                       CupertinoButton(
                         onPressed: () {},
-                        child: const Text('Nobody'),
+                        child: const Text('Clear player'),
                       ),
                     ],
                   );
                 },
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
               CupertinoButton.filled(
-                  child: const Text('Add answers'), onPressed: () {}),
+                child: const Text('Add answers'),
+                onPressed: () {},
+              ),
             ],
           ),
         ),

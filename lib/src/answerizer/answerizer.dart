@@ -12,62 +12,62 @@ List<List<String>> answerizer(String answer) {
 List<List<String>> _answerizerSingleLine(String answer) {
   final results = <List<String>>[];
 
-  if (answer.contains(',')) {
-    final tokens = answer.split(',');
+  if (answer.contains(RegExp(r'[,;]'))) {
+    final tokens = answer.split(RegExp(r'[,;]'));
     final rawResults = tokens
         .map((e) => e.trim())
         .where((e) => e.isNotEmpty)
         .toList(growable: false);
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\W')))) {
-      results.add(rawResults
-          .map((e) => e.replaceFirst(RegExp(r'^\s*\W'), '').trim())
-          .toList(growable: false));
-    }
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\d')))) {
-      results.add(rawResults
-          .map((e) =>
-              e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim())
-          .toList(growable: false));
-    }
-    results.add(rawResults);
-  }
-
-  if (answer.contains(';')) {
-    final tokens = answer.split(';');
-    final rawResults = tokens
-        .map((e) => e.trim())
-        .where((e) => e.isNotEmpty)
-        .toList(growable: false);
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s\W')))) {
-      results.add(rawResults
-          .map((e) => e.replaceFirst(RegExp(r'^\s\W'), '').trim())
-          .toList(growable: false));
-    }
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\d')))) {
-      results.add(rawResults
-          .map((e) =>
-              e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim())
-          .toList(growable: false));
+    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*[\W\d]')))) {
+      results.add(rawResults.map((e) {
+        if (e.startsWith(RegExp(r'\s*\W'))) {
+          return e.replaceFirst(RegExp(r'^\s*\W'), '').trim();
+        } else if (e.startsWith(RegExp(r'\s*\d'))) {
+          return e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim();
+        } else {
+          return e;
+        }
+      }).toList(growable: false));
     }
     results.add(rawResults);
-  }
 
-  if (answer.contains('.')) {
+    if (answer.contains('.')) {
+      final tokens = answer.split(RegExp(r'[,;.]'));
+      final rawResults = tokens
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList(growable: false);
+      if (rawResults.any((e) => e.startsWith(RegExp(r'\s*[\W\d]')))) {
+        results.add(rawResults.map((e) {
+          if (e.startsWith(RegExp(r'\s*\W'))) {
+            return e.replaceFirst(RegExp(r'^\s*\W'), '').trim();
+          } else if (e.startsWith(RegExp(r'\s*\d'))) {
+            return e
+                .replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '')
+                .trim();
+          } else {
+            return e;
+          }
+        }).toList(growable: false));
+      }
+      results.add(rawResults);
+    }
+  } else if (answer.contains('.')) {
     final tokens = answer.split('.');
     final rawResults = tokens
         .map((e) => e.trim())
         .where((e) => e.isNotEmpty)
         .toList(growable: false);
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\W')))) {
-      results.add(rawResults
-          .map((e) => e.replaceFirst(RegExp(r'^\s*\W'), '').trim())
-          .toList(growable: false));
-    }
-    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\d')))) {
-      results.add(rawResults
-          .map((e) =>
-              e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:):'), '').trim())
-          .toList(growable: false));
+    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*[\W\d]')))) {
+      results.add(rawResults.map((e) {
+        if (e.startsWith(RegExp(r'\s*\W'))) {
+          return e.replaceFirst(RegExp(r'^\s*\W'), '').trim();
+        } else if (e.startsWith(RegExp(r'\s*\d'))) {
+          return e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim();
+        } else {
+          return e;
+        }
+      }).toList(growable: false));
     }
     results.add(rawResults);
   }
@@ -83,15 +83,16 @@ List<List<String>> _answerizerMultiline(List<String> rawLines) {
       .map((e) => e.trim())
       .where((e) => e.isNotEmpty)
       .toList(growable: false);
-  if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\W')))) {
-    results.add(rawResults
-        .map((e) => e.replaceFirst(RegExp(r'^\s*\W'), '').trim())
-        .toList(growable: false));
-  }
-  if (rawResults.any((e) => e.startsWith(RegExp(r'\s*\d')))) {
-    results.add(rawResults
-        .map((e) => e.replaceFirst(RegExp(r'^\s*\d+\s*(\.|\)|\:)'), '').trim())
-        .toList(growable: false));
+  if (rawResults.any((e) => e.startsWith(RegExp(r'\s*[\W\d]')))) {
+    results.add(rawResults.map((e) {
+      if (e.startsWith(RegExp(r'\s*\W'))) {
+        return e.replaceFirst(RegExp(r'^\s*\W'), '').trim();
+      } else if (e.startsWith(RegExp(r'\s*\d'))) {
+        return e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim();
+      } else {
+        return e;
+      }
+    }).toList(growable: false));
   }
   results.add(rawResults);
   return results;

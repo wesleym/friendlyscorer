@@ -141,13 +141,7 @@ Eddie Murphy  ''';
 - Chevy Chase
 * Eddie Murphy''';
     const expected = [
-      [
-        '1. Britney Spears',
-        '2) Charles Barkley',
-        'Chevy Chase',
-        'Eddie Murphy'
-      ],
-      ['Britney Spears', 'Charles Barkley', '- Chevy Chase', '* Eddie Murphy'],
+      ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       [
         '1. Britney Spears',
         '2) Charles Barkley',
@@ -188,9 +182,8 @@ Eddie Murphy  ''';
   test('answerizer parses multiple separators', () {
     const input = 'Britney Spears, Charles Barkley; Chevy Chase. Eddie Murphy.';
     const expected = [
-      ['Britney Spears', 'Charles Barkley; Chevy Chase. Eddie Murphy.'],
-      ['Britney Spears, Charles Barkley', 'Chevy Chase. Eddie Murphy.'],
-      ['Britney Spears, Charles Barkley; Chevy Chase', 'Eddie Murphy'],
+      ['Britney Spears', 'Charles Barkley', 'Chevy Chase. Eddie Murphy.'],
+      ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears, Charles Barkley; Chevy Chase. Eddie Murphy.'],
     ];
     expect(answerizer(input), equals(expected));
@@ -201,7 +194,7 @@ Eddie Murphy  ''';
         'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy.  \n';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy.'],
-      ['Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy'],
+      ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy.'],
     ];
     expect(answerizer(input), equals(expected));

@@ -3,8 +3,13 @@ List<List<String>> answerizer(String answer) {
   if (answer.contains('\n')) {
     final lines = answer.split('\n');
     return _answerizerMultiline(lines);
+  } else {
+    final line = answer.trim();
+    return _answerizerSingleLine(line);
   }
+}
 
+List<List<String>> _answerizerSingleLine(String answer) {
   final results = <List<String>>[];
 
   if (answer.contains(',')) {

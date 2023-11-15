@@ -19,6 +19,7 @@ class InputSheet extends StatefulWidget {
 class _InputSheetState extends State<InputSheet> {
   late final PlayerRepository _playerRepository;
   var _answerValue = '';
+  String? _selectedPlayerId;
 
   @override
   void initState() {
@@ -73,19 +74,31 @@ class _InputSheetState extends State<InputSheet> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CupertinoSlidingSegmentedControl(
-                        groupValue: null,
-                        onValueChanged: (value) {},
-                        children: snapshot.data!.asMap().map(
-                              (key, value) => MapEntry(
-                                value.id,
-                                Text(value.name),
+                      Expanded(
+                        child: CupertinoSlidingSegmentedControl(
+                          groupValue: _selectedPlayerId,
+                          onValueChanged: (value) {
+                            setState(() {
+                              _selectedPlayerId = value;
+                            });
+                          },
+                          children: snapshot.data!.asMap().map(
+                                (key, value) => MapEntry(
+                                  value.id,
+                                  Text(value.name),
+                                ),
                               ),
-                            ),
+                        ),
                       ),
                       CupertinoButton(
-                        onPressed: () {},
-                        child: const Text('Clear player'),
+                        onPressed: _selectedPlayerId == null
+                            ? null
+                            : () {
+                                setState(() {
+                                  _selectedPlayerId = null;
+                                });
+                              },
+                        child: const Icon(CupertinoIcons.clear_circled),
                       ),
                     ],
                   );

@@ -2,6 +2,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 
 void main() {
+  test('answerizer parses empty string as no results', () {
+    const input = '';
+    const expected = [];
+    expect(answerizer(input), equals(expected));
+  });
+
+  test('answerizer parses whitespace as no results', () {
+    const input = ' ';
+    const expected = [];
+    expect(answerizer(input), equals(expected));
+  });
+
   test('answerizer parses answers on multiple lines correctly', () {
     const input = '''
 Britney Spears

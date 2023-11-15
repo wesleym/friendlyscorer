@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import 'answerizer/answerizer.dart';
 import 'answerizer/result_display.dart';
 import 'data/repository.dart';
 
@@ -17,6 +18,7 @@ class InputSheet extends StatefulWidget {
 
 class _InputSheetState extends State<InputSheet> {
   late final PlayerRepository _playerRepository;
+  var _answerValue = '';
 
   @override
   void initState() {
@@ -51,12 +53,18 @@ class _InputSheetState extends State<InputSheet> {
                 ],
               ),
               const SizedBox(height: 8),
-              const CupertinoTextField(
-                  maxLines: 6,
-                  placeholder:
-                      'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy'),
+              CupertinoTextField(
+                maxLines: 6,
+                placeholder:
+                    'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy',
+                onChanged: (value) {
+                  setState(() {
+                    _answerValue = value;
+                  });
+                },
+              ),
               const SizedBox(height: 16),
-              const ResultDisplay(),
+              ResultDisplay(results: answerizer(_answerValue)),
               const SizedBox(height: 16),
               StreamBuilder(
                 initialData: _playerRepository.players,

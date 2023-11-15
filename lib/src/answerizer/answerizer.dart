@@ -1,5 +1,8 @@
 List<List<String>> answerizer(String answer) {
   answer = answer.trim();
+
+  if (answer.isEmpty) return [];
+
   if (answer.contains('\n')) {
     final lines = answer.split('\n');
     return _answerizerMultiline(lines);

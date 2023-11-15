@@ -3,7 +3,12 @@ import 'package:flutter/cupertino.dart';
 import '../tiles.dart';
 
 class ResultDisplay extends StatelessWidget {
-  const ResultDisplay({super.key});
+  final List<List<String>> results;
+
+  const ResultDisplay({
+    super.key,
+    required this.results,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,30 +17,16 @@ class ResultDisplay extends StatelessWidget {
       children: [
         CupertinoListSection(
           header: const Text('Parsed answers'),
-          children: const [
-            CupertinoListTile(
-              trailing: Icon(CupertinoIcons.check_mark),
+          children: results.map((e) {
+            return CupertinoListTile(
               title: Wrap(
                 spacing: 4,
-                children: [
-                  AnswerCircle(
-                      answer:
-                          'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy'),
-                ],
+                children: e
+                    .map((e) => AnswerCircle(answer: e))
+                    .toList(growable: false),
               ),
-            ),
-            CupertinoListTile(
-              title: Wrap(
-                spacing: 4,
-                children: [
-                  AnswerCircle(answer: 'Britney Spears'),
-                  AnswerCircle(answer: 'Eddie Murphy'),
-                  AnswerCircle(answer: 'Justin Timberlake'),
-                  AnswerCircle(answer: 'Magnus Carlsen'),
-                ],
-              ),
-            ),
-          ],
+            );
+          }).toList(growable: false),
         ),
       ],
     );

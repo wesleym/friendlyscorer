@@ -14,6 +14,24 @@ void main() {
     expect(answerizer(input), equals(expected));
   });
 
+  test('answerizer splits string with no other separators on spaces', () {
+    const input = 'Britney Spears';
+    const expected = [
+      ['Britney', 'Spears'],
+      ['Britney Spears'],
+    ];
+    expect(answerizer(input), equals(expected));
+  });
+
+  test('answerizer does not splits string with other separators on spaces', () {
+    const input = 'Britney Spears,';
+    const expected = [
+      ['Britney Spears'],
+      ['Britney Spears,'],
+    ];
+    expect(answerizer(input), equals(expected));
+  });
+
   test('answerizer parses answers on multiple lines correctly', () {
     const input = '''
 Britney Spears

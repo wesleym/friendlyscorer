@@ -73,6 +73,24 @@ List<List<String>> _answerizerSingleLine(String answer) {
       }).toList(growable: false));
     }
     results.add(rawResults);
+  } else if (answer.contains(RegExp(r'\s'))) {
+    final tokens = answer.split(RegExp(r'\s+'));
+    final rawResults = tokens
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .toList(growable: false);
+    if (rawResults.any((e) => e.startsWith(RegExp(r'\s*[\W\d]')))) {
+      results.add(rawResults.map((e) {
+        if (e.startsWith(RegExp(r'\s*\W'))) {
+          return e.replaceFirst(RegExp(r'^\s*\W'), '').trim();
+        } else if (e.startsWith(RegExp(r'\s*\d'))) {
+          return e.replaceFirst(RegExp(r'^\(?\s*\d+\s*(\.|\)|\:)'), '').trim();
+        } else {
+          return e;
+        }
+      }).toList(growable: false));
+    }
+    results.add(rawResults);
   }
 
   results.add([answer.trim()]);

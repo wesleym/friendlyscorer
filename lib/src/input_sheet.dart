@@ -74,22 +74,23 @@ class _InputSheetState extends State<InputSheet> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: CupertinoSlidingSegmentedControl(
-                          groupValue: _selectedPlayerId,
-                          onValueChanged: (value) {
-                            setState(() {
-                              _selectedPlayerId = value;
-                            });
-                          },
-                          children: snapshot.data!.asMap().map(
-                                (key, value) => MapEntry(
-                                  value.id,
-                                  Text(value.name),
+                      if (snapshot.data!.isNotEmpty)
+                        Expanded(
+                          child: CupertinoSlidingSegmentedControl(
+                            groupValue: _selectedPlayerId,
+                            onValueChanged: (value) {
+                              setState(() {
+                                _selectedPlayerId = value;
+                              });
+                            },
+                            children: snapshot.data!.asMap().map(
+                                  (key, value) => MapEntry(
+                                    value.id,
+                                    Text(value.name),
+                                  ),
                                 ),
-                              ),
+                          ),
                         ),
-                      ),
                       CupertinoButton(
                         onPressed: _selectedPlayerId == null
                             ? null

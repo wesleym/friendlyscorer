@@ -63,7 +63,9 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
   @override
   Widget build(BuildContext context) {
     final tileTextStyle =
-        CupertinoTheme.of(context).textTheme.navTitleTextStyle;
+        CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
+              color: CupertinoColors.black,
+            );
 
     List<BoxShadow>? shadows;
     if (widget.floating) {

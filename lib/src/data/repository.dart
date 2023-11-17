@@ -36,6 +36,11 @@ class AnswerRepository {
 
   List<Answer> get answers => _answers;
   Stream<List<Answer>> get answerStream => _streamController.stream;
+
+  void clear() {
+    _answers.clear();
+    _streamController.add(_answers);
+  }
 }
 
 class PlayerRepository {
@@ -64,6 +69,11 @@ class PlayerRepository {
 
   Player getPlayerById(String playerId) =>
       _players.singleWhere((p) => p.id == playerId);
+
+  void clear() {
+    _players.clear();
+    _streamController.add(_players);
+  }
 }
 
 class RuleRepository {
@@ -85,6 +95,11 @@ class RuleRepository {
   Stream<List<Rule>> get ruleStream => _streamController.stream;
 
   Rule getRuleById(String ruleId) => _rules.singleWhere((r) => r.id == ruleId);
+
+  void clear() {
+    _rules.clear();
+    _streamController.add(_rules);
+  }
 }
 
 class PlayerAnswerAssociation {

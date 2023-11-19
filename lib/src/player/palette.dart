@@ -17,7 +17,13 @@ const playerColors = [
 ];
 
 class PlayerIdVendor {
+  static PlayerIdVendor? _instance;
+
   var currentId = 0;
+
+  PlayerIdVendor._();
+
+  factory PlayerIdVendor() => _instance ??= PlayerIdVendor._();
 
   int next() => currentId++;
 }
@@ -52,7 +58,13 @@ const letterForId = {
 };
 
 class RuleIdVendor {
+  static RuleIdVendor? _instance;
+
   var currentId = 0;
+
+  RuleIdVendor._();
+
+  factory RuleIdVendor() => _instance ??= RuleIdVendor._();
 
   int next() => currentId++;
 }

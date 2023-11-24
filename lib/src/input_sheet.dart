@@ -66,6 +66,8 @@ class _InputSheetState extends State<InputSheet> {
                     _answerValue = value;
                   });
                 },
+                onTapOutside: (event) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
               ),
               const SizedBox(height: 16),
               ResultDisplay(results: answerizer(_answerValue)),

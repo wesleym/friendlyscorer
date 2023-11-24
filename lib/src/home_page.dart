@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                           context: context,
                                           builder: (context) {
                                             return DraggableScrollableSheet(
-                                              initialChildSize: 1,
+                                              initialChildSize: 0.8,
                                               controller:
                                                   _draggableScrollableController,
                                               builder:

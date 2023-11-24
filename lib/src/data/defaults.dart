@@ -96,12 +96,28 @@ final defaultPlayerAnswerAssociations = [
   PlayerAnswerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
 ];
 
+final alecBaldwinOrSteveMartin = ruleFromName('Alec Baldwin or Steve Martin');
+final athleteRule = ruleFromName('Athlete');
+
 final defaultRules = [
-  'Buck Henry',
-  'Alec Baldwin or Steve Martin',
-  'Athlete',
-].map((r) {
+  ruleFromName('Buck Henry'),
+  alecBaldwinOrSteveMartin,
+  athleteRule,
+];
+
+Rule ruleFromName(String r) {
   final id = RuleIdVendor().next();
   final color = playerColors[id];
   return Rule(id: id.toString(), text: r, color: color);
-}).toList();
+}
+
+final defaultAnswerRuleAssociations = [
+  AnswerRuleAssociation(
+    ruleId: alecBaldwinOrSteveMartin.id,
+    answerId: steveMartin.id,
+  ),
+  AnswerRuleAssociation(
+    ruleId: athleteRule.id,
+    answerId: charlesBarkley.id,
+  ),
+];

@@ -139,7 +139,7 @@ class AnswerRuleAssociationRepository {
   static getInstance(RuleRepository ruleRepository) =>
       _instance ??= AnswerRuleAssociationRepository(ruleRepository);
 
-  final _associations = <AnswerRuleAssociation>[];
+  final _associations = defaultAnswerRuleAssociations.toList();
   final _streamController =
       StreamController<List<AnswerRuleAssociation>>.broadcast();
   final RuleRepository _ruleRepository;

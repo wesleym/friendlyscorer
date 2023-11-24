@@ -2,21 +2,31 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 import 'src/home_page.dart';
 
-void main() {
+void main() async {
   if (kIsWeb) {
     runApp(const FriendlyWebApp());
     return;
   }
 
   if (Platform.isMacOS) {
+    await _configureMacosWindowUtils();
     runApp(const FriendlyMacApp());
     return;
   }
 
   runApp(const FriendlyIOSApp());
+}
+
+/// This method initializes macos_window_utils and styles the window.
+Future<void> _configureMacosWindowUtils() async {
+  const config = MacosWindowUtilsConfig(
+    toolbarStyle: NSWindowToolbarStyle.unified,
+  );
+  await config.apply();
 }
 
 class FriendlyIOSApp extends StatelessWidget {
@@ -37,8 +47,10 @@ class FriendlyMacApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
-      home: HomePage(),
+    return MacosApp(
+      theme: MacosThemeData.light(),
+      darkTheme: MacosThemeData.dark(),
+      home: const MacHomePage(),
     );
   }
 }

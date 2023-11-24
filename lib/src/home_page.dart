@@ -1,17 +1,48 @@
 import 'package:flutter/cupertino.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 import 'data/repository.dart';
 import 'input_sheet.dart';
 import 'tiles.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return const CupertinoPageScaffold(
+      backgroundColor: CupertinoColors.systemGroupedBackground,
+      child: HomePageBody(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class MacHomePage extends StatelessWidget {
+  const MacHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MacosWindow(
+      child: MacosScaffold(
+        toolBar: const ToolBar(title: Text('Friendly Scorer')),
+        children: [
+          ContentArea(
+            builder: (context, scrollController) => const HomePageBody(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomePageBody extends StatefulWidget {
+  const HomePageBody({super.key});
+
+  @override
+  State<HomePageBody> createState() => _HomePageBodyState();
+}
+
+class _HomePageBodyState extends State<HomePageBody> {
   late final AnswerRepository _answerRepository;
   late final PlayerRepository _playerRepository;
   late final RuleRepository _ruleRepository;
@@ -36,104 +67,101 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
-      child: Stack(
-        children: [
-          SafeArea(
-            minimum: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  width: 120,
-                  child: PlayerColumn(
-                    playerRepository: _playerRepository,
-                  ),
+    return Stack(
+      children: [
+        SafeArea(
+          minimum: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: 140,
+                child: PlayerColumn(
+                  playerRepository: _playerRepository,
                 ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: StreamBuilder(
-                      initialData: _answerRepository.answers,
-                      stream: _answerRepository.answerStream,
-                      builder: (context, snapshot) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Align(
-                              alignment: Alignment.center,
-                              child: Icon(CupertinoIcons.text_bubble,
-                                  color: CupertinoColors.inactiveGray),
-                            ),
-                            const SizedBox(height: 8),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Wrap(
-                                  children: snapshot.data!
-                                      .map(
-                                        (s) => AnswerTile(
-                                          key: ValueKey(s.id),
-                                          answer: s,
-                                        ),
-                                      )
-                                      .toList(growable: false),
-                                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: StreamBuilder(
+                    initialData: _answerRepository.answers,
+                    stream: _answerRepository.answerStream,
+                    builder: (context, snapshot) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Align(
+                            alignment: Alignment.center,
+                            child: Icon(CupertinoIcons.text_bubble,
+                                color: CupertinoColors.inactiveGray),
+                          ),
+                          const SizedBox(height: 8),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Wrap(
+                                children: snapshot.data!
+                                    .map(
+                                      (s) => AnswerTile(
+                                        key: ValueKey(s.id),
+                                        answer: s,
+                                      ),
+                                    )
+                                    .toList(growable: false),
                               ),
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  children: [
-                                    CupertinoButton(
-                                      child: const Icon(CupertinoIcons.add),
-                                      onPressed: () {
-                                        showCupertinoModalPopup(
-                                          context: context,
-                                          builder: (context) {
-                                            return DraggableScrollableSheet(
-                                              initialChildSize: 0.9,
-                                              controller:
-                                                  _draggableScrollableController,
-                                              builder:
-                                                  (context, scrollController) {
-                                                return InputSheet(
-                                                    scrollController:
-                                                        scrollController);
-                                              },
-                                            );
-                                          },
-                                        );
-                                      },
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  CupertinoButton(
+                                    child: const Icon(CupertinoIcons.add),
+                                    onPressed: () {
+                                      showCupertinoModalPopup(
+                                        context: context,
+                                        builder: (context) {
+                                          return DraggableScrollableSheet(
+                                            initialChildSize: 0.9,
+                                            controller:
+                                                _draggableScrollableController,
+                                            builder:
+                                                (context, scrollController) {
+                                              return InputSheet(
+                                                  scrollController:
+                                                      scrollController);
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  CupertinoButton(
+                                    onPressed: _onClearAnswers,
+                                    child: const Text(
+                                      'Clear',
+                                      style: TextStyle(
+                                          color:
+                                              CupertinoColors.destructiveRed),
                                     ),
-                                    CupertinoButton(
-                                      onPressed: _onClearAnswers,
-                                      child: const Text(
-                                        'Clear',
-                                        style: TextStyle(
-                                            color:
-                                                CupertinoColors.destructiveRed),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-                const SizedBox(width: 16),
-                SizedBox(
-                  width: 120,
-                  child: RuleColumn(ruleRepository: _ruleRepository),
-                ),
-              ],
-            ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              const SizedBox(width: 16),
+              SizedBox(
+                width: 140,
+                child: RuleColumn(ruleRepository: _ruleRepository),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

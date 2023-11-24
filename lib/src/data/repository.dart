@@ -70,7 +70,7 @@ class PlayerAnswerAssociationRepository {
   static getInstance(PlayerRepository playerRepository) =>
       _instance ??= PlayerAnswerAssociationRepository(playerRepository);
 
-  final _associations = <PlayerAnswerAssociation>[];
+  final _associations = defaultPlayerAnswerAssociations.toList();
   final _streamController =
       StreamController<List<PlayerAnswerAssociation>>.broadcast();
   final PlayerRepository _playerRepository;

@@ -12,31 +12,42 @@ final taylorSwift = answerFromName('Taylor Swift');
 final eddieMurphy = answerFromName('Eddie Murphy');
 final chevyChase = answerFromName('Chevy Chase');
 
+final robertDowneyJr = answerFromName('Robert Downey Jr.');
+final linManuelMiranda = answerFromName('Lin-Manuel Miranda');
+final paulGiamatti = answerFromName('Paul Giamatti');
+final justinTimberlake = answerFromName('Justin Timberlake');
+
+final tinaFey = answerFromName('Tina Fey');
+final paulSimon = answerFromName('Paul Simon');
+final tomHanks = answerFromName('Tom Hanks');
+
+final taylorLautner = answerFromName('Taylor Lautner');
+final britneySpears = answerFromName('Britney Spears');
+final hughJackman = answerFromName('Hugh Jackman');
+
+final elonMusk = answerFromName('Elon Musk');
+final ruthGordon = answerFromName('Ruth Gordon');
+final charlesBarkley = answerFromName('Charles Barkley');
+final magnusCarlsen = answerFromName('Magnus Carlsen');
+
 final defaultAnswers = [
-  ...[
-    'Britney Spears',
-    'Charles Barkley',
-  ].map(answerFromName),
+  charlesBarkley,
   chevyChase,
   eddieMurphy,
-  ...[
-    'Elon Musk',
-    'Hugh Jackman',
-    'Justin Timberlake',
-    'Lin-Manuel Miranda',
-    'Magnus Carlsen',
-    'Paul Giamatti',
-    'Paul Simon',
-    'Robert Downey Jr.',
-    'Ruth Gordon',
-  ].map(answerFromName),
+  elonMusk,
+  hughJackman,
+  justinTimberlake,
+  linManuelMiranda,
+  magnusCarlsen,
+  paulGiamatti,
+  paulSimon,
+  robertDowneyJr,
+  ruthGordon,
   steveMartin,
-  answerFromName('Taylor Lautner'),
+  taylorLautner,
   taylorSwift,
-  ...[
-    'Tina Fey',
-    'Tom Hanks',
-  ].map(answerFromName),
+  tinaFey,
+  tomHanks,
 ].toList();
 
 Player fromName(String name) {
@@ -49,16 +60,17 @@ Player fromName(String name) {
 }
 
 final chip = fromName('Chip');
+final brian = fromName('Brian');
+final shelley = fromName('Shelley');
+final kathy = fromName('Kathy');
+final carlGpt = fromName('CarlGPT');
 
 final defaultPlayers = [
-  fromName('Brian'),
+  brian,
   chip,
-  ...[
-    'Kathy',
-    'Lex',
-    'Shelley',
-    'CarlGPT',
-  ].map(fromName),
+  kathy,
+  shelley,
+  carlGpt,
 ].toList();
 
 final defaultPlayerAnswerAssociations = [
@@ -66,6 +78,22 @@ final defaultPlayerAnswerAssociations = [
   PlayerAnswerAssociation(playerId: chip.id, answerId: taylorSwift.id),
   PlayerAnswerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
   PlayerAnswerAssociation(playerId: chip.id, answerId: chevyChase.id),
+  PlayerAnswerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
+  PlayerAnswerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
+  PlayerAnswerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
+  PlayerAnswerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
+  PlayerAnswerAssociation(playerId: shelley.id, answerId: steveMartin.id),
+  PlayerAnswerAssociation(playerId: shelley.id, answerId: tinaFey.id),
+  PlayerAnswerAssociation(playerId: shelley.id, answerId: paulSimon.id),
+  PlayerAnswerAssociation(playerId: shelley.id, answerId: tomHanks.id),
+  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
+  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
+  PlayerAnswerAssociation(playerId: kathy.id, answerId: britneySpears.id),
+  PlayerAnswerAssociation(playerId: kathy.id, answerId: hughJackman.id),
+  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
+  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
+  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
+  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
 ];
 
 final defaultRules = [

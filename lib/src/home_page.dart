@@ -42,92 +42,95 @@ class _HomePageState extends State<HomePage> {
         children: [
           SafeArea(
             minimum: const EdgeInsets.all(8),
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 9,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        child: PlayerColumn(
-                          playerRepository: _playerRepository,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: StreamBuilder(
-                            initialData: _answerRepository.answers,
-                            stream: _answerRepository.answerStream,
-                            builder: (context, snapshot) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Align(
-                                    alignment: Alignment.center,
-                                    child: Icon(CupertinoIcons.text_bubble,
-                                        color: CupertinoColors.inactiveGray),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      child: Wrap(
-                                        children: snapshot.data!
-                                            .map(
-                                              (s) => AnswerTile(
-                                                key: ValueKey(s.id),
-                                                answer: s,
-                                              ),
-                                            )
-                                            .toList(growable: false),
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          CupertinoButton(
-                                            onPressed: _onClearAnswers,
-                                            child: const Text(
-                                              'Clear',
-                                              style: TextStyle(
-                                                  color: CupertinoColors
-                                                      .destructiveRed),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            }),
-                      ),
-                      const SizedBox(width: 16),
-                      SizedBox(
-                        width: 120,
-                        child: RuleColumn(ruleRepository: _ruleRepository),
-                      ),
-                    ],
+                SizedBox(
+                  width: 120,
+                  child: PlayerColumn(
+                    playerRepository: _playerRepository,
                   ),
                 ),
-                const Flexible(
-                  flex: 1,
-                  child: SizedBox(),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: StreamBuilder(
+                      initialData: _answerRepository.answers,
+                      stream: _answerRepository.answerStream,
+                      builder: (context, snapshot) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Align(
+                              alignment: Alignment.center,
+                              child: Icon(CupertinoIcons.text_bubble,
+                                  color: CupertinoColors.inactiveGray),
+                            ),
+                            const SizedBox(height: 8),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Wrap(
+                                  children: snapshot.data!
+                                      .map(
+                                        (s) => AnswerTile(
+                                          key: ValueKey(s.id),
+                                          answer: s,
+                                        ),
+                                      )
+                                      .toList(growable: false),
+                                ),
+                              ),
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    CupertinoButton(
+                                      child: const Icon(CupertinoIcons.add),
+                                      onPressed: () {
+                                        showCupertinoModalPopup(
+                                          context: context,
+                                          builder: (context) {
+                                            return DraggableScrollableSheet(
+                                              initialChildSize: 1,
+                                              controller:
+                                                  _draggableScrollableController,
+                                              builder:
+                                                  (context, scrollController) {
+                                                return InputSheet(
+                                                    scrollController:
+                                                        scrollController);
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                    CupertinoButton(
+                                      onPressed: _onClearAnswers,
+                                      child: const Text(
+                                        'Clear',
+                                        style: TextStyle(
+                                            color:
+                                                CupertinoColors.destructiveRed),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }),
+                ),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: 120,
+                  child: RuleColumn(ruleRepository: _ruleRepository),
                 ),
               ],
             ),
-          ),
-          DraggableScrollableSheet(
-            minChildSize: 0.1,
-            initialChildSize: 0.1,
-            controller: _draggableScrollableController,
-            builder: (context, scrollController) =>
-                InputSheet(scrollController: scrollController),
           ),
         ],
       ),

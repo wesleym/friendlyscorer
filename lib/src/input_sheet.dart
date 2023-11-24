@@ -5,11 +5,11 @@ import 'answerizer/result_display.dart';
 import 'data/repository.dart';
 
 class InputSheet extends StatefulWidget {
-  final ScrollController _scrollController;
+  final ScrollController? _scrollController;
 
   const InputSheet({
     super.key,
-    required ScrollController scrollController,
+    ScrollController? scrollController,
   }) : _scrollController = scrollController;
 
   @override
@@ -30,30 +30,33 @@ class _InputSheetState extends State<InputSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CupertinoTheme.of(context);
+
     return CupertinoPopupSurface(
       child: SingleChildScrollView(
         controller: widget._scrollController,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Stack(
-                alignment: AlignmentDirectional.center,
+              Row(
                 children: [
-                  SizedBox(
-                    width: 24,
-                    height: 4,
-                    child: DecoratedBox(
-                      decoration: ShapeDecoration(
-                        color: CupertinoColors.systemFill,
-                        shape: StadiumBorder(),
-                      ),
+                  Expanded(
+                    child: Text(
+                      'Answers',
+                      style: theme.textTheme.navLargeTitleTextStyle,
                     ),
+                  ),
+                  CupertinoButton(
+                    child: const Icon(CupertinoIcons.chevron_down),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 16),
               CupertinoTextField(
                 maxLines: 6,
                 placeholder:
@@ -107,7 +110,7 @@ class _InputSheetState extends State<InputSheet> {
               ),
               const SizedBox(height: 16),
               CupertinoButton.filled(
-                child: const Text('Add answers'),
+                child: const Text('Add to scoreboard'),
                 onPressed: () {},
               ),
             ],

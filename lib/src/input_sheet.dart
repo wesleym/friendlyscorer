@@ -20,6 +20,7 @@ class _InputSheetState extends State<InputSheet> {
   late final PlayerRepository _playerRepository;
   var _answerValue = '';
   String? _selectedPlayerId;
+  int? _selectedAnswersIndex;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _InputSheetState extends State<InputSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = CupertinoTheme.of(context);
+    var answers = answerizer(_answerValue);
 
     return CupertinoPopupSurface(
       child: SingleChildScrollView(
@@ -50,9 +52,7 @@ class _InputSheetState extends State<InputSheet> {
                   ),
                   CupertinoButton(
                     child: const Icon(CupertinoIcons.chevron_down),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
               ),
@@ -62,15 +62,19 @@ class _InputSheetState extends State<InputSheet> {
                 placeholder:
                     'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy',
                 onChanged: (value) {
-                  setState(() {
-                    _answerValue = value;
-                  });
+                  setState(() => _answerValue = value);
                 },
                 onTapOutside: (event) =>
                     FocusManager.instance.primaryFocus?.unfocus(),
               ),
               const SizedBox(height: 16),
-              ResultDisplay(results: answerizer(_answerValue)),
+              ResultDisplay(
+                results: answers,
+                selectedAnswersIndex: _selectedAnswersIndex,
+                onSelect: (answersIndex) => setState(() {
+                  _selectedAnswersIndex = answersIndex;
+                }),
+              ),
               const SizedBox(height: 16),
               StreamBuilder(
                 initialData: _playerRepository.players,

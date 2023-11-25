@@ -66,8 +66,9 @@ class FriendlyMaterialApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MaterialHomePage(),
+    return MaterialApp(
+      home: const MaterialHomePage(),
+      darkTheme: ThemeData.dark(),
     );
   }
 }

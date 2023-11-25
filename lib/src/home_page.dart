@@ -4,6 +4,7 @@ import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
+import 'package:friendlyscorer/src/platform/modal.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import 'data/repository.dart';
@@ -198,7 +199,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                   PlatformIconButton(
                                     CupertinoIcons.add,
                                     onPressed: () {
-                                      showCupertinoModalPopup(
+                                      presentPlatformModal(
                                         context: context,
                                         builder: (context) {
                                           return DraggableScrollableSheet(

@@ -5,6 +5,7 @@ import 'answerizer/result_display.dart';
 import 'data/repository.dart';
 import 'platform/filled_button.dart';
 import 'platform/text_field.dart';
+import 'player/picker.dart';
 
 class CupertinoInputSheet extends StatelessWidget {
   final ScrollController? scrollController;
@@ -111,37 +112,12 @@ class _InputSheetState extends State<InputSheet> {
           initialData: _playerRepository.players,
           stream: _playerRepository.playerStream,
           builder: (context, snapshot) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (snapshot.data!.isNotEmpty)
-                  Expanded(
-                    child: CupertinoSlidingSegmentedControl(
-                      groupValue: _selectedPlayerId,
-                      onValueChanged: (value) {
-                        setState(() {
-                          _selectedPlayerId = value;
-                        });
-                      },
-                      children: snapshot.data!.asMap().map(
-                            (key, value) => MapEntry(
-                              value.id,
-                              Text(value.name),
-                            ),
-                          ),
-                    ),
-                  ),
-                CupertinoButton(
-                  onPressed: _selectedPlayerId == null
-                      ? null
-                      : () {
-                          setState(() {
-                            _selectedPlayerId = null;
-                          });
-                        },
-                  child: const Icon(CupertinoIcons.clear_circled),
-                ),
-              ],
+            return PlayerPicker(
+              players: snapshot.data!,
+              selectedPlayerId: _selectedPlayerId,
+              onSelectPlayer: (playerId) {
+                setState(() => _selectedPlayerId = playerId);
+              },
             );
           },
         ),

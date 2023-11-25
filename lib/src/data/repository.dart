@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'defaults.dart';
 import 'models.dart';
@@ -167,7 +166,6 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
-    log('add called');
     _associations.add(AnswerRuleAssociation(
       ruleId: ruleId,
       answerId: answerId,
@@ -179,7 +177,6 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
-    log('remove called');
     _associations
         .removeWhere((a) => a.ruleId == ruleId && a.answerId == answerId);
     _streamController.add(_associations);
@@ -189,7 +186,6 @@ class AnswerRuleAssociationRepository {
     required String ruleId,
     required String answerId,
   }) {
-    log('toggle called');
     if (_associations
         .any((a) => a.ruleId == ruleId && a.answerId == answerId)) {
       removeAssociation(ruleId: ruleId, answerId: answerId);

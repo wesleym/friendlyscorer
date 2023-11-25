@@ -2,13 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import 'src/home_page.dart';
 
 void main() async {
   if (kIsWeb) {
-    runApp(const FriendlyWebApp());
+    runApp(const FriendlyMaterialApp());
+    return;
+  }
+
+  if (Platform.isIOS) {
+    runApp(const FriendlyIOSApp());
     return;
   }
 
@@ -18,7 +24,7 @@ void main() async {
     return;
   }
 
-  runApp(const FriendlyIOSApp());
+  runApp(const FriendlyMaterialApp());
 }
 
 /// This method initializes macos_window_utils and styles the window.
@@ -37,7 +43,7 @@ class FriendlyIOSApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const CupertinoApp(
       title: 'Friendly Scorer',
-      home: HomePage(),
+      home: CupertinoHomePage(),
     );
   }
 }
@@ -55,13 +61,13 @@ class FriendlyMacApp extends StatelessWidget {
   }
 }
 
-class FriendlyWebApp extends StatelessWidget {
-  const FriendlyWebApp({super.key});
+class FriendlyMaterialApp extends StatelessWidget {
+  const FriendlyMaterialApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
-      home: HomePage(),
+    return const MaterialApp(
+      home: MaterialHomePage(),
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:macos_ui/macos_ui.dart';
 
 TextStyle? answerTileHeading(BuildContext context) {
   if (kIsWeb) {
-    return Theme.of(context).textTheme.headlineMedium;
+    return Theme.of(context).textTheme.titleLarge;
   }
 
   if (Platform.isIOS) {
@@ -18,7 +18,7 @@ TextStyle? answerTileHeading(BuildContext context) {
     return MacosTheme.of(context).typography.headline;
   }
 
-  return Theme.of(context).textTheme.headlineMedium;
+  return Theme.of(context).textTheme.titleLarge;
 }
 
 TextStyle? bodyStyle(BuildContext context) {

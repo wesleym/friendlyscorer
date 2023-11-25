@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 
 import 'data/models.dart';
@@ -125,7 +122,10 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: data
-                    .map((r) => Text('• ${r.text}'))
+                    .map((r) => Text(
+                          '• ${r.text}',
+                          style: bodyStyle(context),
+                        ))
                     .toList(growable: false),
               );
             },
@@ -291,45 +291,16 @@ class _RuleTileState extends State<RuleTile> {
   }
 }
 
-class AnswerCircle extends StatelessWidget {
+class MaterialAnswerCircle extends StatelessWidget {
   final String answer;
 
-  const AnswerCircle({
+  const MaterialAnswerCircle({
     super.key,
     required this.answer,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      return const Text('<MaterialAnswerCircle>');
-    }
-
-    if (Platform.isIOS) {
-      return CupertinoAnswerCircle(answer: answer);
-    }
-
-    if (Platform.isMacOS) {
-      return MacAnswerCircle(answer: answer);
-    }
-
-    return const Text('<MaterialAnswerCircle>');
-  }
-}
-
-class CupertinoAnswerCircle extends StatelessWidget {
-  final String answer;
-
-  const CupertinoAnswerCircle({
-    super.key,
-    required this.answer,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = CupertinoTheme.of(context).textTheme;
-    final textStyle = textTheme.textStyle;
-
     return Container(
       decoration: const ShapeDecoration(
         shape: StadiumBorder(),
@@ -345,7 +316,38 @@ class CupertinoAnswerCircle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
         answer,
-        style: textStyle,
+        style: bodyStyle(context),
+      ),
+    );
+  }
+}
+
+class CupertinoAnswerCircle extends StatelessWidget {
+  final String answer;
+
+  const CupertinoAnswerCircle({
+    super.key,
+    required this.answer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const ShapeDecoration(
+        shape: StadiumBorder(),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            CupertinoColors.systemGreen,
+            CupertinoColors.activeOrange,
+          ],
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: Text(
+        answer,
+        style: bodyStyle(context),
       ),
     );
   }

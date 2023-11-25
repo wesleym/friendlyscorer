@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
@@ -9,8 +10,8 @@ import 'data/repository.dart';
 import 'input_sheet.dart';
 import 'tiles.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class CupertinoHomePage extends StatelessWidget {
+  const CupertinoHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,15 @@ class HomePage extends StatelessWidget {
       backgroundColor: CupertinoColors.systemGroupedBackground,
       child: HomePageBody(),
     );
+  }
+}
+
+class MaterialHomePage extends StatelessWidget {
+  const MaterialHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(body: HomePageBody());
   }
 }
 

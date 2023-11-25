@@ -25,7 +25,6 @@ class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _answerRepository = AnswerRepository.instance;

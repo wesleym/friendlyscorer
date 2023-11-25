@@ -85,7 +85,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        color: CupertinoColors.white,
+        color: CupertinoTheme.of(context).primaryContrastingColor,
         shadows: shadows,
       ),
       child: Column(
@@ -146,13 +146,7 @@ class PlayerCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String displayName;
-    // if (_player.name.length > 2) {
-    //   displayName = _player.name.substring(0, 2);
-    // } else {
-    displayName = _player.name;
-    // }
-
+    final displayName = _player.name;
     final hslColor = HSLColor.fromColor(_player.color);
     final color = hslColor.withLightness(hslColor.lightness + 0.2).toColor();
 

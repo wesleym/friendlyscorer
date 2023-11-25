@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/platform/button.dart';
+import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import 'data/repository.dart';
@@ -114,7 +116,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                         children: [
                           const Align(
                             alignment: Alignment.center,
-                            child: Icon(CupertinoIcons.text_bubble,
+                            child: PlatformIcon(CupertinoIcons.text_bubble,
                                 color: CupertinoColors.inactiveGray),
                           ),
                           const SizedBox(height: 8),
@@ -137,8 +139,8 @@ class _HomePageBodyState extends State<HomePageBody> {
                             children: [
                               Row(
                                 children: [
-                                  CupertinoButton(
-                                    child: const Icon(CupertinoIcons.add),
+                                  PlatformIconButton(
+                                    CupertinoIcons.add,
                                     onPressed: () {
                                       showCupertinoModalPopup(
                                         context: context,
@@ -158,7 +160,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       );
                                     },
                                   ),
-                                  CupertinoButton(
+                                  PlatformButton(
                                     onPressed: _onClearAnswers,
                                     child: const Text(
                                       'Clear',
@@ -231,8 +233,10 @@ class RuleColumn extends StatelessWidget {
           children: [
             const Align(
               alignment: Alignment.center,
-              child: Icon(CupertinoIcons.exclamationmark_square,
-                  color: CupertinoColors.inactiveGray),
+              child: PlatformIcon(
+                CupertinoIcons.exclamationmark_square,
+                color: CupertinoColors.inactiveGray,
+              ),
             ),
             const SizedBox(height: 8),
             ...snapshot.data!.map(
@@ -242,11 +246,11 @@ class RuleColumn extends StatelessWidget {
             ),
             Row(
               children: [
-                CupertinoButton(
+                PlatformIconButton(
+                  CupertinoIcons.add,
                   onPressed: () {},
-                  child: const Icon(CupertinoIcons.add),
                 ),
-                CupertinoButton(
+                PlatformButton(
                   onPressed: () => _onClearRules(context),
                   child: const Text(
                     'Clear',
@@ -304,7 +308,7 @@ class PlayerColumn extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Icon(CupertinoIcons.person_3_fill,
+            const PlatformIcon(CupertinoIcons.person_3_fill,
                 color: CupertinoColors.inactiveGray),
             const SizedBox(height: 8),
             ...snapshot.data!.map(
@@ -314,11 +318,11 @@ class PlayerColumn extends StatelessWidget {
             ),
             Row(
               children: [
-                CupertinoButton(
+                PlatformIconButton(
+                  CupertinoIcons.add,
                   onPressed: () {},
-                  child: const Icon(CupertinoIcons.add),
                 ),
-                CupertinoButton(
+                PlatformButton(
                   onPressed: () => _onClearPlayers(context),
                   child: const Text(
                     'Clear',

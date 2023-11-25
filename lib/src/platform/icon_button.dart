@@ -7,12 +7,12 @@ import 'package:macos_ui/macos_ui.dart';
 
 class PlatformIconButton extends StatelessWidget {
   final void Function()? onPressed;
-  final Widget child;
+  final IconData icon;
 
-  const PlatformIconButton({
+  const PlatformIconButton(
+    this.icon, {
     super.key,
     this.onPressed,
-    required this.child,
   });
 
   @override
@@ -20,24 +20,48 @@ class PlatformIconButton extends StatelessWidget {
     if (kIsWeb) {
       return IconButton(
         onPressed: onPressed,
-        icon: child,
+        icon: Icon(icon),
       );
     }
 
     if (Platform.isIOS) {
       return CupertinoButton(
         onPressed: onPressed,
-        child: child,
+        child: Icon(icon),
       );
     }
 
     if (Platform.isMacOS) {
-      return MacosIconButton(icon: child);
+      return MacosIconButton(icon: MacosIcon(icon));
     }
 
-    return FilledButton(
+    return IconButton(
       onPressed: onPressed,
-      child: child,
+      icon: Icon(icon),
     );
+  }
+}
+
+class PlatformIcon extends StatelessWidget {
+  final IconData icon;
+  final Color? color;
+
+  const PlatformIcon(
+    this.icon, {
+    super.key,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (kIsWeb || Platform.isIOS) {
+      return Icon(icon, color: color);
+    }
+
+    if (Platform.isMacOS) {
+      return MacosIcon(icon, color: color);
+    }
+
+    return Icon(icon, color: color);
   }
 }

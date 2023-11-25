@@ -117,18 +117,21 @@ class MacPlayerPicker extends StatelessWidget {
 
     var playerRadios = players.map(
       (p) {
-        return GestureDetector(
-          onTap: () => onSelectPlayer(p.id),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Label(
-              text: Text(p.name),
-              icon: MacosRadioButton(
+        return Padding(
+          padding: const EdgeInsets.all(2),
+          child: Row(
+            children: [
+              MacosRadioButton(
                 value: p.id,
                 groupValue: selectedPlayerId,
                 onChanged: onSelectPlayer,
               ),
-            ),
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: () => onSelectPlayer(p.id),
+                child: Text(p.name),
+              ),
+            ],
           ),
         );
       },

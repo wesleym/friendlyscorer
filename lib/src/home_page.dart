@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/answerizer/answerizer.dart';
+import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -27,11 +29,55 @@ class MacHomePage extends StatefulWidget {
 }
 
 class _MacHomePageState extends State<MacHomePage> {
+  late final AnswerRepository _answerRepository;
+
+  int? _selectedAnswersIndex;
+  var _answerValue = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _answerRepository = AnswerRepository.instance;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final answers = answerizer(_answerValue);
+    final selectedAnswersIndex = _selectedAnswersIndex;
+
     return MacosWindow(
       endSidebar: Sidebar(
-        builder: (context, scrollController) => const MacInputSheet(),
+        builder: (context, scrollController) => MacInputSheet(
+          answerValue: _answerValue,
+          onAnswerValueChange: (a) {
+            setState(() => _answerValue = a);
+          },
+          selectedAnswersIndex: _selectedAnswersIndex,
+          onSelectedAnswersIndex: (i) {
+            setState(() => _selectedAnswersIndex = i);
+          },
+        ),
+        bottom: PushButton(
+          controlSize: ControlSize.regular,
+          onPressed: selectedAnswersIndex != null &&
+                  selectedAnswersIndex < answers.length
+              ? () {
+                  for (final answerText in answers[_selectedAnswersIndex!]) {
+                    _answerRepository.add(Answer(
+                      id: answerText,
+                      text: answerText,
+                    ));
+                  }
+
+                  setState(() {
+                    _answerValue = '';
+                    _selectedAnswersIndex = null;
+                  });
+                }
+              : null,
+          child: const Text('Add to scoreboard'),
+        ),
         minWidth: 200,
       ),
       child: Builder(builder: (context) {

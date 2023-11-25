@@ -9,13 +9,13 @@ import '../tiles.dart';
 class ResultDisplay extends StatelessWidget {
   final List<List<String>> _results;
   final int? selectedAnswersIndex;
-  final void Function(dynamic answersIndex)? _onSelect;
+  final void Function(int? index)? _onSelect;
 
   const ResultDisplay({
     super.key,
     required List<List<String>> results,
     this.selectedAnswersIndex,
-    void Function(dynamic answersIndex)? onSelect,
+    void Function(int? index)? onSelect,
   })  : _results = results,
         _onSelect = onSelect;
 

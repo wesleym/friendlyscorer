@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/data/models.dart';
 
 import 'answerizer/answerizer.dart';
 import 'answerizer/result_display.dart';
@@ -7,18 +8,37 @@ import 'platform/filled_button.dart';
 import 'platform/text_field.dart';
 import 'player/picker.dart';
 
-class CupertinoInputSheet extends StatelessWidget {
+class CupertinoInputSheet extends StatefulWidget {
   final ScrollController? scrollController;
 
   const CupertinoInputSheet({super.key, this.scrollController});
 
   @override
+  State<CupertinoInputSheet> createState() => _CupertinoInputSheetState();
+}
+
+class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
+  late final AnswerRepository _answerRepository;
+
+  int? _selectedAnswersIndex;
+  var _answerValue = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _answerRepository = AnswerRepository.instance;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = CupertinoTheme.of(context);
+    final answers = answerizer(_answerValue);
 
     return CupertinoPopupSurface(
       child: SingleChildScrollView(
-        controller: scrollController,
+        controller: widget.scrollController,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
@@ -38,7 +58,30 @@ class CupertinoInputSheet extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              InputSheet(scrollController: scrollController),
+              InputSheet(
+                scrollController: widget.scrollController,
+                answerValue: _answerValue,
+                onAnswerValueChange: (a) {
+                  setState(() => _answerValue = a);
+                },
+                selectedAnswersIndex: _selectedAnswersIndex,
+                onSelectedAnswersIndex: (i) {
+                  setState(() => _selectedAnswersIndex = i);
+                },
+              ),
+              const SizedBox(height: 16),
+              PlatformFilledTextButton(
+                onPressed: _selectedAnswersIndex != null &&
+                        _selectedAnswersIndex! < answers.length
+                    ? () {
+                        for (final answerText
+                            in answers[_selectedAnswersIndex!]) {
+                          _answerRepository.add(Answer(id: answerText));
+                        }
+                      }
+                    : null,
+                child: const Text('Add to scoreboard'),
+              ),
             ],
           ),
         ),
@@ -47,23 +90,55 @@ class CupertinoInputSheet extends StatelessWidget {
   }
 }
 
-class MacInputSheet extends StatelessWidget {
-  const MacInputSheet({super.key});
+class MacInputSheet extends StatefulWidget {
+  final int? selectedAnswersIndex;
+  final String answerValue;
+  final void Function(String) _onAnswerValueChange;
+  final void Function(int?) _onSelectedAnswersIndex;
+
+  const MacInputSheet({
+    super.key,
+    required this.answerValue,
+    required void Function(String) onAnswerValueChange,
+    required this.selectedAnswersIndex,
+    required void Function(int?) onSelectedAnswersIndex,
+  })  : _onAnswerValueChange = onAnswerValueChange,
+        _onSelectedAnswersIndex = onSelectedAnswersIndex;
 
   @override
+  State<MacInputSheet> createState() => _MacInputSheetState();
+}
+
+class _MacInputSheetState extends State<MacInputSheet> {
+  @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8),
-      child: InputSheet(),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: InputSheet(
+        answerValue: widget.answerValue,
+        onAnswerValueChange: widget._onAnswerValueChange,
+        selectedAnswersIndex: widget.selectedAnswersIndex,
+        onSelectedAnswersIndex: widget._onSelectedAnswersIndex,
+      ),
     );
   }
 }
 
 class InputSheet extends StatefulWidget {
+  final int? selectedAnswersIndex;
+  final String answerValue;
+  final void Function(String) _onAnswerValueChange;
+  final void Function(int?) _onSelectedAnswersIndex;
+
   const InputSheet({
     super.key,
     ScrollController? scrollController,
-  });
+    required this.answerValue,
+    required void Function(String) onAnswerValueChange,
+    required this.selectedAnswersIndex,
+    required void Function(int?) onSelectedAnswersIndex,
+  })  : _onAnswerValueChange = onAnswerValueChange,
+        _onSelectedAnswersIndex = onSelectedAnswersIndex;
 
   @override
   State<InputSheet> createState() => _InputSheetState();
@@ -71,9 +146,7 @@ class InputSheet extends StatefulWidget {
 
 class _InputSheetState extends State<InputSheet> {
   late final PlayerRepository _playerRepository;
-  var _answerValue = '';
   String? _selectedPlayerId;
-  int? _selectedAnswersIndex;
 
   @override
   void initState() {
@@ -84,7 +157,7 @@ class _InputSheetState extends State<InputSheet> {
 
   @override
   Widget build(BuildContext context) {
-    var answers = answerizer(_answerValue);
+    final answers = answerizer(widget.answerValue);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -93,19 +166,15 @@ class _InputSheetState extends State<InputSheet> {
           maxLines: 6,
           placeholder:
               'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy',
-          onChanged: (value) {
-            setState(() => _answerValue = value);
-          },
+          onChanged: widget._onAnswerValueChange,
           onTapOutside: (event) =>
               FocusManager.instance.primaryFocus?.unfocus(),
         ),
         const SizedBox(height: 16),
         ResultDisplay(
           results: answers,
-          selectedAnswersIndex: _selectedAnswersIndex,
-          onSelect: (answersIndex) => setState(() {
-            _selectedAnswersIndex = answersIndex;
-          }),
+          selectedAnswersIndex: widget.selectedAnswersIndex,
+          onSelect: widget._onSelectedAnswersIndex,
         ),
         const SizedBox(height: 16),
         StreamBuilder(
@@ -120,14 +189,6 @@ class _InputSheetState extends State<InputSheet> {
               },
             );
           },
-        ),
-        const SizedBox(height: 16),
-        PlatformFilledTextButton(
-          onPressed: _selectedAnswersIndex != null &&
-                  _selectedAnswersIndex! < answers.length
-              ? () {}
-              : null,
-          child: const Text('Add to scoreboard'),
         ),
       ],
     );

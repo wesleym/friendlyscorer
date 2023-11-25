@@ -14,6 +14,12 @@ class AnswerRepository {
   List<Answer> get answers => _answers;
   Stream<List<Answer>> get answerStream => _streamController.stream;
 
+  void add(Answer answer) {
+    if (_answers.any((a) => a.id == answer.id)) return;
+    _answers.add(answer);
+    _streamController.add(_answers);
+  }
+
   void clear() {
     _answers.clear();
     _streamController.add(_answers);

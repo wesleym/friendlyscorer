@@ -41,9 +41,8 @@ class _MacHomePageState extends State<MacHomePage> {
                 label: 'Add answer',
                 icon: const MacosIcon(CupertinoIcons.sidebar_right),
                 showLabel: false,
-                onPressed: () {
-                  MacosWindowScope.of(context).toggleSidebar();
-                },
+                onPressed: () =>
+                    MacosWindowScope.of(context).toggleEndSidebar(),
               ),
             ],
           ),
@@ -111,7 +110,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                     stream: _answerRepository.answerStream,
                     builder: (context, snapshot) {
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const Align(
                             alignment: Alignment.center,

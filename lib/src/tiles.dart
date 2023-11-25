@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:friendlyscorer/src/platform/typography.dart';
 
 import 'data/models.dart';
 import 'data/repository.dart';
@@ -65,11 +66,6 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle =
-        CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(
-              color: CupertinoColors.black,
-            );
-
     List<BoxShadow>? shadows;
     if (widget.floating) {
       shadows = const [
@@ -96,7 +92,10 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(widget._answer.text, style: tileTextStyle),
+          Text(
+            widget._answer.text,
+            style: answerTileHeading(context),
+          ),
           const SizedBox(height: 8),
           StreamBuilder(
             initialData: _playerAnswerAssociationRepository
@@ -147,9 +146,6 @@ class PlayerCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = CupertinoTheme.of(context).textTheme;
-    final textStyle = textTheme.textStyle;
-
     final String displayName;
     // if (_player.name.length > 2) {
     //   displayName = _player.name.substring(0, 2);
@@ -170,7 +166,7 @@ class PlayerCircle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
         displayName,
-        style: textStyle,
+        style: bodyStyle(context),
       ),
     );
   }
@@ -201,10 +197,8 @@ class _PlayerTileState extends State<PlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle = CupertinoTheme.of(context)
-        .textTheme
-        .navTitleTextStyle
-        .copyWith(color: CupertinoColors.white);
+    final tileTextStyle =
+        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
 
     return DragTarget<Answer>(
       onWillAccept: (data) {
@@ -267,10 +261,8 @@ class _RuleTileState extends State<RuleTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle = CupertinoTheme.of(context)
-        .textTheme
-        .navTitleTextStyle
-        .copyWith(color: CupertinoColors.white);
+    final tileTextStyle =
+        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
 
     return DragTarget<Answer>(
       onWillAccept: (data) {

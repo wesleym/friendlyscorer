@@ -23,8 +23,15 @@ class MacHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
+      endSidebar: Sidebar(
+          builder: (context, scrollController) {
+            return const MacInputSheet();
+          },
+          minWidth: 200),
       child: MacosScaffold(
-        toolBar: const ToolBar(title: Text('Friendly Scorer')),
+        toolBar: const ToolBar(
+          title: Text('Friendly Scorer'),
+        ),
         children: [
           ContentArea(
             builder: (context, scrollController) => const HomePageBody(),
@@ -127,7 +134,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                                 _draggableScrollableController,
                                             builder:
                                                 (context, scrollController) {
-                                              return InputSheet(
+                                              return CupertinoInputSheet(
                                                   scrollController:
                                                       scrollController);
                                             },

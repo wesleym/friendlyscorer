@@ -17,27 +17,43 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class MacHomePage extends StatelessWidget {
+class MacHomePage extends StatefulWidget {
   const MacHomePage({super.key});
 
+  @override
+  State<MacHomePage> createState() => _MacHomePageState();
+}
+
+class _MacHomePageState extends State<MacHomePage> {
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
       endSidebar: Sidebar(
-          builder: (context, scrollController) {
-            return const MacInputSheet();
-          },
-          minWidth: 200),
-      child: MacosScaffold(
-        toolBar: const ToolBar(
-          title: Text('Friendly Scorer'),
-        ),
-        children: [
-          ContentArea(
-            builder: (context, scrollController) => const HomePageBody(),
-          ),
-        ],
+        builder: (context, scrollController) => const MacInputSheet(),
+        minWidth: 200,
       ),
+      child: Builder(builder: (context) {
+        return MacosScaffold(
+          toolBar: ToolBar(
+            title: const Text('Friendly Scorer'),
+            actions: [
+              ToolBarIconButton(
+                label: 'Add answer',
+                icon: const MacosIcon(CupertinoIcons.sidebar_right),
+                showLabel: false,
+                onPressed: () {
+                  MacosWindowScope.of(context).toggleSidebar();
+                },
+              ),
+            ],
+          ),
+          children: [
+            ContentArea(
+              builder: (context, scrollController) => const HomePageBody(),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

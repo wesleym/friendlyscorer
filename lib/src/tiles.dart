@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'data/models.dart';
 import 'data/repository.dart';
@@ -312,6 +315,32 @@ class AnswerCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      return const Text('<MaterialAnswerCircle>');
+    }
+
+    if (Platform.isIOS) {
+      return CupertinoAnswerCircle(answer: answer);
+    }
+
+    if (Platform.isMacOS) {
+      return MacAnswerCircle(answer: answer);
+    }
+
+    return const Text('<MaterialAnswerCircle>');
+  }
+}
+
+class CupertinoAnswerCircle extends StatelessWidget {
+  final String answer;
+
+  const CupertinoAnswerCircle({
+    super.key,
+    required this.answer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final textTheme = CupertinoTheme.of(context).textTheme;
     final textStyle = textTheme.textStyle;
 
@@ -332,6 +361,35 @@ class AnswerCircle extends StatelessWidget {
         answer,
         style: textStyle,
       ),
+    );
+  }
+}
+
+class MacAnswerCircle extends StatelessWidget {
+  final String answer;
+
+  const MacAnswerCircle({
+    super.key,
+    required this.answer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const ShapeDecoration(
+        shape: StadiumBorder(),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            CupertinoColors.systemGreen,
+            CupertinoColors.activeOrange,
+          ],
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.all(1),
+      child: Text(answer),
     );
   }
 }

@@ -128,7 +128,6 @@ class _HomePageBodyState extends State<HomePageBody> {
   late final AnswerRepository _answerRepository;
   late final PlayerRepository _playerRepository;
   late final RuleRepository _ruleRepository;
-  late final DraggableScrollableController _draggableScrollableController;
 
   @override
   void initState() {
@@ -137,14 +136,6 @@ class _HomePageBodyState extends State<HomePageBody> {
     _answerRepository = AnswerRepository.instance;
     _playerRepository = PlayerRepository.instance;
     _ruleRepository = RuleRepository.instance;
-
-    _draggableScrollableController = DraggableScrollableController();
-  }
-
-  @override
-  void dispose() {
-    _draggableScrollableController.dispose();
-    super.dispose();
   }
 
   @override
@@ -205,9 +196,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       presentPlatformModal(
                                         context: context,
                                         builder: (context) {
-                                          return PlatformInputSheet(
-                                              draggableScrollableController:
-                                                  _draggableScrollableController);
+                                          return const PlatformInputSheet();
                                         },
                                       );
                                     },

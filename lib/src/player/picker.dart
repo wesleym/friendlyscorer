@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../data/models.dart';
@@ -21,7 +22,11 @@ class PlayerPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return const MaterialPlayerPicker();
+      return MaterialPlayerPicker(
+        players: players,
+        selectedPlayerId: selectedPlayerId,
+        onSelectPlayer: onSelectPlayer,
+      );
     }
 
     if (Platform.isIOS) {
@@ -40,16 +45,56 @@ class PlayerPicker extends StatelessWidget {
       );
     }
 
-    return const MaterialPlayerPicker();
+    return MaterialPlayerPicker(
+      players: players,
+      selectedPlayerId: selectedPlayerId,
+      onSelectPlayer: onSelectPlayer,
+    );
   }
 }
 
 class MaterialPlayerPicker extends StatelessWidget {
-  const MaterialPlayerPicker({super.key});
+  final List<Player> players;
+  final String? selectedPlayerId;
+  final void Function(String? playerId) onSelectPlayer;
+
+  const MaterialPlayerPicker({
+    super.key,
+    this.players = const [],
+    this.selectedPlayerId,
+    required this.onSelectPlayer,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Text('<MaterialPlayerPicker>');
+    final selectedPlayerIdAlias = selectedPlayerId;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (players.isNotEmpty)
+          Expanded(
+            child: SegmentedButton<String>(
+              emptySelectionAllowed: true,
+              segments: players.map((p) {
+                return ButtonSegment(
+                  value: p.id,
+                  label: Text(p.name),
+                );
+              }).toList(growable: false),
+              selected: {
+                if (selectedPlayerIdAlias != null) selectedPlayerIdAlias
+              },
+              onSelectionChanged: (selection) =>
+                  onSelectPlayer(selection.singleOrNull),
+            ),
+          ),
+        IconButton(
+          onPressed:
+              selectedPlayerId == null ? null : () => onSelectPlayer(null),
+          icon: const Icon(Icons.cancel),
+        ),
+      ],
+    );
   }
 }
 

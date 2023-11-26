@@ -10,7 +10,12 @@ void presentPlatformModal({
   required Widget Function(BuildContext) builder,
 }) {
   if (kIsWeb) {
-    showBottomSheet(context: context, builder: builder);
+    showBottomSheet(
+      context: context,
+      constraints: const BoxConstraints(maxWidth: 592),
+      elevation: 8,
+      builder: builder,
+    );
     return;
   }
 
@@ -24,5 +29,10 @@ void presentPlatformModal({
     return;
   }
 
-  showBottomSheet(context: context, builder: builder);
+  showBottomSheet(
+    context: context,
+    constraints: const BoxConstraints(maxWidth: 592),
+    elevation: 8,
+    builder: builder,
+  );
 }

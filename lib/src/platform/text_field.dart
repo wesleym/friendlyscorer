@@ -25,7 +25,10 @@ class PlatformTextField extends StatelessWidget {
     if (kIsWeb) {
       return TextField(
         maxLines: maxLines,
-        decoration: InputDecoration(hintText: placeholder),
+        decoration: InputDecoration(
+          hintText: placeholder,
+          border: const OutlineInputBorder(),
+        ),
         onChanged: onChanged,
         onTapOutside: onTapOutside,
       );

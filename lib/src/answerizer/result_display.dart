@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import '../tiles.dart';
@@ -22,7 +23,11 @@ class ResultDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return const MaterialResultDisplay();
+      return MaterialResultDisplay(
+        results: _results,
+        onSelect: _onSelect,
+        selectedAnswersIndex: selectedAnswersIndex,
+      );
     }
 
     if (Platform.isIOS) {
@@ -41,16 +46,58 @@ class ResultDisplay extends StatelessWidget {
       );
     }
 
-    return const MaterialResultDisplay();
+    return MaterialResultDisplay(
+      results: _results,
+      onSelect: _onSelect,
+      selectedAnswersIndex: selectedAnswersIndex,
+    );
   }
 }
 
 class MaterialResultDisplay extends StatelessWidget {
-  const MaterialResultDisplay({super.key});
+  final List<List<String>> results;
+  final int? selectedAnswersIndex;
+  final void Function(int answersIndex)? onSelect;
+
+  const MaterialResultDisplay({
+    super.key,
+    required this.results,
+    this.selectedAnswersIndex,
+    this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Text('<MaterialResultDisplay>');
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Parsed answers'),
+        ...results
+            .asMap()
+            .map((key, value) {
+              Widget? trailing;
+              if (key == selectedAnswersIndex) {
+                trailing = const Icon(Icons.check);
+              }
+              var children = value
+                  .map((e) => MaterialAnswerCircle(answer: e))
+                  .toList(growable: false);
+              return MapEntry(
+                key,
+                ListTile(
+                  title: Wrap(
+                    spacing: 4,
+                    children: children,
+                  ),
+                  trailing: trailing,
+                  onTap: () => onSelect?.call(key),
+                ),
+              );
+            })
+            .values
+            .toList(growable: false),
+      ],
+    );
   }
 }
 

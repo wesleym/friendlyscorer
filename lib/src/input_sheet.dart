@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 
 import 'answerizer/answerizer.dart';
@@ -8,10 +12,41 @@ import 'platform/filled_button.dart';
 import 'platform/text_field.dart';
 import 'player/picker.dart';
 
-class CupertinoInputSheet extends StatefulWidget {
-  final ScrollController? scrollController;
+class PlatformInputSheet extends StatelessWidget {
+  final DraggableScrollableController draggableScrollableController;
 
-  const CupertinoInputSheet({super.key, this.scrollController});
+  const PlatformInputSheet({
+    super.key,
+    required this.draggableScrollableController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (kIsWeb) {
+      return MaterialInputSheet(
+        draggableScrollableController: draggableScrollableController,
+      );
+    }
+
+    if (Platform.isIOS) {
+      return CupertinoInputSheet(
+        draggableScrollableController: draggableScrollableController,
+      );
+    }
+
+    return MaterialInputSheet(
+      draggableScrollableController: draggableScrollableController,
+    );
+  }
+}
+
+class CupertinoInputSheet extends StatefulWidget {
+  final DraggableScrollableController draggableScrollableController;
+
+  const CupertinoInputSheet({
+    super.key,
+    required this.draggableScrollableController,
+  });
 
   @override
   State<CupertinoInputSheet> createState() => _CupertinoInputSheetState();
@@ -35,56 +70,152 @@ class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
     final theme = CupertinoTheme.of(context);
     final answers = answerizer(_answerValue);
 
-    return CupertinoPopupSurface(
-      child: SingleChildScrollView(
-        controller: widget.scrollController,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: Column(
-            children: [
-              Row(
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      controller: widget.draggableScrollableController,
+      builder: (context, scrollController) {
+        return CupertinoPopupSurface(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: Text(
-                      'Answers',
-                      style: theme.textTheme.navLargeTitleTextStyle,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Answers',
+                          style: theme.textTheme.navLargeTitleTextStyle,
+                        ),
+                      ),
+                      CupertinoButton(
+                        child: const Icon(CupertinoIcons.chevron_down),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
                   ),
-                  CupertinoButton(
-                    child: const Icon(CupertinoIcons.chevron_down),
-                    onPressed: () => Navigator.of(context).pop(),
+                  const SizedBox(height: 16),
+                  InputSheet(
+                    scrollController: scrollController,
+                    answerValue: _answerValue,
+                    onAnswerValueChange: (a) {
+                      setState(() => _answerValue = a);
+                    },
+                    selectedAnswersIndex: _selectedAnswersIndex,
+                    onSelectedAnswersIndex: (i) {
+                      setState(() => _selectedAnswersIndex = i);
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  PlatformFilledTextButton(
+                    onPressed: _selectedAnswersIndex != null &&
+                            _selectedAnswersIndex! < answers.length
+                        ? () {
+                            for (final answerText
+                                in answers[_selectedAnswersIndex!]) {
+                              _answerRepository.add(Answer(id: answerText));
+                            }
+                          }
+                        : null,
+                    child: const Text('Add to scoreboard'),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              InputSheet(
-                scrollController: widget.scrollController,
-                answerValue: _answerValue,
-                onAnswerValueChange: (a) {
-                  setState(() => _answerValue = a);
-                },
-                selectedAnswersIndex: _selectedAnswersIndex,
-                onSelectedAnswersIndex: (i) {
-                  setState(() => _selectedAnswersIndex = i);
-                },
-              ),
-              const SizedBox(height: 16),
-              PlatformFilledTextButton(
-                onPressed: _selectedAnswersIndex != null &&
-                        _selectedAnswersIndex! < answers.length
-                    ? () {
-                        for (final answerText
-                            in answers[_selectedAnswersIndex!]) {
-                          _answerRepository.add(Answer(id: answerText));
-                        }
-                      }
-                    : null,
-                child: const Text('Add to scoreboard'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
+    );
+  }
+}
+
+class MaterialInputSheet extends StatefulWidget {
+  final ScrollController? scrollController;
+  final DraggableScrollableController _draggableScrollableController;
+
+  const MaterialInputSheet({
+    super.key,
+    this.scrollController,
+    required DraggableScrollableController draggableScrollableController,
+  }) : _draggableScrollableController = draggableScrollableController;
+
+  @override
+  State<MaterialInputSheet> createState() => _MaterialInputSheetState();
+}
+
+class _MaterialInputSheetState extends State<MaterialInputSheet> {
+  late final AnswerRepository _answerRepository;
+
+  int? _selectedAnswersIndex;
+  var _answerValue = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _answerRepository = AnswerRepository.instance;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final answers = answerizer(_answerValue);
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      controller: widget._draggableScrollableController,
+      builder: (context, scrollController) {
+        return SingleChildScrollView(
+          controller: widget.scrollController,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Answers',
+                        style: theme.textTheme.headlineMedium,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: Navigator.of(context).pop,
+                      icon: const Icon(Icons.expand_more),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                InputSheet(
+                  scrollController: widget.scrollController,
+                  answerValue: _answerValue,
+                  onAnswerValueChange: (a) {
+                    setState(() => _answerValue = a);
+                  },
+                  selectedAnswersIndex: _selectedAnswersIndex,
+                  onSelectedAnswersIndex: (i) {
+                    setState(() => _selectedAnswersIndex = i);
+                  },
+                ),
+                const SizedBox(height: 16),
+                PlatformFilledTextButton(
+                  onPressed: _selectedAnswersIndex != null &&
+                          _selectedAnswersIndex! < answers.length
+                      ? () {
+                          for (final answerText
+                              in answers[_selectedAnswersIndex!]) {
+                            _answerRepository.add(Answer(id: answerText));
+                          }
+                        }
+                      : null,
+                  child: const Text('Add to scoreboard'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -202,17 +202,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       presentPlatformModal(
                                         context: context,
                                         builder: (context) {
-                                          return DraggableScrollableSheet(
-                                            initialChildSize: 0.9,
-                                            controller:
-                                                _draggableScrollableController,
-                                            builder:
-                                                (context, scrollController) {
-                                              return CupertinoInputSheet(
-                                                  scrollController:
-                                                      scrollController);
-                                            },
-                                          );
+                                          return PlatformInputSheet(
+                                              draggableScrollableController:
+                                                  _draggableScrollableController);
                                         },
                                       );
                                     },

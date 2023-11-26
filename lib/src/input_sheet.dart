@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/platform/icons.dart';
 
 import 'answerizer/answerizer.dart';
 import 'answerizer/result_display.dart';
@@ -90,8 +91,8 @@ class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
                         ),
                       ),
                       CupertinoButton(
-                        child: const Icon(CupertinoIcons.chevron_down),
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: Navigator.of(context).pop,
+                        child: Icon(PlatformIcons.add),
                       ),
                     ],
                   ),

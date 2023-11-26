@@ -4,6 +4,7 @@ import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
+import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
 import 'package:macos_ui/macos_ui.dart';
 
@@ -171,10 +172,12 @@ class _HomePageBodyState extends State<HomePageBody> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const Align(
+                          Align(
                             alignment: Alignment.center,
-                            child: PlatformIcon(CupertinoIcons.text_bubble,
-                                color: CupertinoColors.inactiveGray),
+                            child: PlatformIcon(
+                              PlatformIcons.answers,
+                              color: CupertinoColors.inactiveGray,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           Expanded(
@@ -197,7 +200,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                               Row(
                                 children: [
                                   PlatformIconButton(
-                                    CupertinoIcons.add,
+                                    PlatformIcons.add,
                                     onPressed: () {
                                       presentPlatformModal(
                                         context: context,
@@ -280,10 +283,10 @@ class RuleColumn extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Align(
+            Align(
               alignment: Alignment.center,
               child: PlatformIcon(
-                CupertinoIcons.exclamationmark_square,
+                PlatformIcons.specialRules,
                 color: CupertinoColors.inactiveGray,
               ),
             ),
@@ -296,7 +299,7 @@ class RuleColumn extends StatelessWidget {
             Row(
               children: [
                 PlatformIconButton(
-                  CupertinoIcons.add,
+                  PlatformIcons.add,
                   onPressed: () {},
                 ),
                 PlatformButton(
@@ -357,8 +360,10 @@ class PlayerColumn extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const PlatformIcon(CupertinoIcons.person_3_fill,
-                color: CupertinoColors.inactiveGray),
+            PlatformIcon(
+              PlatformIcons.players,
+              color: CupertinoColors.inactiveGray,
+            ),
             const SizedBox(height: 8),
             ...snapshot.data!.map(
               (p) => Expanded(
@@ -368,7 +373,7 @@ class PlayerColumn extends StatelessWidget {
             Row(
               children: [
                 PlatformIconButton(
-                  CupertinoIcons.add,
+                  PlatformIcons.add,
                   onPressed: () {},
                 ),
                 PlatformButton(

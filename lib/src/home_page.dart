@@ -6,6 +6,7 @@ import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
+import 'package:friendlyscorer/src/platform/modal.dart';
 import 'package:friendlyscorer/src/player/palette.dart';
 import 'package:friendlyscorer/src/player/tiles.dart';
 import 'package:friendlyscorer/src/rule/tiles.dart';
@@ -212,28 +213,14 @@ class _HomePageBodyState extends State<HomePageBody> {
     );
   }
 
-  void _onClearAnswers() {
-    showCupertinoModalPopup(
+  void _onClearAnswers() async {
+    final delete = await presentPlatformDestructionConfirmation(
       context: context,
-      builder: (context) {
-        return CupertinoActionSheet(
-          actions: [
-            CupertinoActionSheetAction(
-              onPressed: () {
-                _answerRepository.clear();
-                Navigator.of(context).pop();
-              },
-              isDestructiveAction: true,
-              isDefaultAction: true,
-              child: const Text('Remove all answers'),
-            ),
-          ],
-          cancelButton: CupertinoActionSheetAction(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel')),
-        );
-      },
+      title: const Text('Delete all answers'),
     );
+    if (delete) {
+      _answerRepository.clear();
+    }
   }
 }
 
@@ -283,29 +270,14 @@ class RuleColumn extends StatelessWidget {
     );
   }
 
-  void _onClearRules(BuildContext context) {
-    showCupertinoModalPopup(
+  void _onClearRules(BuildContext context) async {
+    final delete = await presentPlatformDestructionConfirmation(
       context: context,
-      builder: (context) {
-        return CupertinoActionSheet(
-          actions: [
-            CupertinoActionSheetAction(
-              onPressed: () {
-                _ruleRepository.clear();
-                Navigator.of(context).pop();
-              },
-              isDestructiveAction: true,
-              isDefaultAction: true,
-              child: const Text('Clear all rules'),
-            ),
-          ],
-          cancelButton: CupertinoActionSheetAction(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-        );
-      },
+      title: const Text('Delete all special rules?'),
     );
+    if (delete) {
+      _ruleRepository.clear();
+    }
   }
 
   void _onCreateRule(String name) {
@@ -362,29 +334,14 @@ class PlayerColumn extends StatelessWidget {
     );
   }
 
-  void _onClearPlayers(BuildContext context) {
-    showCupertinoModalPopup(
+  void _onClearPlayers(BuildContext context) async {
+    final delete = await presentPlatformDestructionConfirmation(
       context: context,
-      builder: (context) {
-        return CupertinoActionSheet(
-          actions: [
-            CupertinoActionSheetAction(
-              onPressed: () {
-                _playerRepository.clear();
-                Navigator.of(context).pop();
-              },
-              isDestructiveAction: true,
-              isDefaultAction: true,
-              child: const Text('Destroy all players'),
-            ),
-          ],
-          cancelButton: CupertinoActionSheetAction(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-        );
-      },
+      title: const Text('Delete all players'),
     );
+    if (delete) {
+      _playerRepository.clear();
+    }
   }
 
   void _onCreatePlayer(String name) {

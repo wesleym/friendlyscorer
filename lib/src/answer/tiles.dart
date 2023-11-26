@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/tiles.dart';
@@ -83,7 +84,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        color: CupertinoTheme.of(context).primaryContrastingColor,
+        color: platformAnswerColor(context),
         shadows: shadows,
       ),
       child: Column(
@@ -167,7 +168,10 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
         color: CupertinoColors.systemFill,
         shadows: shadows,
       ),
-      child: PlatformInvisibleTextField(style: answerTileHeading(context)),
+      child: PlatformInvisibleTextField(
+        style: answerTileHeading(context),
+        placeholder: 'Answer, or answers',
+      ),
     );
   }
 }

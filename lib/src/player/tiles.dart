@@ -70,16 +70,24 @@ class _PlayerTileState extends State<PlayerTile> {
 }
 
 class NewPlayerTile extends StatefulWidget {
-  const NewPlayerTile({super.key});
+  final void Function(String name)? _onCreatePlayer;
+
+  const NewPlayerTile({
+    super.key,
+    void Function(String name)? onCreatePlayer,
+  }) : _onCreatePlayer = onCreatePlayer;
 
   @override
   State<NewPlayerTile> createState() => _NewPlayerTileState();
 }
 
 class _NewPlayerTileState extends State<NewPlayerTile> {
+  final _controller = TextEditingController();
+
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -107,7 +115,16 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
           ],
         ),
       ),
-      child: PlatformInvisibleTextField(style: tileTextStyle),
+      child: PlatformInvisibleTextField(
+        style: tileTextStyle,
+        placeholder: 'Player',
+        controller: _controller,
+        onSubmitted: (value) {
+          widget._onCreatePlayer?.call(value);
+          _controller.clear();
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+      ),
     );
   }
 }

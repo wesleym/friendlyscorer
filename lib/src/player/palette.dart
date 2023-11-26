@@ -5,15 +5,15 @@ const playerColors = [
   CupertinoColors.systemOrange,
   CupertinoColors.systemYellow,
   CupertinoColors.systemGreen,
-  // CupertinoColors.systemMint,
-  // CupertinoColors.systemTeal,
-  // CupertinoColors.systemCyan,
+  CupertinoColors.systemMint,
+  CupertinoColors.systemTeal,
+  CupertinoColors.systemCyan,
   CupertinoColors.systemBlue,
-  // CupertinoColors.systemPink,
+  CupertinoColors.systemPink,
   CupertinoColors.systemPurple,
-  // CupertinoColors.systemIndigo,
-  // CupertinoColors.systemBrown,
-  CupertinoColors.systemGrey,
+  CupertinoColors.systemIndigo,
+  CupertinoColors.systemBrown,
+  // CupertinoColors.systemGrey,
 ];
 
 class PlayerIdVendor {

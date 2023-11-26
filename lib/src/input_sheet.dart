@@ -108,7 +108,10 @@ class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
                         ? () {
                             for (final answerText
                                 in answers[_selectedAnswersIndex!]) {
-                              _answerRepository.add(Answer(id: answerText));
+                              _answerRepository.add(Answer(
+                                id: answerText,
+                                text: answerText,
+                              ));
                             }
                           }
                         : null,
@@ -186,7 +189,10 @@ class _MaterialInputSheetState extends State<MaterialInputSheet> {
                   ? () {
                       for (final answerText
                           in answers[_selectedAnswersIndex!]) {
-                        _answerRepository.add(Answer(id: answerText));
+                        _answerRepository.add(Answer(
+                          id: answerText,
+                          text: answerText,
+                        ));
                       }
                     }
                   : null,

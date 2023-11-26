@@ -43,6 +43,11 @@ class PlayerRepository {
     _players.clear();
     _streamController.add(_players);
   }
+
+  void add(Player player) {
+    _players.add(player);
+    _streamController.add(_players);
+  }
 }
 
 class RuleRepository {
@@ -59,6 +64,11 @@ class RuleRepository {
 
   void clear() {
     _rules.clear();
+    _streamController.add(_rules);
+  }
+
+  void add(Rule rule) {
+    _rules.add(rule);
     _streamController.add(_rules);
   }
 }

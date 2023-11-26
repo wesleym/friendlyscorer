@@ -68,6 +68,8 @@ class PlatformInvisibleTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function(PointerDownEvent)? onTapOutside;
   final TextStyle? style;
+  final void Function(String)? _onSubmitted;
+  final TextEditingController? _controller;
 
   /// [onTapOutside] is ignored on macOS.
   const PlatformInvisibleTextField({
@@ -77,7 +79,10 @@ class PlatformInvisibleTextField extends StatelessWidget {
     this.onChanged,
     this.onTapOutside,
     this.style,
-  });
+    void Function(String)? onSubmitted,
+    TextEditingController? controller,
+  })  : _onSubmitted = onSubmitted,
+        _controller = controller;
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +90,13 @@ class PlatformInvisibleTextField extends StatelessWidget {
 
     if (kIsWeb) {
       child = TextField(
-        decoration: null,
+        decoration: InputDecoration(hintText: placeholder),
         maxLines: maxLines,
         onChanged: onChanged,
         onTapOutside: onTapOutside,
         style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
       );
     } else if (Platform.isIOS) {
       child = CupertinoTextField(
@@ -98,6 +105,8 @@ class PlatformInvisibleTextField extends StatelessWidget {
         onChanged: onChanged,
         onTapOutside: onTapOutside,
         style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
       );
     } else if (Platform.isMacOS) {
       child = MacosTextField(
@@ -105,14 +114,18 @@ class PlatformInvisibleTextField extends StatelessWidget {
         placeholder: placeholder,
         onChanged: onChanged,
         style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
       );
     } else {
       child = TextField(
-        decoration: null,
+        decoration: InputDecoration(hintText: placeholder),
         maxLines: maxLines,
         onChanged: onChanged,
         onTapOutside: onTapOutside,
         style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
       );
     }
 

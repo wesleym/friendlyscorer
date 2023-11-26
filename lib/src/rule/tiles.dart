@@ -65,13 +65,26 @@ class _RuleTileState extends State<RuleTile> {
 }
 
 class NewRuleTile extends StatefulWidget {
-  const NewRuleTile({super.key});
+  final void Function(String name)? _onCreateRule;
+
+  const NewRuleTile({
+    super.key,
+    void Function(String name)? onCreateRule,
+  }) : _onCreateRule = onCreateRule;
 
   @override
   State<NewRuleTile> createState() => _NewRuleTileState();
 }
 
 class _NewRuleTileState extends State<NewRuleTile> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final tileTextStyle =
@@ -90,7 +103,16 @@ class _NewRuleTileState extends State<NewRuleTile> {
           colors: [CupertinoColors.systemTeal, CupertinoColors.systemPurple],
         ),
       ),
-      child: PlatformInvisibleTextField(style: tileTextStyle),
+      child: PlatformInvisibleTextField(
+        controller: _controller,
+        style: tileTextStyle,
+        placeholder: 'Special rule',
+        onSubmitted: (String value) {
+          widget._onCreateRule?.call(value);
+          _controller.clear();
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+      ),
     );
   }
 }

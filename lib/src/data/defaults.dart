@@ -55,7 +55,7 @@ Player fromName(String name) {
   return Player(
     id: nextId.toString(),
     name: name,
-    color: playerColors[nextId],
+    color: playerColors[nextId % playerColors.length],
   );
 }
 
@@ -107,8 +107,10 @@ final defaultRules = [
 
 Rule ruleFromName(String r) {
   final id = RuleIdVendor().next();
-  final color = playerColors[id];
-  return Rule(id: id.toString(), text: r, color: color);
+  return Rule(
+    id: id.toString(),
+    text: r,
+  );
 }
 
 final defaultAnswerRuleAssociations = [

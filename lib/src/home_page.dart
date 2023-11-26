@@ -6,6 +6,7 @@ import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
+import 'package:friendlyscorer/src/player/palette.dart';
 import 'package:friendlyscorer/src/player/tiles.dart';
 import 'package:friendlyscorer/src/rule/tiles.dart';
 import 'package:macos_ui/macos_ui.dart';
@@ -275,7 +276,7 @@ class RuleColumn extends StatelessWidget {
                 child: RuleTile(rule: r),
               ),
             ),
-            const NewRuleTile(),
+            NewRuleTile(onCreateRule: _onCreateRule),
           ],
         );
       },
@@ -304,6 +305,13 @@ class RuleColumn extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  void _onCreateRule(String name) {
+    final id = RuleIdVendor().next();
+    _ruleRepository.add(
+      Rule(id: id.toString(), text: name),
     );
   }
 }
@@ -347,7 +355,7 @@ class PlayerColumn extends StatelessWidget {
                 child: PlayerTile(player: p),
               ),
             ),
-            const NewPlayerTile(),
+            NewPlayerTile(onCreatePlayer: _onCreatePlayer),
           ],
         );
       },
@@ -377,5 +385,14 @@ class PlayerColumn extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onCreatePlayer(String name) {
+    final id = PlayerIdVendor().next();
+    _playerRepository.add(Player(
+      id: id.toString(),
+      name: name,
+      color: playerColors[id % playerColors.length],
+    ));
   }
 }

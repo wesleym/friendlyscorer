@@ -8,7 +8,7 @@ class Answer {
 
   Answer({
     required this.id,
-    this.text = '',
+    required this.text,
   });
 }
 
@@ -27,11 +27,9 @@ class Player {
 class Rule {
   final String id;
   final String text;
-  Color color;
 
   Rule({
     required this.id,
-    this.text = '',
-    required this.color,
+    required this.text,
   });
 }

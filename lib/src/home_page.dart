@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/answer/tiles.dart';
 import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
-import 'package:friendlyscorer/src/platform/modal.dart';
+import 'package:friendlyscorer/src/player/tiles.dart';
+import 'package:friendlyscorer/src/rule/tiles.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 import 'data/repository.dart';
 import 'input_sheet.dart';
-import 'tiles.dart';
 
 class CupertinoHomePage extends StatelessWidget {
   const CupertinoHomePage({super.key});
@@ -150,9 +151,7 @@ class _HomePageBodyState extends State<HomePageBody> {
             children: [
               SizedBox(
                 width: 140,
-                child: PlayerColumn(
-                  playerRepository: _playerRepository,
-                ),
+                child: PlayerColumn(playerRepository: _playerRepository),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -163,18 +162,28 @@ class _HomePageBodyState extends State<HomePageBody> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: PlatformIcon(
-                              PlatformIcons.answers,
-                              color: CupertinoColors.inactiveGray,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              PlatformIcon(
+                                PlatformIcons.answers,
+                                color: CupertinoColors.inactiveGray,
+                              ),
+                              PlatformButton(
+                                onPressed: _onClearAnswers,
+                                child: const Text(
+                                  'Clear',
+                                  style: TextStyle(
+                                      color: CupertinoColors.destructiveRed),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 8),
                           Expanded(
                             child: SingleChildScrollView(
-                              child: Wrap(
-                                children: snapshot.data!
+                              child: Wrap(children: [
+                                ...snapshot.data!
                                     .map(
                                       (s) => AnswerTile(
                                         key: ValueKey(s.id),
@@ -182,37 +191,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       ),
                                     )
                                     .toList(growable: false),
-                              ),
+                                const NewInnerAnswerTile(),
+                              ]),
                             ),
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Row(
-                                children: [
-                                  PlatformIconButton(
-                                    PlatformIcons.add,
-                                    onPressed: () {
-                                      presentPlatformModal(
-                                        context: context,
-                                        builder: (context) {
-                                          return const PlatformInputSheet();
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  PlatformButton(
-                                    onPressed: _onClearAnswers,
-                                    child: const Text(
-                                      'Clear',
-                                      style: TextStyle(
-                                          color:
-                                              CupertinoColors.destructiveRed),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
                           ),
                         ],
                       );
@@ -272,24 +253,12 @@ class RuleColumn extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: PlatformIcon(
-                PlatformIcons.specialRules,
-                color: CupertinoColors.inactiveGray,
-              ),
-            ),
-            const SizedBox(height: 8),
-            ...snapshot.data!.map(
-              (r) => Expanded(
-                child: RuleTile(rule: r),
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                PlatformIconButton(
-                  PlatformIcons.add,
-                  onPressed: () {},
+                PlatformIcon(
+                  PlatformIcons.specialRules,
+                  color: CupertinoColors.inactiveGray,
                 ),
                 PlatformButton(
                   onPressed: () => _onClearRules(context),
@@ -300,6 +269,13 @@ class RuleColumn extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            ...snapshot.data!.map(
+              (r) => Expanded(
+                child: RuleTile(rule: r),
+              ),
+            ),
+            const NewRuleTile(),
           ],
         );
       },
@@ -333,12 +309,12 @@ class RuleColumn extends StatelessWidget {
 }
 
 class PlayerColumn extends StatelessWidget {
+  final PlayerRepository _playerRepository;
+
   const PlayerColumn({
     super.key,
     required PlayerRepository playerRepository,
   }) : _playerRepository = playerRepository;
-
-  final PlayerRepository _playerRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -349,21 +325,12 @@ class PlayerColumn extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            PlatformIcon(
-              PlatformIcons.players,
-              color: CupertinoColors.inactiveGray,
-            ),
-            const SizedBox(height: 8),
-            ...snapshot.data!.map(
-              (p) => Expanded(
-                child: PlayerTile(player: p),
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                PlatformIconButton(
-                  PlatformIcons.add,
-                  onPressed: () {},
+                PlatformIcon(
+                  PlatformIcons.players,
+                  color: CupertinoColors.inactiveGray,
                 ),
                 PlatformButton(
                   onPressed: () => _onClearPlayers(context),
@@ -374,6 +341,13 @@ class PlayerColumn extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            ...snapshot.data!.map(
+              (p) => Expanded(
+                child: PlayerTile(player: p),
+              ),
+            ),
+            const NewPlayerTile(),
           ],
         );
       },

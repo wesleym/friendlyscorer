@@ -193,7 +193,14 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       ),
                                     )
                                     .toList(growable: false),
-                                const NewInnerAnswerTile(),
+                                NewInnerAnswerTile(
+                                  onAddAnswers: (candidates) {
+                                    for (final a in candidates) {
+                                      final answer = Answer(id: a, text: a);
+                                      _answerRepository.add(answer);
+                                    }
+                                  },
+                                ),
                               ]),
                             ),
                           ),

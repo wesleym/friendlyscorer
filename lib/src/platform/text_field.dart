@@ -86,39 +86,8 @@ class PlatformInvisibleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget child;
-
     if (kIsWeb) {
-      child = TextField(
-        decoration: InputDecoration(hintText: placeholder),
-        maxLines: maxLines,
-        onChanged: onChanged,
-        onTapOutside: onTapOutside,
-        style: style,
-        onSubmitted: _onSubmitted,
-        controller: _controller,
-      );
-    } else if (Platform.isIOS) {
-      child = CupertinoTextField(
-        maxLines: maxLines,
-        placeholder: placeholder,
-        onChanged: onChanged,
-        onTapOutside: onTapOutside,
-        style: style,
-        onSubmitted: _onSubmitted,
-        controller: _controller,
-      );
-    } else if (Platform.isMacOS) {
-      child = MacosTextField(
-        maxLines: maxLines,
-        placeholder: placeholder,
-        onChanged: onChanged,
-        style: style,
-        onSubmitted: _onSubmitted,
-        controller: _controller,
-      );
-    } else {
-      child = TextField(
+      return TextField(
         decoration: InputDecoration(hintText: placeholder),
         maxLines: maxLines,
         onChanged: onChanged,
@@ -128,10 +97,36 @@ class PlatformInvisibleTextField extends StatelessWidget {
         controller: _controller,
       );
     }
+    if (Platform.isIOS) {
+      return CupertinoTextField(
+        maxLines: maxLines,
+        placeholder: placeholder,
+        onChanged: onChanged,
+        onTapOutside: onTapOutside,
+        style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
+      );
+    }
+    if (Platform.isMacOS) {
+      return MacosTextField(
+        maxLines: maxLines,
+        placeholder: placeholder,
+        onChanged: onChanged,
+        style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
+      );
+    }
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 80),
-      child: IntrinsicWidth(child: child),
+    return TextField(
+      decoration: InputDecoration(hintText: placeholder),
+      maxLines: maxLines,
+      onChanged: onChanged,
+      onTapOutside: onTapOutside,
+      style: style,
+      onSubmitted: _onSubmitted,
+      controller: _controller,
     );
   }
 }

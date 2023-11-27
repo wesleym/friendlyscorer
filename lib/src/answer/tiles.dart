@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/answerizer/answerizer.dart';
+import 'package:friendlyscorer/src/answerizer/compact_display.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
@@ -139,18 +141,36 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
 }
 
 class NewInnerAnswerTile extends StatefulWidget {
+  final Function(List<String> candidates)? _onAddAnswers;
+
   const NewInnerAnswerTile({
     super.key,
-  });
+    Function(List<String> candidates)? onAddAnswers,
+  }) : _onAddAnswers = onAddAnswers;
 
   @override
   State<NewInnerAnswerTile> createState() => _NewInnerAnswerTileState();
 }
 
 class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
+  final _controller = TextEditingController();
+
+  var _candidates = <List<String>>[];
+
   @override
   void initState() {
     super.initState();
+    _controller.addListener(() {
+      setState(() {
+        _candidates = answerizer(_controller.value.text);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -168,10 +188,25 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
         color: CupertinoColors.systemFill,
         shadows: shadows,
       ),
-      child: PlatformInvisibleTextField(
-        style: answerTileHeading(context),
-        placeholder: 'Answer, or answers',
+      child: Column(
+        children: [
+          PlatformInvisibleTextField(
+            controller: _controller,
+            style: answerTileHeading(context),
+            placeholder: 'Answer, or answers',
+          ),
+          const SizedBox(height: 8),
+          CompactResultDisplay(
+            results: _candidates,
+            onSelect: _onSelectAnswer,
+          ),
+        ],
       ),
     );
+  }
+
+  void _onSelectAnswer(List<String> answerCandidates) {
+    widget._onAddAnswers?.call(answerCandidates);
+    _controller.clear();
   }
 }

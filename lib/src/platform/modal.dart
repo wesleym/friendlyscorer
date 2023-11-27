@@ -104,11 +104,14 @@ Future<bool> presentPlatformDestructionConfirmation({
           primaryButton: PushButton(
             onPressed: () => Navigator.of(context).pop(true),
             controlSize: ControlSize.large,
+            // Broken in https://github.com/macosui/macos_ui/issues/486.
+            color: CupertinoColors.destructiveRed,
             child: const Text('Delete'),
           ),
           secondaryButton: PushButton(
             onPressed: () => Navigator.of(context).pop(false),
             controlSize: ControlSize.large,
+            secondary: true,
             child: const Text('Keep'),
           ),
         );

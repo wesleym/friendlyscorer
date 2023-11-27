@@ -194,6 +194,10 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
             controller: _controller,
             style: answerTileHeading(context),
             placeholder: 'Answer, or answers',
+            onSubmitted: (_) {
+              if (_candidates.isEmpty) return;
+              _onSelectAnswer(_candidates.first);
+            },
           ),
           const SizedBox(height: 8),
           CompactResultDisplay(

@@ -36,8 +36,8 @@ class PlayerRepository {
   List<Player> get players => _players;
   Stream<List<Player>> get playerStream => _streamController.stream;
 
-  Player getPlayerById(String playerId) =>
-      _players.singleWhere((p) => p.id == playerId);
+  Player? getPlayerById(String playerId) =>
+      _players.where((p) => p.id == playerId).singleOrNull;
 
   void clear() {
     _players.clear();
@@ -97,6 +97,7 @@ class PlayerAnswerAssociationRepository {
     return _associations
         .where((a) => a.answerId == answerId)
         .map((a) => _playerRepository.getPlayerById(a.playerId))
+        .nonNulls
         .toList(growable: false);
   }
 
@@ -105,6 +106,7 @@ class PlayerAnswerAssociationRepository {
       return asses
           .where((a) => a.answerId == answerId)
           .map((a) => _playerRepository.getPlayerById(a.playerId))
+          .nonNulls
           .toList(growable: false);
     });
   }

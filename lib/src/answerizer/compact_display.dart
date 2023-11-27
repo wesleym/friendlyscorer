@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:macos_ui/macos_ui.dart';
 
 import '../tiles.dart';
 
@@ -165,25 +164,13 @@ class MacCompactResultDisplay extends StatelessWidget {
                   .toList(growable: false);
               return MapEntry(
                 key,
-                Row(
-                  children: [
-                    MacosRadioButton(
-                      value: key,
-                      groupValue: selectedAnswersIndex,
-                      onChanged: (_) => _onSelect?.call(value),
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () => _onSelect?.call(value),
-                        behavior: HitTestBehavior.opaque,
-                        child: Wrap(
-                          spacing: 4,
-                          children: children,
-                        ),
-                      ),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: () => _onSelect?.call(value),
+                  behavior: HitTestBehavior.opaque,
+                  child: Wrap(
+                    spacing: 4,
+                    children: children,
+                  ),
                 ),
               );
             })

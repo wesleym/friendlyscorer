@@ -15,7 +15,9 @@ Color platformAnswerColor(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    return MacosTheme.of(context).canvasColor;
+    // TODO: This isn't exactly appropriate. The background should be white or
+    // black, and these should probably be canvas.
+    return MacosTheme.of(context).dividerColor;
   }
 
   return Theme.of(context).colorScheme.surface;

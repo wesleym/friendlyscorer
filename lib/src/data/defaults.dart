@@ -96,11 +96,12 @@ final defaultPlayerAnswerAssociations = [
   PlayerAnswerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
 ];
 
-final alecBaldwinOrSteveMartin = ruleFromName('Alec Baldwin or Steve Martin');
-final athleteRule = ruleFromName('Athlete');
+final alecBaldwinOrSteveMartin =
+    ruleFromName('Alec Baldwin or Steve Martin +1');
+final athleteRule = ruleFromName('Athlete -2');
 
 final defaultRules = [
-  ruleFromName('Buck Henry'),
+  ruleFromName('Buck Henry +2'),
   alecBaldwinOrSteveMartin,
   athleteRule,
 ];

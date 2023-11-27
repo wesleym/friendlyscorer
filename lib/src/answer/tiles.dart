@@ -229,6 +229,8 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
             controller: _controller,
             style: answerTileHeading(context),
             placeholder: 'Answer(s)',
+            onTapOutside: (event) =>
+                FocusManager.instance.primaryFocus?.unfocus(),
             onSubmitted: (_) {
               if (_candidates.isEmpty) return;
               _onSelectAnswer(_candidates.first);

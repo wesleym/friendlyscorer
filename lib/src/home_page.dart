@@ -14,24 +14,64 @@ import 'package:macos_ui/macos_ui.dart';
 
 import 'data/repository.dart';
 
-class CupertinoHomePage extends StatelessWidget {
+class CupertinoHomePage extends StatefulWidget {
   const CupertinoHomePage({super.key});
 
   @override
+  State<CupertinoHomePage> createState() => _CupertinoHomePageState();
+}
+
+class _CupertinoHomePageState extends State<CupertinoHomePage> {
+  var _editing = false;
+
+  @override
   Widget build(BuildContext context) {
-    return const CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.systemGroupedBackground,
-      child: HomePageBody(),
+    return EditingProvider(
+      editing: _editing,
+      child: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: const Text('Friendly Scorer'),
+          trailing: CupertinoButton(
+              onPressed: () {
+                setState(() => _editing = !_editing);
+              },
+              child: const Icon(CupertinoIcons.pencil)),
+        ),
+        backgroundColor: CupertinoColors.systemGroupedBackground,
+        child: const HomePageBody(),
+      ),
     );
   }
 }
 
-class MaterialHomePage extends StatelessWidget {
+class MaterialHomePage extends StatefulWidget {
   const MaterialHomePage({super.key});
 
   @override
+  State<MaterialHomePage> createState() => _MaterialHomePageState();
+}
+
+class _MaterialHomePageState extends State<MaterialHomePage> {
+  var _editing = false;
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: HomePageBody());
+    return EditingProvider(
+      editing: _editing,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Friendly Scorer'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  setState(() => _editing = !_editing);
+                },
+                child: const Text('Edit')),
+          ],
+        ),
+        body: const HomePageBody(),
+      ),
+    );
   }
 }
 

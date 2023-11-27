@@ -108,35 +108,30 @@ class CupertinoCompactResultDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CupertinoListSection(
-          header: const Text('Parsed answers'),
-          children: results
-              .asMap()
-              .map((key, value) {
-                Widget? trailing;
-                if (key == selectedAnswersIndex) {
-                  trailing = const Icon(CupertinoIcons.check_mark);
-                }
-                var children = value
-                    .map((e) => CupertinoAnswerCircle(answer: e))
-                    .toList(growable: false);
-                return MapEntry(
-                  key,
-                  CupertinoListTile(
-                    title: Wrap(
-                      spacing: 4,
-                      children: children,
-                    ),
-                    trailing: trailing,
-                    onTap: () => _onSelect?.call(value),
-                  ),
-                );
-              })
-              .values
-              .toList(growable: false),
-        ),
-      ],
+      children: results
+          .asMap()
+          .map((key, value) {
+            Widget? trailing;
+            if (key == selectedAnswersIndex) {
+              trailing = const Icon(CupertinoIcons.check_mark);
+            }
+            var children = value
+                .map((e) => CupertinoAnswerCircle(answer: e))
+                .toList(growable: false);
+            return MapEntry(
+              key,
+              CupertinoListTile(
+                title: Wrap(
+                  spacing: 4,
+                  children: children,
+                ),
+                trailing: trailing,
+                onTap: () => _onSelect?.call(value),
+              ),
+            );
+          })
+          .values
+          .toList(growable: false),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 
 import '../tiles.dart';
 
@@ -155,6 +156,7 @@ class MacCompactResultDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...results
             .asMap()
@@ -164,12 +166,16 @@ class MacCompactResultDisplay extends StatelessWidget {
                   .toList(growable: false);
               return MapEntry(
                 key,
-                GestureDetector(
-                  onTap: () => _onSelect?.call(value),
-                  behavior: HitTestBehavior.opaque,
-                  child: Wrap(
-                    spacing: 4,
-                    children: children,
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: PushButton(
+                    controlSize: ControlSize.regular,
+                    secondary: true,
+                    onPressed: () => _onSelect?.call(value),
+                    child: Wrap(
+                      spacing: 4,
+                      children: children,
+                    ),
                   ),
                 ),
               );

@@ -185,7 +185,7 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        color: CupertinoColors.systemFill,
+        color: platformAnswerColor(context),
         shadows: shadows,
       ),
       child: Column(
@@ -193,7 +193,7 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
           PlatformInvisibleTextField(
             controller: _controller,
             style: answerTileHeading(context),
-            placeholder: 'Answer, or answers',
+            placeholder: 'Answer(s)',
             onSubmitted: (_) {
               if (_candidates.isEmpty) return;
               _onSelectAnswer(_candidates.first);

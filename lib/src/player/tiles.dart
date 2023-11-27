@@ -122,7 +122,6 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
         onSubmitted: (value) {
           widget._onCreatePlayer?.call(value);
           _controller.clear();
-          FocusManager.instance.primaryFocus?.unfocus();
         },
       ),
     );

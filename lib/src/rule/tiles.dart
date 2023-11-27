@@ -110,7 +110,6 @@ class _NewRuleTileState extends State<NewRuleTile> {
         onSubmitted: (String value) {
           widget._onCreateRule?.call(value);
           _controller.clear();
-          FocusManager.instance.primaryFocus?.unfocus();
         },
       ),
     );

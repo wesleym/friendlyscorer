@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:friendlyscorer/src/answer/tiles.dart';
 import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/editing/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
@@ -34,29 +35,43 @@ class MaterialHomePage extends StatelessWidget {
   }
 }
 
-class MacHomePage extends StatelessWidget {
+class MacHomePage extends StatefulWidget {
   const MacHomePage({super.key});
+
+  @override
+  State<MacHomePage> createState() => _MacHomePageState();
+}
+
+class _MacHomePageState extends State<MacHomePage> {
+  var _editing = false;
 
   @override
   Widget build(BuildContext context) {
     return MacosWindow(
       child: Builder(builder: (context) {
-        return MacosScaffold(
-          toolBar: const ToolBar(
-            title: Text('Friendly Scorer'),
-            actions: [
-              ToolBarIconButton(
-                label: 'Edit',
-                icon: MacosIcon(CupertinoIcons.pencil),
-                showLabel: false,
+        return EditingProvider(
+          editing: _editing,
+          child: MacosScaffold(
+            toolBar: ToolBar(
+              title: const Text('Friendly Scorer'),
+              actions: [
+                ToolBarIconButton(
+                  label: 'Edit',
+                  tooltipMessage: 'Edit',
+                  icon: const MacosIcon(CupertinoIcons.pencil),
+                  showLabel: false,
+                  onPressed: () {
+                    setState(() => _editing = !_editing);
+                  },
+                ),
+              ],
+            ),
+            children: [
+              ContentArea(
+                builder: (context, scrollController) => const HomePageBody(),
               ),
             ],
           ),
-          children: [
-            ContentArea(
-              builder: (context, scrollController) => const HomePageBody(),
-            ),
-          ],
         );
       }),
     );
@@ -86,6 +101,20 @@ class _HomePageBodyState extends State<HomePageBody> {
 
   @override
   Widget build(BuildContext context) {
+    final editing = EditingProvider.of(context);
+    Widget? clearButton;
+    void Function(String answerId)? onDelete;
+    if (editing.editing) {
+      clearButton = PlatformButton(
+        onPressed: _onClearAnswers,
+        child: const Text(
+          'Clear',
+          style: TextStyle(color: CupertinoColors.destructiveRed),
+        ),
+      );
+      onDelete = _onDeleteAnswer;
+    }
+
     return Stack(
       children: [
         SafeArea(
@@ -114,14 +143,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                 PlatformIcons.answers,
                                 color: CupertinoColors.inactiveGray,
                               ),
-                              PlatformButton(
-                                onPressed: _onClearAnswers,
-                                child: const Text(
-                                  'Clear',
-                                  style: TextStyle(
-                                      color: CupertinoColors.destructiveRed),
-                                ),
-                              ),
+                              if (clearButton != null) clearButton,
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -133,6 +155,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                       (s) => AnswerTile(
                                         key: ValueKey(s.id),
                                         answer: s,
+                                        onDelete: onDelete,
                                       ),
                                     )
                                     .toList(growable: false),
@@ -172,6 +195,8 @@ class _HomePageBodyState extends State<HomePageBody> {
       _answerRepository.clear();
     }
   }
+
+  void _onDeleteAnswer(String answerId) => _answerRepository.remove(answerId);
 }
 
 class RuleColumn extends StatelessWidget {
@@ -184,6 +209,18 @@ class RuleColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final editing = EditingProvider.of(context);
+    Widget? clearButton;
+    if (editing.editing) {
+      clearButton = PlatformButton(
+        onPressed: () => _onClearRules(context),
+        child: const Text(
+          'Clear',
+          style: TextStyle(color: CupertinoColors.destructiveRed),
+        ),
+      );
+    }
+
     return StreamBuilder(
       initialData: _ruleRepository.rules,
       stream: _ruleRepository.ruleStream,
@@ -198,13 +235,7 @@ class RuleColumn extends StatelessWidget {
                   PlatformIcons.specialRules,
                   color: CupertinoColors.inactiveGray,
                 ),
-                PlatformButton(
-                  onPressed: () => _onClearRules(context),
-                  child: const Text(
-                    'Clear',
-                    style: TextStyle(color: CupertinoColors.destructiveRed),
-                  ),
-                ),
+                if (clearButton != null) clearButton,
               ],
             ),
             const SizedBox(height: 8),
@@ -248,6 +279,18 @@ class PlayerColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final editing = EditingProvider.of(context);
+    Widget? clearButton;
+    if (editing.editing) {
+      clearButton = PlatformButton(
+        onPressed: () => _onClearPlayers(context),
+        child: const Text(
+          'Clear',
+          style: TextStyle(color: CupertinoColors.destructiveRed),
+        ),
+      );
+    }
+
     return StreamBuilder(
       initialData: _playerRepository.players,
       stream: _playerRepository.playerStream,
@@ -262,13 +305,7 @@ class PlayerColumn extends StatelessWidget {
                   PlatformIcons.players,
                   color: CupertinoColors.inactiveGray,
                 ),
-                PlatformButton(
-                  onPressed: () => _onClearPlayers(context),
-                  child: const Text(
-                    'Clear',
-                    style: TextStyle(color: CupertinoColors.destructiveRed),
-                  ),
-                ),
+                if (clearButton != null) clearButton,
               ],
             ),
             const SizedBox(height: 8),

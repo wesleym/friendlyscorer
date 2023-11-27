@@ -20,6 +20,11 @@ class AnswerRepository {
     _streamController.add(_answers);
   }
 
+  void remove(String answerId) {
+    _answers.removeWhere((a) => a.id == answerId);
+    _streamController.add(_answers);
+  }
+
   void clear() {
     _answers.clear();
     _streamController.add(_answers);

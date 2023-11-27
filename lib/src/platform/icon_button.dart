@@ -32,7 +32,10 @@ class PlatformIconButton extends StatelessWidget {
     }
 
     if (Platform.isMacOS) {
-      return MacosIconButton(icon: MacosIcon(icon));
+      return MacosIconButton(
+        icon: MacosIcon(icon),
+        onPressed: onPressed,
+      );
     }
 
     return IconButton(

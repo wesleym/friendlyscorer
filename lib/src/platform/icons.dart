@@ -5,6 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PlatformIcons {
+  static IconData get delete {
+    if (kIsWeb) {
+      return Icons.close;
+    }
+
+    if (Platform.isIOS || Platform.isMacOS) {
+      return CupertinoIcons.clear;
+    }
+
+    return Icons.close;
+  }
+
   PlatformIcons._();
 
   static IconData get add {

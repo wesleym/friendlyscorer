@@ -3,6 +3,9 @@ import 'package:friendlyscorer/src/answerizer/answerizer.dart';
 import 'package:friendlyscorer/src/answerizer/compact_display.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/editing/editing.dart';
+import 'package:friendlyscorer/src/platform/icon_button.dart';
+import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
@@ -14,20 +17,35 @@ class _AnswerTileKey extends ValueKey {
 
 class AnswerTile extends StatelessWidget {
   final Answer _answer;
+  final void Function(String answerId)? _onDelete;
 
   static Key keyFor(String answerId) => _AnswerTileKey(answerId);
 
-  const AnswerTile({super.key, required Answer answer}) : _answer = answer;
+  const AnswerTile(
+      {super.key,
+      required Answer answer,
+      void Function(String answerId)? onDelete})
+      : _answer = answer,
+        _onDelete = onDelete;
 
   @override
   Widget build(BuildContext context) {
+    final child = InnerAnswerTile(
+      answer: _answer,
+      onDelete: _onDelete,
+    );
+
+    if (EditingProvider.of(context).editing) {
+      return child;
+    }
+
     return Draggable(
       data: _answer,
       feedback: InnerAnswerTile(
         floating: true,
         answer: _answer,
       ),
-      child: InnerAnswerTile(answer: _answer),
+      child: child,
     );
   }
 }
@@ -35,12 +53,15 @@ class AnswerTile extends StatelessWidget {
 class InnerAnswerTile extends StatefulWidget {
   final bool floating;
   final Answer _answer;
+  final void Function(String answerId)? _onDelete;
 
-  const InnerAnswerTile({
-    super.key,
-    required Answer answer,
-    this.floating = false,
-  }) : _answer = answer;
+  const InnerAnswerTile(
+      {super.key,
+      required Answer answer,
+      this.floating = false,
+      void Function(String answerId)? onDelete})
+      : _answer = answer,
+        _onDelete = onDelete;
 
   @override
   State<InnerAnswerTile> createState() => _InnerAnswerTileState();
@@ -78,6 +99,15 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
       ];
     }
 
+    Widget? deleteButton;
+    final onDelete = widget._onDelete;
+    if (onDelete != null) {
+      deleteButton = PlatformIconButton(
+        PlatformIcons.delete,
+        onPressed: () => onDelete(widget._answer.id),
+      );
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -89,51 +119,56 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         color: platformAnswerColor(context),
         shadows: shadows,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: [
-          Text(
-            widget._answer.text,
-            style: answerTileHeading(context),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget._answer.text,
+                style: answerTileHeading(context),
+              ),
+              const SizedBox(height: 8),
+              StreamBuilder(
+                initialData: _playerAnswerAssociationRepository
+                    .getPlayersWhoHaveChosenAnswer(widget._answer.id),
+                stream: _playerAnswerAssociationRepository
+                    .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
+                builder: (context, snapshot) {
+                  final data = snapshot.data!;
+                  data.sort((a, b) => a.id.compareTo(b.id));
+                  return Wrap(
+                    spacing: 4,
+                    children: data
+                        .map((p) => PlayerCircle(player: p))
+                        .toList(growable: false),
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              StreamBuilder(
+                initialData: _answerRuleAssociationRepository
+                    .getRulesAffectingAnswer(widget._answer.id),
+                stream: _answerRuleAssociationRepository
+                    .getStreamOfRulesAffectingAnswer(widget._answer.id),
+                builder: (context, snapshot) {
+                  final data = snapshot.data!;
+                  data.sort((a, b) => a.id.compareTo(b.id));
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: data
+                        .map((r) => Text(
+                              '• ${r.text}',
+                              style: bodyStyle(context),
+                            ))
+                        .toList(growable: false),
+                  );
+                },
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
-          StreamBuilder(
-            initialData: _playerAnswerAssociationRepository
-                .getPlayersWhoHaveChosenAnswer(widget._answer.id),
-            stream: _playerAnswerAssociationRepository
-                .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
-            builder: (context, snapshot) {
-              final data = snapshot.data!;
-              data.sort((a, b) => a.id.compareTo(b.id));
-              return Wrap(
-                spacing: 4,
-                children: data
-                    .map((p) => PlayerCircle(player: p))
-                    .toList(growable: false),
-              );
-            },
-          ),
-          const SizedBox(height: 8),
-          StreamBuilder(
-            initialData: _answerRuleAssociationRepository
-                .getRulesAffectingAnswer(widget._answer.id),
-            stream: _answerRuleAssociationRepository
-                .getStreamOfRulesAffectingAnswer(widget._answer.id),
-            builder: (context, snapshot) {
-              final data = snapshot.data!;
-              data.sort((a, b) => a.id.compareTo(b.id));
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: data
-                    .map((r) => Text(
-                          '• ${r.text}',
-                          style: bodyStyle(context),
-                        ))
-                    .toList(growable: false),
-              );
-            },
-          ),
+          if (deleteButton != null) deleteButton,
         ],
       ),
     );

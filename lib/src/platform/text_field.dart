@@ -106,6 +106,7 @@ class PlatformInvisibleTextField extends StatelessWidget {
         style: style,
         onSubmitted: _onSubmitted,
         controller: _controller,
+        decoration: null,
       );
     }
     if (Platform.isMacOS) {

@@ -167,7 +167,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                 width: 140,
                 child: PlayerColumn(playerRepository: _playerRepository),
               ),
-              const SizedBox(width: 16),
               Expanded(
                 child: StreamBuilder(
                     initialData: _answerRepository.answers,
@@ -189,6 +188,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                           const SizedBox(height: 8),
                           Expanded(
                             child: SingleChildScrollView(
+                              primary: true,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 48),
                               child: Wrap(children: [
                                 ...snapshot.data!
                                     .map(
@@ -214,7 +216,6 @@ class _HomePageBodyState extends State<HomePageBody> {
                       );
                     }),
               ),
-              const SizedBox(width: 16),
               SizedBox(
                 width: 140,
                 child: RuleColumn(ruleRepository: _ruleRepository),

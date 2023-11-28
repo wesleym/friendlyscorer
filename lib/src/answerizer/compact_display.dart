@@ -152,32 +152,30 @@ class MacCompactResultDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ...results
-            .asMap()
-            .map((key, value) {
-              var children = value
-                  .map((e) => MacAnswerCircle(answer: e))
-                  .toList(growable: false);
-              return MapEntry(
-                key,
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: PushButton(
-                    controlSize: ControlSize.regular,
-                    secondary: true,
-                    onPressed: () => _onSelect?.call(value),
-                    child: Wrap(
-                      spacing: 4,
-                      children: children,
-                    ),
+      children: results
+          .asMap()
+          .map((key, value) {
+            var children = value
+                .map((e) => MacAnswerCircle(answer: e))
+                .toList(growable: false);
+            return MapEntry(
+              key,
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: PushButton(
+                  controlSize: ControlSize.regular,
+                  secondary: true,
+                  onPressed: () => _onSelect?.call(value),
+                  child: Wrap(
+                    spacing: 4,
+                    children: children,
                   ),
                 ),
-              );
-            })
-            .values
-            .toList(growable: false),
-      ],
+              ),
+            );
+          })
+          .values
+          .toList(growable: false),
     );
   }
 }

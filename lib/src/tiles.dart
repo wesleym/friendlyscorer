@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
+import 'package:friendlyscorer/src/player/palette.dart';
 
 import 'data/models.dart';
 
@@ -14,20 +15,21 @@ class PlayerCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayName = _player.name;
-    final hslColor = HSLColor.fromColor(_player.color);
-    final color = hslColor.withLightness(hslColor.lightness + 0.2).toColor();
+
+    final pColors = playerColors(context);
+    final color = pColors[int.parse(_player.id) % pColors.length];
 
     return Container(
       decoration: ShapeDecoration(
         shape: StadiumBorder(
-          side: BorderSide(color: _player.color),
+          side: BorderSide(color: color),
         ),
         color: color,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
         displayName,
-        style: bodyStyle(context),
+        style: bodyStyle(context)?.copyWith(color: CupertinoColors.white),
       ),
     );
   }

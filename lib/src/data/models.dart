@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class Answer {
   final String id;
   final tagIds = [];
@@ -15,12 +13,10 @@ class Answer {
 class Player {
   final String id;
   final String name;
-  Color color;
 
   Player({
     required this.id,
     required this.name,
-    required this.color,
   });
 }
 

@@ -3,6 +3,7 @@ import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
+import 'package:friendlyscorer/src/player/palette.dart';
 
 class PlayerTile extends StatefulWidget {
   final Player _player;
@@ -32,6 +33,9 @@ class _PlayerTileState extends State<PlayerTile> {
     final tileTextStyle =
         answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
 
+    final pColors = playerColors(context);
+    final color = pColors[int.parse(widget._player.id) % pColors.length];
+
     return DragTarget<Answer>(
       onWillAccept: (data) {
         _playerAnswerAssociationRepository.toggleAssociation(
@@ -50,12 +54,10 @@ class _PlayerTileState extends State<PlayerTile> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                HSLColor.fromColor(widget._player.color)
-                    .withLightness(
-                        HSLColor.fromColor(widget._player.color).lightness +
-                            0.1)
+                HSLColor.fromColor(color)
+                    .withLightness(HSLColor.fromColor(color).lightness + 0.1)
                     .toColor(),
-                widget._player.color
+                color,
               ],
             ),
           ),

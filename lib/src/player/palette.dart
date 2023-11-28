@@ -1,6 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 
-const playerColors = [
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
+
+const cupertinoPlayerColors = [
   CupertinoColors.systemRed,
   CupertinoColors.systemOrange,
   CupertinoColors.systemYellow,
@@ -15,6 +20,59 @@ const playerColors = [
   CupertinoColors.systemBrown,
   // CupertinoColors.systemGrey,
 ];
+
+const macPlayerColors = [
+  MacosColors.appleRed,
+  MacosColors.appleOrange,
+  MacosColors.appleYellow,
+  MacosColors.appleGreen,
+  MacosColors.appleCyan,
+  MacosColors.appleBlue,
+  MacosColors.appleMagenta,
+  MacosColors.applePurple,
+  MacosColors.appleBrown,
+  // CupertinoColors.systemGrey,
+];
+
+final materialPlayerColors = [
+  Colors.red,
+  Colors.pink,
+  Colors.purple,
+  Colors.deepPurple,
+  Colors.indigo,
+  Colors.blue,
+  Colors.lightBlue,
+  Colors.cyan,
+  Colors.teal,
+  Colors.green,
+  Colors.lightGreen,
+  Colors.lime,
+  Colors.yellow,
+  Colors.amber,
+  Colors.orange,
+  Colors.deepOrange,
+  Colors.brown,
+  // The grey swatch is intentionally omitted because when picking a color
+  // randomly from this list to colorize an application, picking grey suddenly
+  // makes the app look disabled.
+  Colors.blueGrey,
+];
+
+List<Color> playerColors(BuildContext context) {
+  if (kIsWeb) {
+    return materialPlayerColors;
+  }
+
+  if (Platform.isIOS) {
+    return cupertinoPlayerColors;
+  }
+
+  if (Platform.isMacOS) {
+    return macPlayerColors;
+  }
+
+  return materialPlayerColors;
+}
 
 class PlayerIdVendor {
   static PlayerIdVendor? _instance;

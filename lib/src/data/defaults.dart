@@ -55,7 +55,6 @@ Player fromName(String name) {
   return Player(
     id: nextId.toString(),
     name: name,
-    color: playerColors[nextId % playerColors.length],
   );
 }
 

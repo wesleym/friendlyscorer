@@ -192,15 +192,13 @@ class _HomePageBodyState extends State<HomePageBody> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 48),
                               child: Wrap(children: [
-                                ...snapshot.data!
-                                    .map(
-                                      (s) => AnswerTile(
-                                        key: ValueKey(s.id),
-                                        answer: s,
-                                        onDelete: onDelete,
-                                      ),
-                                    )
-                                    .toList(growable: false),
+                                ...snapshot.data!.map(
+                                  (s) => AnswerTile(
+                                    key: ValueKey(s.id),
+                                    answer: s,
+                                    onDelete: onDelete,
+                                  ),
+                                ),
                                 NewInnerAnswerTile(
                                   onAddAnswers: (candidates) {
                                     for (final a in candidates) {
@@ -377,7 +375,6 @@ class PlayerColumn extends StatelessWidget {
     _playerRepository.add(Player(
       id: id.toString(),
       name: name,
-      color: playerColors[id % playerColors.length],
     ));
   }
 }

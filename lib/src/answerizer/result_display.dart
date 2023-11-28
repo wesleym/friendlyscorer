@@ -72,30 +72,26 @@ class MaterialResultDisplay extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Parsed answers'),
-        ...results
-            .asMap()
-            .map((key, value) {
-              Widget? trailing;
-              if (key == selectedAnswersIndex) {
-                trailing = const Icon(Icons.check);
-              }
-              var children = value
-                  .map((e) => MaterialAnswerCircle(answer: e))
-                  .toList(growable: false);
-              return MapEntry(
-                key,
-                ListTile(
-                  title: Wrap(
-                    spacing: 4,
-                    children: children,
-                  ),
-                  trailing: trailing,
-                  onTap: () => onSelect?.call(key),
-                ),
-              );
-            })
-            .values
-            .toList(growable: false),
+        ...results.asMap().map((key, value) {
+          Widget? trailing;
+          if (key == selectedAnswersIndex) {
+            trailing = const Icon(Icons.check);
+          }
+          var children = value
+              .map((e) => MaterialAnswerCircle(answer: e))
+              .toList(growable: false);
+          return MapEntry(
+            key,
+            ListTile(
+              title: Wrap(
+                spacing: 4,
+                children: children,
+              ),
+              trailing: trailing,
+              onTap: () => onSelect?.call(key),
+            ),
+          );
+        }).values,
       ],
     );
   }
@@ -167,38 +163,34 @@ class MacResultDisplay extends StatelessWidget {
     return Column(
       children: [
         const Text('Parsed answers'),
-        ...results
-            .asMap()
-            .map((key, value) {
-              var children = value
-                  .map((e) => MacAnswerCircle(answer: e))
-                  .toList(growable: false);
-              return MapEntry(
-                key,
-                Row(
-                  children: [
-                    MacosRadioButton(
-                      value: key,
-                      groupValue: selectedAnswersIndex,
-                      onChanged: (value) => onSelect?.call(key),
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: GestureDetector(
-                        onTap: () => onSelect?.call(key),
-                        behavior: HitTestBehavior.opaque,
-                        child: Wrap(
-                          spacing: 4,
-                          children: children,
-                        ),
-                      ),
-                    ),
-                  ],
+        ...results.asMap().map((key, value) {
+          var children = value
+              .map((e) => MacAnswerCircle(answer: e))
+              .toList(growable: false);
+          return MapEntry(
+            key,
+            Row(
+              children: [
+                MacosRadioButton(
+                  value: key,
+                  groupValue: selectedAnswersIndex,
+                  onChanged: (value) => onSelect?.call(key),
                 ),
-              );
-            })
-            .values
-            .toList(growable: false),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: GestureDetector(
+                    onTap: () => onSelect?.call(key),
+                    behavior: HitTestBehavior.opaque,
+                    child: Wrap(
+                      spacing: 4,
+                      children: children,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).values,
       ],
     );
   }

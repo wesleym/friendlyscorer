@@ -37,7 +37,7 @@ class _CupertinoHomePageState extends State<CupertinoHomePage> {
               },
               child: const Icon(CupertinoIcons.pencil)),
         ),
-        backgroundColor: CupertinoColors.systemGroupedBackground,
+        backgroundColor: CupertinoColors.systemBackground,
         child: const HomePageBody(),
       ),
     );
@@ -87,13 +87,15 @@ class _MacHomePageState extends State<MacHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = MacosTheme.of(context);
+
     return MacosWindow(
       child: Builder(builder: (context) {
         return EditingProvider(
           editing: _editing,
           child: MacosScaffold(
             toolBar: ToolBar(
-              title: const Text('Friendly Scorer'),
+              // title: const Text('Friendly Scorer'),
               actions: [
                 ToolBarIconButton(
                   label: 'Edit',
@@ -108,7 +110,15 @@ class _MacHomePageState extends State<MacHomePage> {
             ),
             children: [
               ContentArea(
-                builder: (context, scrollController) => const HomePageBody(),
+                builder: (context, scrollController) => DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: switch (theme.brightness) {
+                      Brightness.dark => MacosColors.black,
+                      Brightness.light => MacosColors.white,
+                    },
+                  ),
+                  child: const HomePageBody(),
+                ),
               ),
             ],
           ),

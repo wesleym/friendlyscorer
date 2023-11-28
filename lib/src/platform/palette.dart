@@ -25,11 +25,11 @@ Color platformAnswerColor(BuildContext context) {
 
 Color platformCanvasColor(BuildContext context) {
   if (kIsWeb) {
-    return Theme.of(context).colorScheme.surfaceVariant;
+    return Theme.of(context).colorScheme.background;
   }
 
   if (Platform.isIOS) {
-    return CupertinoTheme.of(context).primaryContrastingColor;
+    return CupertinoColors.systemBackground;
   }
 
   if (Platform.isMacOS) {

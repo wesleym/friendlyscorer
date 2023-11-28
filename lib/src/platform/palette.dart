@@ -7,7 +7,7 @@ import 'package:macos_ui/macos_ui.dart';
 
 Color platformAnswerColor(BuildContext context) {
   if (kIsWeb) {
-    return Theme.of(context).colorScheme.surface;
+    return Theme.of(context).colorScheme.primaryContainer;
   }
 
   if (Platform.isIOS) {
@@ -20,5 +20,23 @@ Color platformAnswerColor(BuildContext context) {
     return MacosTheme.of(context).dividerColor;
   }
 
-  return Theme.of(context).colorScheme.surface;
+  return Theme.of(context).colorScheme.primaryContainer;
+}
+
+Color platformCanvasColor(BuildContext context) {
+  if (kIsWeb) {
+    return Theme.of(context).colorScheme.surfaceVariant;
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoTheme.of(context).primaryContrastingColor;
+  }
+
+  if (Platform.isMacOS) {
+    // TODO: This isn't exactly appropriate. The background should be white or
+    // black, and these should probably be canvas.
+    return MacosTheme.of(context).dividerColor;
+  }
+
+  return Theme.of(context).colorScheme.background;
 }

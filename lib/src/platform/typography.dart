@@ -31,10 +31,7 @@ TextStyle? playerTileHeading(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    return MacosTheme.of(context)
-        .typography
-        .headline
-        .copyWith(color: MacosColors.black);
+    return MacosTheme.of(context).typography.headline;
   }
 
   return Theme.of(context).textTheme.titleLarge;
@@ -58,10 +55,7 @@ TextStyle? bodyStyle(BuildContext context) {
 
 TextStyle? playerCircleStyle(BuildContext context) {
   if (kIsWeb) {
-    return Theme.of(context)
-        .textTheme
-        .bodyMedium
-        ?.copyWith(color: Colors.white);
+    return Theme.of(context).textTheme.bodyMedium;
   }
 
   if (Platform.isIOS) {
@@ -69,11 +63,8 @@ TextStyle? playerCircleStyle(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    return MacosTheme.of(context)
-        .typography
-        .body
-        .copyWith(color: MacosColors.black);
+    return MacosTheme.of(context).typography.body;
   }
 
-  return Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white);
+  return Theme.of(context).textTheme.bodyMedium;
 }

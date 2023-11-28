@@ -21,7 +21,7 @@ const cupertinoPlayerColors = [
   // CupertinoColors.systemGrey,
 ];
 
-const macPlayerColors = [
+final lightMacPlayerColors = [
   MacosColors.appleRed,
   MacosColors.appleOrange,
   MacosColors.appleYellow,
@@ -32,7 +32,30 @@ const macPlayerColors = [
   MacosColors.applePurple,
   MacosColors.appleBrown,
   // CupertinoColors.systemGrey,
-];
+].map((c) {
+  final hslColor = HSLColor.fromColor(c);
+  return hslColor
+      .withLightness(clampDouble(hslColor.lightness + 0.1, 0, 1))
+      .toColor();
+}).toList(growable: false);
+
+final darkMacPlayerColors = [
+  MacosColors.appleRed,
+  MacosColors.appleOrange,
+  MacosColors.appleYellow,
+  MacosColors.appleGreen,
+  MacosColors.appleCyan,
+  MacosColors.appleBlue,
+  MacosColors.appleMagenta,
+  MacosColors.applePurple,
+  MacosColors.appleBrown,
+  // CupertinoColors.systemGrey,
+].map((c) {
+  final hslColor = HSLColor.fromColor(c);
+  return hslColor
+      .withLightness(clampDouble(hslColor.lightness - 0.2, 0, 1))
+      .toColor();
+}).toList(growable: false);
 
 final materialPlayerColors = [
   Colors.red,
@@ -68,7 +91,10 @@ List<Color> playerColors(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    return macPlayerColors;
+    return switch (MacosTheme.of(context).brightness) {
+      Brightness.dark => darkMacPlayerColors,
+      Brightness.light => lightMacPlayerColors,
+    };
   }
 
   return materialPlayerColors;

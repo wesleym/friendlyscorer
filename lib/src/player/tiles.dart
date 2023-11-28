@@ -91,9 +91,6 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
-
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -115,7 +112,7 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
         ),
       ),
       child: PlatformInvisibleTextField(
-        style: tileTextStyle,
+        style: answerTileHeading(context),
         placeholder: 'Player',
         controller: _controller,
         onSubmitted: (value) {

@@ -21,6 +21,25 @@ TextStyle? answerTileHeading(BuildContext context) {
   return Theme.of(context).textTheme.titleLarge;
 }
 
+TextStyle? playerTileHeading(BuildContext context) {
+  if (kIsWeb) {
+    return Theme.of(context).textTheme.titleLarge;
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoTheme.of(context).textTheme.navTitleTextStyle;
+  }
+
+  if (Platform.isMacOS) {
+    return MacosTheme.of(context)
+        .typography
+        .headline
+        .copyWith(color: MacosColors.black);
+  }
+
+  return Theme.of(context).textTheme.titleLarge;
+}
+
 TextStyle? bodyStyle(BuildContext context) {
   if (kIsWeb) {
     return Theme.of(context).textTheme.bodyMedium;
@@ -35,4 +54,26 @@ TextStyle? bodyStyle(BuildContext context) {
   }
 
   return Theme.of(context).textTheme.bodyMedium;
+}
+
+TextStyle? playerCircleStyle(BuildContext context) {
+  if (kIsWeb) {
+    return Theme.of(context)
+        .textTheme
+        .bodyMedium
+        ?.copyWith(color: Colors.white);
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoTheme.of(context).textTheme.textStyle;
+  }
+
+  if (Platform.isMacOS) {
+    return MacosTheme.of(context)
+        .typography
+        .body
+        .copyWith(color: MacosColors.black);
+  }
+
+  return Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white);
 }

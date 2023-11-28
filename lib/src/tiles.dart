@@ -29,7 +29,7 @@ class PlayerCircle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Text(
         displayName,
-        style: bodyStyle(context)?.copyWith(color: CupertinoColors.white),
+        style: playerCircleStyle(context),
       ),
     );
   }

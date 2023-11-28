@@ -30,9 +30,6 @@ class _PlayerTileState extends State<PlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
-
     final pColors = playerColors(context);
     final color = pColors[int.parse(widget._player.id) % pColors.length];
 
@@ -63,7 +60,7 @@ class _PlayerTileState extends State<PlayerTile> {
           ),
           child: Text(
             widget._player.name,
-            style: tileTextStyle,
+            style: playerTileHeading(context),
           ),
         );
       },

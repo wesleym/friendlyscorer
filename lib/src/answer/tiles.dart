@@ -21,11 +21,11 @@ class AnswerTile extends StatelessWidget {
 
   static Key keyFor(String answerId) => _AnswerTileKey(answerId);
 
-  const AnswerTile(
-      {super.key,
-      required Answer answer,
-      void Function(String answerId)? onDelete})
-      : _answer = answer,
+  const AnswerTile({
+    super.key,
+    required Answer answer,
+    void Function(String answerId)? onDelete,
+  })  : _answer = answer,
         _onDelete = onDelete;
 
   @override

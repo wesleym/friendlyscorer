@@ -95,7 +95,7 @@ class _MacHomePageState extends State<MacHomePage> {
           editing: _editing,
           child: MacosScaffold(
             toolBar: ToolBar(
-              // title: const Text('Friendly Scorer'),
+              title: const Text('Friendly Scorer'),
               actions: [
                 ToolBarIconButton(
                   label: 'Edit',

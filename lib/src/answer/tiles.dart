@@ -119,56 +119,57 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         color: platformAnswerColor(context),
         shadows: shadows,
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (deleteButton != null) deleteButton,
               Text(
                 widget._answer.text,
                 style: answerTileHeading(context),
               ),
-              const SizedBox(height: 8),
-              StreamBuilder(
-                initialData: _playerAnswerAssociationRepository
-                    .getPlayersWhoHaveChosenAnswer(widget._answer.id),
-                stream: _playerAnswerAssociationRepository
-                    .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
-                builder: (context, snapshot) {
-                  final data = snapshot.data!;
-                  data.sort((a, b) => a.id.compareTo(b.id));
-                  return Wrap(
-                    spacing: 4,
-                    children: data
-                        .map((p) => PlayerCircle(player: p))
-                        .toList(growable: false),
-                  );
-                },
-              ),
-              const SizedBox(height: 8),
-              StreamBuilder(
-                initialData: _answerRuleAssociationRepository
-                    .getRulesAffectingAnswer(widget._answer.id),
-                stream: _answerRuleAssociationRepository
-                    .getStreamOfRulesAffectingAnswer(widget._answer.id),
-                builder: (context, snapshot) {
-                  final data = snapshot.data!;
-                  data.sort((a, b) => a.id.compareTo(b.id));
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: data
-                        .map((r) => Text(
-                              '• ${r.text}',
-                              style: bodyStyle(context),
-                            ))
-                        .toList(growable: false),
-                  );
-                },
-              ),
             ],
           ),
-          if (deleteButton != null) deleteButton,
+          const SizedBox(height: 8),
+          StreamBuilder(
+            initialData: _playerAnswerAssociationRepository
+                .getPlayersWhoHaveChosenAnswer(widget._answer.id),
+            stream: _playerAnswerAssociationRepository
+                .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
+            builder: (context, snapshot) {
+              final data = snapshot.data!;
+              data.sort((a, b) => a.id.compareTo(b.id));
+              return Wrap(
+                spacing: 4,
+                children: data
+                    .map((p) => PlayerCircle(player: p))
+                    .toList(growable: false),
+              );
+            },
+          ),
+          const SizedBox(height: 8),
+          StreamBuilder(
+            initialData: _answerRuleAssociationRepository
+                .getRulesAffectingAnswer(widget._answer.id),
+            stream: _answerRuleAssociationRepository
+                .getStreamOfRulesAffectingAnswer(widget._answer.id),
+            builder: (context, snapshot) {
+              final data = snapshot.data!;
+              data.sort((a, b) => a.id.compareTo(b.id));
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: data
+                    .map((r) => Text(
+                          '• ${r.text}',
+                          style: bodyStyle(context),
+                        ))
+                    .toList(growable: false),
+              );
+            },
+          ),
         ],
       ),
     );

@@ -40,3 +40,35 @@ Color platformCanvasColor(BuildContext context) {
 
   return Theme.of(context).colorScheme.background;
 }
+
+Color platformDanger(BuildContext context) {
+  if (kIsWeb) {
+    return Colors.red;
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoColors.destructiveRed;
+  }
+
+  if (Platform.isMacOS) {
+    return MacosColors.appleRed;
+  }
+
+  return Colors.red;
+}
+
+Color ontoPlatformDanger(BuildContext context) {
+  if (kIsWeb) {
+    return Theme.of(context).colorScheme.onPrimary;
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoColors.label;
+  }
+
+  if (Platform.isMacOS) {
+    return MacosColors.labelColor;
+  }
+
+  return Theme.of(context).colorScheme.onPrimary;
+}

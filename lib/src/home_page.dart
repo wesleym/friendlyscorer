@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/answer/new_answer.dart';
 import 'package:friendlyscorer/src/answer/tiles.dart';
+import 'package:friendlyscorer/src/answer/trash.dart';
 import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/editing/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
@@ -11,8 +14,6 @@ import 'package:friendlyscorer/src/player/palette.dart';
 import 'package:friendlyscorer/src/player/tiles.dart';
 import 'package:friendlyscorer/src/rule/tiles.dart';
 import 'package:macos_ui/macos_ui.dart';
-
-import 'data/repository.dart';
 
 class CupertinoHomePage extends StatefulWidget {
   const CupertinoHomePage({super.key});
@@ -144,9 +145,9 @@ class _HomePageBodyState extends State<HomePageBody> {
   void initState() {
     super.initState();
 
-    _answerRepository = AnswerRepository.instance;
-    _playerRepository = PlayerRepository.instance;
-    _ruleRepository = RuleRepository.instance;
+    _answerRepository = AnswerRepository();
+    _playerRepository = PlayerRepository();
+    _ruleRepository = RuleRepository();
   }
 
   @override
@@ -154,6 +155,7 @@ class _HomePageBodyState extends State<HomePageBody> {
     final editing = EditingProvider.of(context);
     Widget? clearButton;
     void Function(String answerId)? onDelete;
+    final Widget bottomAnswer;
     if (editing.editing) {
       clearButton = PlatformButton(
         onPressed: _onClearAnswers,
@@ -163,6 +165,16 @@ class _HomePageBodyState extends State<HomePageBody> {
         ),
       );
       onDelete = _onDeleteAnswer;
+      bottomAnswer = TrashTile(onDeleteAnswer: _onDeleteAnswer);
+    } else {
+      bottomAnswer = NewInnerAnswerTile(
+        onAddAnswers: (candidates) {
+          for (final a in candidates) {
+            final answer = Answer(id: a, text: a);
+            _answerRepository.add(answer);
+          }
+        },
+      );
     }
 
     return Stack(
@@ -209,14 +221,7 @@ class _HomePageBodyState extends State<HomePageBody> {
                                     onDelete: onDelete,
                                   ),
                                 ),
-                                NewInnerAnswerTile(
-                                  onAddAnswers: (candidates) {
-                                    for (final a in candidates) {
-                                      final answer = Answer(id: a, text: a);
-                                      _answerRepository.add(answer);
-                                    }
-                                  },
-                                ),
+                                bottomAnswer,
                               ]),
                             ),
                           ),

@@ -1,13 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/answerizer/answerizer.dart';
-import 'package:friendlyscorer/src/answerizer/compact_display.dart';
 import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
-import 'package:friendlyscorer/src/editing/editing.dart';
-import 'package:friendlyscorer/src/platform/icon_button.dart';
-import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
-import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/tiles.dart';
 
@@ -35,10 +29,6 @@ class AnswerTile extends StatelessWidget {
       onDelete: _onDelete,
     );
 
-    if (EditingProvider.of(context).editing) {
-      return child;
-    }
-
     return Draggable(
       data: _answer,
       feedback: InnerAnswerTile(
@@ -53,15 +43,13 @@ class AnswerTile extends StatelessWidget {
 class InnerAnswerTile extends StatefulWidget {
   final bool floating;
   final Answer _answer;
-  final void Function(String answerId)? _onDelete;
 
   const InnerAnswerTile(
       {super.key,
       required Answer answer,
       this.floating = false,
       void Function(String answerId)? onDelete})
-      : _answer = answer,
-        _onDelete = onDelete;
+      : _answer = answer;
 
   @override
   State<InnerAnswerTile> createState() => _InnerAnswerTileState();
@@ -87,15 +75,6 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
       ];
     }
 
-    Widget? deleteButton;
-    final onDelete = widget._onDelete;
-    if (onDelete != null) {
-      deleteButton = PlatformIconButton(
-        PlatformIcons.delete,
-        onPressed: () => onDelete(widget._answer.id),
-      );
-    }
-
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -114,7 +93,6 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (deleteButton != null) deleteButton,
               Text(
                 widget._answer.text,
                 style: answerTileHeading(context),
@@ -165,82 +143,5 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         ],
       ),
     );
-  }
-}
-
-class NewInnerAnswerTile extends StatefulWidget {
-  final Function(List<String> candidates)? _onAddAnswers;
-
-  const NewInnerAnswerTile({
-    super.key,
-    Function(List<String> candidates)? onAddAnswers,
-  }) : _onAddAnswers = onAddAnswers;
-
-  @override
-  State<NewInnerAnswerTile> createState() => _NewInnerAnswerTileState();
-}
-
-class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
-  final _controller = TextEditingController();
-
-  var _candidates = <List<String>>[];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-      setState(() {
-        _candidates = answerizer(_controller.value.text);
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<BoxShadow>? shadows;
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(2),
-      constraints: const BoxConstraints(minHeight: 140),
-      decoration: ShapeDecoration(
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        color: platformAnswerColor(context),
-        shadows: shadows,
-      ),
-      child: Column(
-        children: [
-          PlatformInvisibleTextField(
-            controller: _controller,
-            style: answerTileHeading(context),
-            placeholder: 'Answer(s)',
-            onTapOutside: (event) =>
-                FocusManager.instance.primaryFocus?.unfocus(),
-            onSubmitted: (_) {
-              if (_candidates.isEmpty) return;
-              _onSelectAnswer(_candidates.first);
-            },
-          ),
-          const SizedBox(height: 8),
-          CompactResultDisplay(
-            results: _candidates,
-            onSelect: _onSelectAnswer,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onSelectAnswer(List<String> answerCandidates) {
-    widget._onAddAnswers?.call(answerCandidates);
-    _controller.clear();
   }
 }

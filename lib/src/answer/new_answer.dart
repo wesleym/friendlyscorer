@@ -55,6 +55,11 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
       ),
       child: Column(
         children: [
+          CompactResultDisplay(
+            results: _candidates,
+            onSelect: _onSelectAnswer,
+          ),
+          const SizedBox(height: 8),
           PlatformInvisibleTextField(
             controller: _controller,
             style: answerTileHeading(context),
@@ -65,11 +70,6 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
               if (_candidates.isEmpty) return;
               _onSelectAnswer(_candidates.first);
             },
-          ),
-          const SizedBox(height: 8),
-          CompactResultDisplay(
-            results: _candidates,
-            onSelect: _onSelectAnswer,
           ),
         ],
       ),

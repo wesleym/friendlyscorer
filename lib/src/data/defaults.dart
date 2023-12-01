@@ -31,23 +31,24 @@ final charlesBarkley = answerFromName('Charles Barkley');
 final magnusCarlsen = answerFromName('Magnus Carlsen');
 
 final defaultAnswers = [
-  charlesBarkley,
-  chevyChase,
-  eddieMurphy,
-  elonMusk,
-  hughJackman,
-  justinTimberlake,
-  linManuelMiranda,
-  magnusCarlsen,
-  paulGiamatti,
-  paulSimon,
-  robertDowneyJr,
-  ruthGordon,
   steveMartin,
-  taylorLautner,
   taylorSwift,
+  eddieMurphy,
+  chevyChase,
+  robertDowneyJr,
+  linManuelMiranda,
+  paulGiamatti,
+  justinTimberlake,
   tinaFey,
+  paulSimon,
   tomHanks,
+  taylorLautner,
+  britneySpears,
+  hughJackman,
+  elonMusk,
+  ruthGordon,
+  charlesBarkley,
+  magnusCarlsen,
 ].toList();
 
 Player fromName(String name) {

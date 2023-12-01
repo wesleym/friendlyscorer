@@ -98,6 +98,21 @@ class _MacHomePageState extends State<MacHomePage> {
             toolBar: ToolBar(
               title: const Text('Friendly Scorer'),
               actions: [
+                // const ToolBarPullDownButton(
+                //   label: 'Clear',
+                //   icon: CupertinoIcons.clear_circled,
+                //   items: [
+                //     MacosPulldownMenuItem(
+                //       title: Text('Clear players'),
+                //     ),
+                //     MacosPulldownMenuItem(
+                //       title: Text('Clear answers'),
+                //     ),
+                //     MacosPulldownMenuItem(
+                //       title: Text('Clear rules'),
+                //     ),
+                //   ],
+                // ),
                 ToolBarIconButton(
                   label: 'Edit',
                   tooltipMessage: 'Edit',
@@ -263,9 +278,9 @@ class RuleColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final editing = EditingProvider.of(context);
+    final editing = EditingProvider.of(context).editing;
     Widget? clearButton;
-    if (editing.editing) {
+    if (editing) {
       clearButton = PlatformButton(
         onPressed: () => _onClearRules(context),
         child: const Text(
@@ -298,7 +313,7 @@ class RuleColumn extends StatelessWidget {
                 child: RuleTile(rule: r),
               ),
             ),
-            NewRuleTile(onCreateRule: _onCreateRule),
+            if (!editing) NewRuleTile(onCreateRule: _onCreateRule),
           ],
         );
       },
@@ -333,9 +348,9 @@ class PlayerColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final editing = EditingProvider.of(context);
+    final editing = EditingProvider.of(context).editing;
     Widget? clearButton;
-    if (editing.editing) {
+    if (editing) {
       clearButton = PlatformButton(
         onPressed: () => _onClearPlayers(context),
         child: const Text(
@@ -368,7 +383,7 @@ class PlayerColumn extends StatelessWidget {
                 child: PlayerTile(player: p),
               ),
             ),
-            NewPlayerTile(onCreatePlayer: _onCreatePlayer),
+            if (!editing) NewPlayerTile(onCreatePlayer: _onCreatePlayer),
           ],
         );
       },

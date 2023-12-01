@@ -14,17 +14,7 @@ class RuleTile extends StatefulWidget {
 }
 
 class _RuleTileState extends State<RuleTile> {
-  late final RuleRepository _ruleRepository;
-  late final AnswerRuleAssociationRepository _answerRuleAssociationRepository;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _ruleRepository = RuleRepository.instance;
-    _answerRuleAssociationRepository =
-        AnswerRuleAssociationRepository.getInstance(_ruleRepository);
-  }
+  final _answerRuleAssociationRepository = AnswerRuleAssociationRepository();
 
   @override
   Widget build(BuildContext context) {

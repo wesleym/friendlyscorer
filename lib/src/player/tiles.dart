@@ -15,7 +15,6 @@ class PlayerTile extends StatefulWidget {
 }
 
 class _PlayerTileState extends State<PlayerTile> {
-  late final PlayerRepository _playerRepository;
   late final PlayerAnswerAssociationRepository
       _playerAnswerAssociationRepository;
 
@@ -23,9 +22,7 @@ class _PlayerTileState extends State<PlayerTile> {
   void initState() {
     super.initState();
 
-    _playerRepository = PlayerRepository.instance;
-    _playerAnswerAssociationRepository =
-        PlayerAnswerAssociationRepository.getInstance(_playerRepository);
+    _playerAnswerAssociationRepository = PlayerAnswerAssociationRepository();
   }
 
   @override

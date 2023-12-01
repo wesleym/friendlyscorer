@@ -5,7 +5,9 @@ import 'models.dart';
 
 class AnswerRepository {
   static AnswerRepository? _instance;
-  static get instance => _instance ??= AnswerRepository();
+
+  AnswerRepository._();
+  factory AnswerRepository() => _instance ??= AnswerRepository._();
 
   final _streamController = StreamController<List<Answer>>.broadcast();
 
@@ -21,6 +23,8 @@ class AnswerRepository {
   }
 
   void remove(String answerId) {
+    AnswerRuleAssociationRepository().removeAllByAnswer(answerId);
+    PlayerAnswerAssociationRepository().removeAllByAnswer(answerId);
     _answers.removeWhere((a) => a.id == answerId);
     _streamController.add(_answers);
   }
@@ -33,7 +37,9 @@ class AnswerRepository {
 
 class PlayerRepository {
   static PlayerRepository? _instance;
-  static get instance => _instance ??= PlayerRepository();
+
+  PlayerRepository._();
+  factory PlayerRepository() => _instance ??= PlayerRepository._();
 
   final _streamController = StreamController<List<Player>>.broadcast();
 
@@ -57,7 +63,9 @@ class PlayerRepository {
 
 class RuleRepository {
   static RuleRepository? _instance;
-  static get instance => _instance ??= RuleRepository();
+
+  RuleRepository._();
+  factory RuleRepository() => _instance ??= RuleRepository._();
 
   final _streamController = StreamController<List<Rule>>.broadcast();
 
@@ -87,30 +95,28 @@ class PlayerAnswerAssociation {
 
 class PlayerAnswerAssociationRepository {
   static PlayerAnswerAssociationRepository? _instance;
-  static getInstance(PlayerRepository playerRepository) =>
-      _instance ??= PlayerAnswerAssociationRepository(playerRepository);
 
   final _associations = defaultPlayerAnswerAssociations.toList();
   final _streamController =
       StreamController<List<PlayerAnswerAssociation>>.broadcast();
-  final PlayerRepository _playerRepository;
 
-  PlayerAnswerAssociationRepository(PlayerRepository playerRepository)
-      : _playerRepository = playerRepository;
+  factory PlayerAnswerAssociationRepository() =>
+      _instance ??= PlayerAnswerAssociationRepository._();
+  PlayerAnswerAssociationRepository._();
 
-  List<Player> getPlayersWhoHaveChosenAnswer(String answerId) {
+  List<String> getPlayersWhoHaveChosenAnswer(String answerId) {
     return _associations
         .where((a) => a.answerId == answerId)
-        .map((a) => _playerRepository.getPlayerById(a.playerId))
+        .map((a) => a.playerId)
         .nonNulls
         .toList(growable: false);
   }
 
-  Stream<List<Player>> getPlayersWhoHaveChosenAnswerStream(String answerId) {
+  Stream<List<String>> getPlayersWhoHaveChosenAnswerStream(String answerId) {
     return _streamController.stream.map((asses) {
       return asses
           .where((a) => a.answerId == answerId)
-          .map((a) => _playerRepository.getPlayerById(a.playerId))
+          .map((a) => a.playerId)
           .nonNulls
           .toList(growable: false);
     });
@@ -147,6 +153,11 @@ class PlayerAnswerAssociationRepository {
       addAssociation(playerId: playerId, answerId: answerId);
     }
   }
+
+  removeAllByAnswer(String answerId) {
+    _associations.removeWhere((a) => a.answerId == answerId);
+    _streamController.add(_associations);
+  }
 }
 
 class AnswerRuleAssociation {
@@ -158,29 +169,27 @@ class AnswerRuleAssociation {
 
 class AnswerRuleAssociationRepository {
   static AnswerRuleAssociationRepository? _instance;
-  static getInstance(RuleRepository ruleRepository) =>
-      _instance ??= AnswerRuleAssociationRepository(ruleRepository);
 
   final _associations = defaultAnswerRuleAssociations.toList();
   final _streamController =
       StreamController<List<AnswerRuleAssociation>>.broadcast();
-  final RuleRepository _ruleRepository;
 
-  AnswerRuleAssociationRepository(RuleRepository ruleRepository)
-      : _ruleRepository = ruleRepository;
+  factory AnswerRuleAssociationRepository() =>
+      _instance ??= AnswerRuleAssociationRepository._();
+  AnswerRuleAssociationRepository._();
 
-  List<Rule> getRulesAffectingAnswer(String answerId) {
+  List<String> getRulesAffectingAnswer(String answerId) {
     return _associations
         .where((a) => a.answerId == answerId)
-        .map((a) => _ruleRepository.getRuleById(a.ruleId))
+        .map((a) => a.ruleId)
         .toList(growable: false);
   }
 
-  Stream<List<Rule>> getStreamOfRulesAffectingAnswer(String answerId) {
+  Stream<List<String>> getStreamOfRulesAffectingAnswer(String answerId) {
     return _streamController.stream.map((asses) {
       return asses
           .where((a) => a.answerId == answerId)
-          .map((a) => _ruleRepository.getRuleById(a.ruleId))
+          .map((a) => a.ruleId)
           .toList(growable: false);
     });
   }
@@ -215,5 +224,10 @@ class AnswerRuleAssociationRepository {
     } else {
       addAssociation(ruleId: ruleId, answerId: answerId);
     }
+  }
+
+  void removeAllByAnswer(String answerId) {
+    _associations.removeWhere((a) => a.answerId == answerId);
+    _streamController.add(_associations);
   }
 }

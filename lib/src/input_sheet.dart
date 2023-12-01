@@ -41,18 +41,10 @@ class CupertinoInputSheet extends StatefulWidget {
 
 class _CupertinoInputSheetState extends State<CupertinoInputSheet> {
   final _draggableScrollableController = DraggableScrollableController();
-
-  late final AnswerRepository _answerRepository;
+  final _answerRepository = AnswerRepository();
 
   int? _selectedAnswersIndex;
   var _answerValue = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    _answerRepository = AnswerRepository.instance;
-  }
 
   @override
   void dispose() {
@@ -135,17 +127,10 @@ class MaterialInputSheet extends StatefulWidget {
 }
 
 class _MaterialInputSheetState extends State<MaterialInputSheet> {
-  late final AnswerRepository _answerRepository;
+  final _answerRepository = AnswerRepository();
 
   int? _selectedAnswersIndex;
   var _answerValue = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    _answerRepository = AnswerRepository.instance;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,15 +244,8 @@ class InputSheet extends StatefulWidget {
 }
 
 class _InputSheetState extends State<InputSheet> {
-  late final PlayerRepository _playerRepository;
+  final _playerRepository = PlayerRepository();
   String? _selectedPlayerId;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _playerRepository = PlayerRepository.instance;
-  }
 
   @override
   Widget build(BuildContext context) {

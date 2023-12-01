@@ -68,23 +68,11 @@ class InnerAnswerTile extends StatefulWidget {
 }
 
 class _InnerAnswerTileState extends State<InnerAnswerTile> {
-  late final PlayerRepository _playerRepository;
-  late final PlayerAnswerAssociationRepository
-      _playerAnswerAssociationRepository;
-  late final RuleRepository _ruleRepository;
-  late final AnswerRuleAssociationRepository _answerRuleAssociationRepository;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _playerRepository = PlayerRepository.instance;
-    _playerAnswerAssociationRepository =
-        PlayerAnswerAssociationRepository.getInstance(_playerRepository);
-    _ruleRepository = RuleRepository.instance;
-    _answerRuleAssociationRepository =
-        AnswerRuleAssociationRepository.getInstance(_ruleRepository);
-  }
+  final _playerRepository = PlayerRepository();
+  final _playerAnswerAssociationRepository =
+      PlayerAnswerAssociationRepository();
+  final _ruleRepository = RuleRepository();
+  final _answerRuleAssociationRepository = AnswerRuleAssociationRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -140,11 +128,13 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
             stream: _playerAnswerAssociationRepository
                 .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
             builder: (context, snapshot) {
-              final data = snapshot.data!;
-              data.sort((a, b) => a.id.compareTo(b.id));
+              final players = snapshot.data!.map((id) {
+                return _playerRepository.getPlayerById(id)!;
+              }).toList()
+                ..sort((a, b) => a.id.compareTo(b.id));
               return Wrap(
                 spacing: 4,
-                children: data
+                children: players
                     .map((p) => PlayerCircle(player: p))
                     .toList(growable: false),
               );
@@ -157,11 +147,13 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
             stream: _answerRuleAssociationRepository
                 .getStreamOfRulesAffectingAnswer(widget._answer.id),
             builder: (context, snapshot) {
-              final data = snapshot.data!;
-              data.sort((a, b) => a.id.compareTo(b.id));
+              final rules = snapshot.data!
+                  .map((id) => _ruleRepository.getRuleById(id))
+                  .toList()
+                ..sort((a, b) => a.id.compareTo(b.id));
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: data
+                children: rules
                     .map((r) => Text(
                           '• ${r.text}',
                           style: bodyStyle(context),

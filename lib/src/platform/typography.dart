@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 TextStyle? answerTileHeading(BuildContext context) {
@@ -55,16 +56,28 @@ TextStyle? bodyStyle(BuildContext context) {
 
 TextStyle? playerCircleStyle(BuildContext context) {
   if (kIsWeb) {
-    return Theme.of(context).textTheme.bodyMedium;
+    return Theme.of(context)
+        .textTheme
+        .bodyMedium
+        ?.copyWith(color: ontoPlatformPlayer(context));
   }
 
   if (Platform.isIOS) {
-    return CupertinoTheme.of(context).textTheme.textStyle;
+    return CupertinoTheme.of(context)
+        .textTheme
+        .textStyle
+        .copyWith(color: ontoPlatformPlayer(context));
   }
 
   if (Platform.isMacOS) {
-    return MacosTheme.of(context).typography.body;
+    return MacosTheme.of(context)
+        .typography
+        .body
+        .copyWith(color: ontoPlatformPlayer(context));
   }
 
-  return Theme.of(context).textTheme.bodyMedium;
+  return Theme.of(context)
+      .textTheme
+      .bodyMedium
+      ?.copyWith(color: ontoPlatformPlayer(context));
 }

@@ -72,3 +72,19 @@ Color ontoPlatformDanger(BuildContext context) {
 
   return Theme.of(context).colorScheme.onPrimary;
 }
+
+Color ontoPlatformPlayer(BuildContext context) {
+  if (kIsWeb) {
+    return Colors.white;
+  }
+
+  if (Platform.isIOS) {
+    return CupertinoColors.white;
+  }
+
+  if (Platform.isMacOS) {
+    return MacosColors.white;
+  }
+
+  return Colors.white;
+}

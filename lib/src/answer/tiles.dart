@@ -58,7 +58,7 @@ class InnerAnswerTile extends StatefulWidget {
 class _InnerAnswerTileState extends State<InnerAnswerTile> {
   final _playerRepository = PlayerRepository();
   final _playerAnswerAssociationRepository =
-      PlayerAnswerAssociationRepository();
+      AnswerPlayerAssociationRepository();
   final _ruleRepository = RuleRepository();
   final _answerRuleAssociationRepository = AnswerRuleAssociationRepository();
 

@@ -24,7 +24,7 @@ class AnswerRepository {
 
   void remove(String answerId) {
     AnswerRuleAssociationRepository().removeAllByAnswer(answerId);
-    PlayerAnswerAssociationRepository().removeAllByAnswer(answerId);
+    AnswerPlayerAssociationRepository().removeAllByAnswer(answerId);
     _answers.removeWhere((a) => a.id == answerId);
     _streamController.add(_answers);
   }
@@ -86,23 +86,37 @@ class RuleRepository {
   }
 }
 
-class PlayerAnswerAssociation {
+class AnswerPlayerAssociation {
   final String playerId;
   final String answerId;
 
-  PlayerAnswerAssociation({required this.playerId, required this.answerId});
+  AnswerPlayerAssociation({required this.playerId, required this.answerId});
+
+  static AnswerPlayerAssociation fromJson(Map<String, dynamic> json) {
+    return AnswerPlayerAssociation(
+      playerId: json['playerId'] as String,
+      answerId: json['answerId'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'playerId': playerId,
+      'answerId': answerId,
+    };
+  }
 }
 
-class PlayerAnswerAssociationRepository {
-  static PlayerAnswerAssociationRepository? _instance;
+class AnswerPlayerAssociationRepository {
+  static AnswerPlayerAssociationRepository? _instance;
 
-  final _associations = defaultPlayerAnswerAssociations.toList();
+  final _associations = defaultAnswerPlayerAssociations.toList();
   final _streamController =
-      StreamController<List<PlayerAnswerAssociation>>.broadcast();
+      StreamController<List<AnswerPlayerAssociation>>.broadcast();
 
-  factory PlayerAnswerAssociationRepository() =>
-      _instance ??= PlayerAnswerAssociationRepository._();
-  PlayerAnswerAssociationRepository._();
+  factory AnswerPlayerAssociationRepository() =>
+      _instance ??= AnswerPlayerAssociationRepository._();
+  AnswerPlayerAssociationRepository._();
 
   List<String> getPlayersWhoHaveChosenAnswer(String answerId) {
     return _associations
@@ -126,7 +140,7 @@ class PlayerAnswerAssociationRepository {
     required String playerId,
     required String answerId,
   }) {
-    _associations.add(PlayerAnswerAssociation(
+    _associations.add(AnswerPlayerAssociation(
       playerId: playerId,
       answerId: answerId,
     ));
@@ -165,6 +179,20 @@ class AnswerRuleAssociation {
   final String answerId;
 
   AnswerRuleAssociation({required this.ruleId, required this.answerId});
+
+  static AnswerRuleAssociation fromJson(Map<String, dynamic> json) {
+    return AnswerRuleAssociation(
+      ruleId: json['ruleId'] as String,
+      answerId: json['answerId'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'ruleId': ruleId,
+      'answerId': answerId,
+    };
+  }
 }
 
 class AnswerRuleAssociationRepository {

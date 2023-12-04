@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../player/palette.dart';
 import 'models.dart';
@@ -51,6 +54,17 @@ final defaultAnswers = [
   magnusCarlsen,
 ].toList();
 
+const answersKey = 'friendlyscorer_answers';
+
+Future<List<Answer>> initialAnswers() async {
+  final prefs = await SharedPreferences.getInstance();
+  final answersValue = prefs.getString(answersKey);
+  if (answersValue == null) return defaultAnswers;
+
+  final answersJson = jsonDecode(answersValue);
+  return answersJson.map((aj) => Answer.fromJson(aj)).toList(growable: false);
+}
+
 Player fromName(String name) {
   final nextId = PlayerIdVendor().next();
   return Player(
@@ -73,28 +87,52 @@ final defaultPlayers = [
   carlGpt,
 ].toList();
 
-final defaultPlayerAnswerAssociations = [
-  PlayerAnswerAssociation(playerId: chip.id, answerId: steveMartin.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: taylorSwift.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: chevyChase.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: steveMartin.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: tinaFey.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: paulSimon.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: tomHanks.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: britneySpears.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: hughJackman.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
+const playersKey = 'friendlyscorer_players';
+
+Future<List<Player>> initialPlayers() async {
+  final prefs = await SharedPreferences.getInstance();
+  final playersValue = prefs.getString(playersKey);
+  if (playersValue == null) return defaultPlayers;
+
+  final playersJson = jsonDecode(playersValue);
+  return playersJson.map((pj) => Player.fromJson(pj)).toList(growable: false);
+}
+
+final defaultAnswerPlayerAssociations = [
+  AnswerPlayerAssociation(playerId: chip.id, answerId: steveMartin.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: taylorSwift.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: chevyChase.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: steveMartin.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: tinaFey.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: paulSimon.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: tomHanks.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: britneySpears.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: hughJackman.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
 ];
+
+const answerPlayerAssociationKey = 'friendlyscorer_answerstoplayers';
+
+Future<List<AnswerPlayerAssociation>> initialRuleAssociations() async {
+  final prefs = await SharedPreferences.getInstance();
+  final associationsValue = prefs.getString(answerPlayerAssociationKey);
+  if (associationsValue == null) return defaultAnswerPlayerAssociations;
+
+  final associationsJson = jsonDecode(associationsValue);
+  return associationsJson
+      .map((rj) => AnswerPlayerAssociation.fromJson(rj))
+      .toList(growable: false);
+}
 
 final alecBaldwinOrSteveMartin =
     ruleFromName('Alec Baldwin or Steve Martin +1');
@@ -105,6 +143,17 @@ final defaultRules = [
   alecBaldwinOrSteveMartin,
   athleteRule,
 ];
+
+const rulesKey = 'friendlyscorer_rules';
+
+Future<List<Rule>> initialRules() async {
+  final prefs = await SharedPreferences.getInstance();
+  final rulesValue = prefs.getString(answerRuleAssociationKey);
+  if (rulesValue == null) return defaultRules;
+
+  final rulesJson = jsonDecode(rulesValue);
+  return rulesJson.map((rj) => Rule.fromJson(rj)).toList(growable: false);
+}
 
 Rule ruleFromName(String r) {
   final id = RuleIdVendor().next();
@@ -124,3 +173,16 @@ final defaultAnswerRuleAssociations = [
     answerId: charlesBarkley.id,
   ),
 ];
+
+const answerRuleAssociationKey = 'friendlyscorer_answerstorules';
+
+Future<List<AnswerRuleAssociation>> initialAnswerRuleAssociations() async {
+  final prefs = await SharedPreferences.getInstance();
+  final associationsValue = prefs.getString(answerRuleAssociationKey);
+  if (associationsValue == null) return defaultAnswerRuleAssociations;
+
+  final associationsJson = jsonDecode(associationsValue);
+  return associationsJson
+      .map((rj) => AnswerRuleAssociation.fromJson(rj))
+      .toList(growable: false);
+}

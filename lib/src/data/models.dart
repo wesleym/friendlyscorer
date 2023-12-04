@@ -1,6 +1,5 @@
 class Answer {
   final String id;
-  final tagIds = [];
 
   String text;
 

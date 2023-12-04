@@ -5,7 +5,7 @@ import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/tiles.dart';
 
-class _AnswerTileKey extends ValueKey {
+class _AnswerTileKey extends ValueKey<String> {
   const _AnswerTileKey(super.value);
 }
 

@@ -5,12 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-void presentPlatformModal({
+void presentPlatformModal<T>({
   required BuildContext context,
   required Widget Function(BuildContext) builder,
 }) {
   if (kIsWeb) {
-    showBottomSheet(
+    showBottomSheet<T>(
       context: context,
       constraints: const BoxConstraints(maxWidth: 592),
       elevation: 8,
@@ -20,16 +20,16 @@ void presentPlatformModal({
   }
 
   if (Platform.isIOS) {
-    showCupertinoDialog(context: context, builder: builder);
+    showCupertinoDialog<T>(context: context, builder: builder);
     return;
   }
 
   if (Platform.isMacOS) {
-    showMacosSheet(context: context, builder: builder);
+    showMacosSheet<T>(context: context, builder: builder);
     return;
   }
 
-  showBottomSheet(
+  showBottomSheet<T>(
     context: context,
     constraints: const BoxConstraints(maxWidth: 592),
     elevation: 8,

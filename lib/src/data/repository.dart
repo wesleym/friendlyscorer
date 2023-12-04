@@ -154,7 +154,7 @@ class PlayerAnswerAssociationRepository {
     }
   }
 
-  removeAllByAnswer(String answerId) {
+  void removeAllByAnswer(String answerId) {
     _associations.removeWhere((a) => a.answerId == answerId);
     _streamController.add(_associations);
   }

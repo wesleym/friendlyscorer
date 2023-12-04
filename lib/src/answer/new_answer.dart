@@ -6,11 +6,11 @@ import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 
 class NewInnerAnswerTile extends StatefulWidget {
-  final Function(List<String> candidates)? _onAddAnswers;
+  final void Function(List<String> candidates)? _onAddAnswers;
 
   const NewInnerAnswerTile({
     super.key,
-    Function(List<String> candidates)? onAddAnswers,
+    void Function(List<String> candidates)? onAddAnswers,
   }) : _onAddAnswers = onAddAnswers;
 
   @override

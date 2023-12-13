@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:friendlyscorer/src/data/defaults.dart';
+import 'package:friendlyscorer/src/defaults.dart';
 import 'package:friendlyscorer/src/rule/models.dart';
 
 class RuleRepository {

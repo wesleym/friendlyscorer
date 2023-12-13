@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:friendlyscorer/src/answer/models.dart';
-import 'package:friendlyscorer/src/data/defaults.dart';
+import 'package:friendlyscorer/src/defaults.dart';
 
 class AnswerRepository {
   static AnswerRepository? _instance;

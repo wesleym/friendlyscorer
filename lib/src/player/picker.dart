@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/player/models.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class PlayerPicker extends StatelessWidget {

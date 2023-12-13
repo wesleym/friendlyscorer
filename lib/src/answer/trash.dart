@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
+import 'package:friendlyscorer/src/player/models.dart';
 import 'package:friendlyscorer/src/player/palette.dart';
 
 class PlayerChip extends StatelessWidget {

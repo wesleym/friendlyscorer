@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/data/defaults.dart';
-import 'package:friendlyscorer/src/data/models.dart';
+import 'package:friendlyscorer/src/player/models.dart';
+import 'package:friendlyscorer/src/rule/models.dart';
 
 class AnswerRepository {
   static AnswerRepository? _instance;
@@ -86,19 +88,12 @@ class RuleRepository {
   }
 }
 
-class PlayerAnswerAssociation {
-  final String playerId;
-  final String answerId;
-
-  PlayerAnswerAssociation({required this.playerId, required this.answerId});
-}
-
 class PlayerAnswerAssociationRepository {
   static PlayerAnswerAssociationRepository? _instance;
 
   final _associations = defaultPlayerAnswerAssociations.toList();
   final _streamController =
-      StreamController<List<PlayerAnswerAssociation>>.broadcast();
+      StreamController<List<AnswerPlayerAssociation>>.broadcast();
 
   factory PlayerAnswerAssociationRepository() =>
       _instance ??= PlayerAnswerAssociationRepository._();
@@ -126,7 +121,7 @@ class PlayerAnswerAssociationRepository {
     required String playerId,
     required String answerId,
   }) {
-    _associations.add(PlayerAnswerAssociation(
+    _associations.add(AnswerPlayerAssociation(
       playerId: playerId,
       answerId: answerId,
     ));
@@ -158,13 +153,6 @@ class PlayerAnswerAssociationRepository {
     _associations.removeWhere((a) => a.answerId == answerId);
     _streamController.add(_associations);
   }
-}
-
-class AnswerRuleAssociation {
-  final String ruleId;
-  final String answerId;
-
-  AnswerRuleAssociation({required this.ruleId, required this.answerId});
 }
 
 class AnswerRuleAssociationRepository {

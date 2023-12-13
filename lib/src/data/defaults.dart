@@ -1,6 +1,7 @@
-import 'package:friendlyscorer/src/data/models.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/answer/models.dart';
+import 'package:friendlyscorer/src/player/models.dart';
 import 'package:friendlyscorer/src/player/palette.dart';
+import 'package:friendlyscorer/src/rule/models.dart';
 
 Answer answerFromName(String name) {
   return Answer(id: name, text: name);
@@ -73,26 +74,26 @@ final defaultPlayers = [
 ].toList();
 
 final defaultPlayerAnswerAssociations = [
-  PlayerAnswerAssociation(playerId: chip.id, answerId: steveMartin.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: taylorSwift.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
-  PlayerAnswerAssociation(playerId: chip.id, answerId: chevyChase.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
-  PlayerAnswerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: steveMartin.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: tinaFey.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: paulSimon.id),
-  PlayerAnswerAssociation(playerId: shelley.id, answerId: tomHanks.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: britneySpears.id),
-  PlayerAnswerAssociation(playerId: kathy.id, answerId: hughJackman.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
-  PlayerAnswerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: steveMartin.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: taylorSwift.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
+  AnswerPlayerAssociation(playerId: chip.id, answerId: chevyChase.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
+  AnswerPlayerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: steveMartin.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: tinaFey.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: paulSimon.id),
+  AnswerPlayerAssociation(playerId: shelley.id, answerId: tomHanks.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: britneySpears.id),
+  AnswerPlayerAssociation(playerId: kathy.id, answerId: hughJackman.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
+  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
 ];
 
 final alecBaldwinOrSteveMartin =

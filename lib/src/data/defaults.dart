@@ -73,7 +73,7 @@ final defaultPlayers = [
   carlGpt,
 ].toList();
 
-final defaultPlayerAnswerAssociations = [
+final defaultAnswerPlayerAssociations = [
   AnswerPlayerAssociation(playerId: chip.id, answerId: steveMartin.id),
   AnswerPlayerAssociation(playerId: chip.id, answerId: taylorSwift.id),
   AnswerPlayerAssociation(playerId: chip.id, answerId: eddieMurphy.id),

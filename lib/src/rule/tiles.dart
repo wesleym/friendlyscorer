@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/rule/models.dart';

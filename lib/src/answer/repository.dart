@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/data/defaults.dart';
-import 'package:friendlyscorer/src/player/models.dart';
-import 'package:friendlyscorer/src/rule/models.dart';
 
 class AnswerRepository {
   static AnswerRepository? _instance;
@@ -26,7 +24,7 @@ class AnswerRepository {
 
   void remove(String answerId) {
     AnswerRuleAssociationRepository().removeAllByAnswer(answerId);
-    PlayerAnswerAssociationRepository().removeAllByAnswer(answerId);
+    AnswerPlayerAssociationRepository().removeAllByAnswer(answerId);
     _answers.removeWhere((a) => a.id == answerId);
     _streamController.add(_answers);
   }
@@ -37,67 +35,16 @@ class AnswerRepository {
   }
 }
 
-class PlayerRepository {
-  static PlayerRepository? _instance;
+class AnswerPlayerAssociationRepository {
+  static AnswerPlayerAssociationRepository? _instance;
 
-  PlayerRepository._();
-  factory PlayerRepository() => _instance ??= PlayerRepository._();
-
-  final _streamController = StreamController<List<Player>>.broadcast();
-
-  final _players = defaultPlayers.toList();
-  List<Player> get players => _players;
-  Stream<List<Player>> get playerStream => _streamController.stream;
-
-  Player? getPlayerById(String playerId) =>
-      _players.where((p) => p.id == playerId).singleOrNull;
-
-  void clear() {
-    _players.clear();
-    _streamController.add(_players);
-  }
-
-  void add(Player player) {
-    _players.add(player);
-    _streamController.add(_players);
-  }
-}
-
-class RuleRepository {
-  static RuleRepository? _instance;
-
-  RuleRepository._();
-  factory RuleRepository() => _instance ??= RuleRepository._();
-
-  final _streamController = StreamController<List<Rule>>.broadcast();
-
-  final _rules = defaultRules.toList();
-  List<Rule> get rules => _rules;
-  Stream<List<Rule>> get ruleStream => _streamController.stream;
-
-  Rule getRuleById(String ruleId) => _rules.singleWhere((r) => r.id == ruleId);
-
-  void clear() {
-    _rules.clear();
-    _streamController.add(_rules);
-  }
-
-  void add(Rule rule) {
-    _rules.add(rule);
-    _streamController.add(_rules);
-  }
-}
-
-class PlayerAnswerAssociationRepository {
-  static PlayerAnswerAssociationRepository? _instance;
-
-  final _associations = defaultPlayerAnswerAssociations.toList();
+  final _associations = defaultAnswerPlayerAssociations.toList();
   final _streamController =
       StreamController<List<AnswerPlayerAssociation>>.broadcast();
 
-  factory PlayerAnswerAssociationRepository() =>
-      _instance ??= PlayerAnswerAssociationRepository._();
-  PlayerAnswerAssociationRepository._();
+  factory AnswerPlayerAssociationRepository() =>
+      _instance ??= AnswerPlayerAssociationRepository._();
+  AnswerPlayerAssociationRepository._();
 
   List<String> getPlayersWhoHaveChosenAnswer(String answerId) {
     return _associations

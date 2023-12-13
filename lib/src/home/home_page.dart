@@ -3,7 +3,7 @@ import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/new_answer.dart';
 import 'package:friendlyscorer/src/answer/tiles.dart';
 import 'package:friendlyscorer/src/answer/trash.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/editing/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
@@ -11,8 +11,10 @@ import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
 import 'package:friendlyscorer/src/player/models.dart';
 import 'package:friendlyscorer/src/player/palette.dart';
+import 'package:friendlyscorer/src/player/repository.dart';
 import 'package:friendlyscorer/src/player/tiles.dart';
 import 'package:friendlyscorer/src/rule/models.dart';
+import 'package:friendlyscorer/src/rule/repository.dart';
 import 'package:friendlyscorer/src/rule/tiles.dart';
 
 class HomePageBody extends StatefulWidget {

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/player/chip.dart';
+import 'package:friendlyscorer/src/player/repository.dart';
+import 'package:friendlyscorer/src/rule/repository.dart';
 
 class _AnswerTileKey extends ValueKey<String> {
   const _AnswerTileKey(super.value);
@@ -57,8 +59,8 @@ class InnerAnswerTile extends StatefulWidget {
 
 class _InnerAnswerTileState extends State<InnerAnswerTile> {
   final _playerRepository = PlayerRepository();
-  final _playerAnswerAssociationRepository =
-      PlayerAnswerAssociationRepository();
+  final _answerPlayerAssociationRepository =
+      AnswerPlayerAssociationRepository();
   final _ruleRepository = RuleRepository();
   final _answerRuleAssociationRepository = AnswerRuleAssociationRepository();
 
@@ -101,9 +103,9 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
           ),
           const SizedBox(height: 8),
           StreamBuilder(
-            initialData: _playerAnswerAssociationRepository
+            initialData: _answerPlayerAssociationRepository
                 .getPlayersWhoHaveChosenAnswer(widget._answer.id),
-            stream: _playerAnswerAssociationRepository
+            stream: _answerPlayerAssociationRepository
                 .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
             builder: (context, snapshot) {
               final players = snapshot.data!.map((id) {

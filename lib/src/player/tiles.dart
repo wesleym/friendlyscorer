@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
-import 'package:friendlyscorer/src/data/repository.dart';
+import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/player/models.dart';
@@ -16,14 +16,14 @@ class PlayerTile extends StatefulWidget {
 }
 
 class _PlayerTileState extends State<PlayerTile> {
-  late final PlayerAnswerAssociationRepository
-      _playerAnswerAssociationRepository;
+  late final AnswerPlayerAssociationRepository
+      _answerPlayerAssociationRepository;
 
   @override
   void initState() {
     super.initState();
 
-    _playerAnswerAssociationRepository = PlayerAnswerAssociationRepository();
+    _answerPlayerAssociationRepository = AnswerPlayerAssociationRepository();
   }
 
   @override
@@ -33,7 +33,7 @@ class _PlayerTileState extends State<PlayerTile> {
 
     return DragTarget<Answer>(
       onWillAccept: (data) {
-        _playerAnswerAssociationRepository.toggleAssociation(
+        _answerPlayerAssociationRepository.toggleAssociation(
             playerId: widget._player.id, answerId: data!.id);
         return false;
       },

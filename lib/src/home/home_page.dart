@@ -1,21 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/new_answer.dart';
+import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/answer/tiles.dart';
 import 'package:friendlyscorer/src/answer/trash.dart';
-import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/editing/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
-import 'package:friendlyscorer/src/player/models.dart';
-import 'package:friendlyscorer/src/player/palette.dart';
+import 'package:friendlyscorer/src/player/column.dart';
 import 'package:friendlyscorer/src/player/repository.dart';
-import 'package:friendlyscorer/src/player/tiles.dart';
-import 'package:friendlyscorer/src/rule/models.dart';
+import 'package:friendlyscorer/src/rule/column.dart';
 import 'package:friendlyscorer/src/rule/repository.dart';
-import 'package:friendlyscorer/src/rule/tiles.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({super.key});
@@ -139,145 +136,4 @@ class _HomePageBodyState extends State<HomePageBody> {
   }
 
   void _onDeleteAnswer(String answerId) => _answerRepository.remove(answerId);
-}
-
-class RuleColumn extends StatelessWidget {
-  const RuleColumn({
-    super.key,
-    required RuleRepository ruleRepository,
-  }) : _ruleRepository = ruleRepository;
-
-  final RuleRepository _ruleRepository;
-
-  @override
-  Widget build(BuildContext context) {
-    final editing = EditingProvider.of(context).editing;
-    Widget? clearButton;
-    if (editing) {
-      clearButton = PlatformButton(
-        onPressed: () => _onClearRules(context),
-        child: const Text(
-          'Clear',
-          style: TextStyle(color: CupertinoColors.destructiveRed),
-        ),
-      );
-    }
-
-    return StreamBuilder(
-      initialData: _ruleRepository.rules,
-      stream: _ruleRepository.ruleStream,
-      builder: (context, snapshot) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PlatformIcon(
-                  PlatformIcons.specialRules,
-                  color: CupertinoColors.inactiveGray,
-                ),
-                if (clearButton != null) clearButton,
-              ],
-            ),
-            const SizedBox(height: 8),
-            ...snapshot.data!.map(
-              (r) => Expanded(
-                child: RuleTile(rule: r),
-              ),
-            ),
-            if (!editing) NewRuleTile(onCreateRule: _onCreateRule),
-          ],
-        );
-      },
-    );
-  }
-
-  void _onClearRules(BuildContext context) async {
-    final delete = await presentPlatformDestructionConfirmation(
-      context: context,
-      title: const Text('Delete all special rules?'),
-    );
-    if (delete) {
-      _ruleRepository.clear();
-    }
-  }
-
-  void _onCreateRule(String name) {
-    final id = RuleIdVendor().next();
-    _ruleRepository.add(
-      Rule(id: id.toString(), text: name),
-    );
-  }
-}
-
-class PlayerColumn extends StatelessWidget {
-  final PlayerRepository _playerRepository;
-
-  const PlayerColumn({
-    super.key,
-    required PlayerRepository playerRepository,
-  }) : _playerRepository = playerRepository;
-
-  @override
-  Widget build(BuildContext context) {
-    final editing = EditingProvider.of(context).editing;
-    Widget? clearButton;
-    if (editing) {
-      clearButton = PlatformButton(
-        onPressed: () => _onClearPlayers(context),
-        child: const Text(
-          'Clear',
-          style: TextStyle(color: CupertinoColors.destructiveRed),
-        ),
-      );
-    }
-
-    return StreamBuilder(
-      initialData: _playerRepository.players,
-      stream: _playerRepository.playerStream,
-      builder: (context, snapshot) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PlatformIcon(
-                  PlatformIcons.players,
-                  color: CupertinoColors.inactiveGray,
-                ),
-                if (clearButton != null) clearButton,
-              ],
-            ),
-            const SizedBox(height: 8),
-            ...snapshot.data!.map(
-              (p) => Expanded(
-                child: PlayerTile(player: p),
-              ),
-            ),
-            if (!editing) NewPlayerTile(onCreatePlayer: _onCreatePlayer),
-          ],
-        );
-      },
-    );
-  }
-
-  void _onClearPlayers(BuildContext context) async {
-    final delete = await presentPlatformDestructionConfirmation(
-      context: context,
-      title: const Text('Delete all players'),
-    );
-    if (delete) {
-      _playerRepository.clear();
-    }
-  }
-
-  void _onCreatePlayer(String name) {
-    final id = PlayerIdVendor().next();
-    _playerRepository.add(Player(
-      id: id.toString(),
-      name: name,
-    ));
-  }
 }

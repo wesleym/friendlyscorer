@@ -11,7 +11,7 @@ Color platformAnswerColor(BuildContext context) {
   }
 
   if (Platform.isIOS) {
-    return CupertinoTheme.of(context).primaryContrastingColor;
+    return CupertinoColors.systemFill;
   }
 
   if (Platform.isMacOS) {

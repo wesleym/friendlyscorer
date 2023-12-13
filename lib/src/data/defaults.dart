@@ -1,7 +1,6 @@
+import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
-
-import '../player/palette.dart';
-import 'models.dart';
+import 'package:friendlyscorer/src/player/palette.dart';
 
 Answer answerFromName(String name) {
   return Answer(id: name, text: name);

@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/tiles.dart';
 import 'package:macos_ui/macos_ui.dart';
-
-import '../tiles.dart';
 
 class ResultDisplay extends StatelessWidget {
   final List<List<String>> _results;

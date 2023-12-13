@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/player/palette.dart';
-
-import 'data/models.dart';
 
 class PlayerCircle extends StatelessWidget {
   final Player _player;

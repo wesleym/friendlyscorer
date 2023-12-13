@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/home_page.dart';
 import 'package:macos_ui/macos_ui.dart';
-
-import 'src/home_page.dart';
 
 void main() async {
   if (kIsWeb) {

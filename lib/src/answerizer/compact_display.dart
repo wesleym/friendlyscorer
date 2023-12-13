@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/src/tiles.dart';
+import 'package:friendlyscorer/src/answerizer/chip.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class CompactResultDisplay extends StatelessWidget {
@@ -71,7 +71,7 @@ class MaterialCompactResultDisplay extends StatelessWidget {
               trailing = const Icon(Icons.check);
             }
             var children = value
-                .map((e) => MaterialAnswerCircle(answer: e))
+                .map((e) => MaterialAnswerCandidateChip(answer: e))
                 .toList(growable: false);
             return MapEntry(
               key,
@@ -115,7 +115,7 @@ class CupertinoCompactResultDisplay extends StatelessWidget {
               trailing = const Icon(CupertinoIcons.check_mark);
             }
             var children = value
-                .map((e) => CupertinoAnswerCircle(answer: e))
+                .map((e) => CupertinoAnswerCandidateChip(answer: e))
                 .toList(growable: false);
             return MapEntry(
               key,
@@ -155,7 +155,7 @@ class MacCompactResultDisplay extends StatelessWidget {
           .asMap()
           .map((key, value) {
             var children = value
-                .map((e) => MacAnswerCircle(answer: e))
+                .map((e) => MacAnswerCandidateChip(answer: e))
                 .toList(growable: false);
             return MapEntry(
               key,

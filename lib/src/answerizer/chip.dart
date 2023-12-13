@@ -1,43 +1,20 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
-import 'package:friendlyscorer/src/player/palette.dart';
 
-class PlayerCircle extends StatelessWidget {
-  final Player _player;
+/* 
+The answerizer splits input text into a number of answers. For example:
 
-  const PlayerCircle({
-    super.key,
-    required Player player,
-  }) : _player = player;
+"foo, bar, baz" -> "foo", "bar", and "baz"
 
-  @override
-  Widget build(BuildContext context) {
-    final displayName = _player.name;
+To visually indicate that these are three separate answers, each answer is
+represented by an answer candidate chip widget. This gives them a shape and
+gradient background so they are visually separated.
+*/
 
-    final pColors = playerColors(context);
-    final color = pColors[int.parse(_player.id) % pColors.length];
-
-    return Container(
-      decoration: ShapeDecoration(
-        shape: StadiumBorder(
-          side: BorderSide(color: color),
-        ),
-        color: color,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Text(
-        displayName,
-        style: playerCircleStyle(context),
-      ),
-    );
-  }
-}
-
-class MaterialAnswerCircle extends StatelessWidget {
+class MaterialAnswerCandidateChip extends StatelessWidget {
   final String answer;
 
-  const MaterialAnswerCircle({
+  const MaterialAnswerCandidateChip({
     super.key,
     required this.answer,
   });
@@ -65,10 +42,10 @@ class MaterialAnswerCircle extends StatelessWidget {
   }
 }
 
-class CupertinoAnswerCircle extends StatelessWidget {
+class CupertinoAnswerCandidateChip extends StatelessWidget {
   final String answer;
 
-  const CupertinoAnswerCircle({
+  const CupertinoAnswerCandidateChip({
     super.key,
     required this.answer,
   });
@@ -96,10 +73,10 @@ class CupertinoAnswerCircle extends StatelessWidget {
   }
 }
 
-class MacAnswerCircle extends StatelessWidget {
+class MacAnswerCandidateChip extends StatelessWidget {
   final String answer;
 
-  const MacAnswerCircle({
+  const MacAnswerCandidateChip({
     super.key,
     required this.answer,
   });

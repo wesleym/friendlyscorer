@@ -3,7 +3,7 @@ import 'package:friendlyscorer/src/data/models.dart';
 import 'package:friendlyscorer/src/data/repository.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
-import 'package:friendlyscorer/src/tiles.dart';
+import 'package:friendlyscorer/src/player/chip.dart';
 
 class _AnswerTileKey extends ValueKey<String> {
   const _AnswerTileKey(super.value);
@@ -113,7 +113,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
               return Wrap(
                 spacing: 4,
                 children: players
-                    .map((p) => PlayerCircle(player: p))
+                    .map((p) => PlayerChip(player: p))
                     .toList(growable: false),
               );
             },

@@ -77,6 +77,15 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
       ];
     }
 
+    final playersWhoHaveChosenAnswer = _answerPlayerAssociationRepository
+        .getPlayersWhoHaveChosenAnswer(widget._answer.id);
+    final playersWhoHaveChosenAnswerStream = _answerPlayerAssociationRepository
+        .getPlayersWhoHaveChosenAnswerStream(widget._answer.id);
+    final rulesAffectingAnswer = _answerRuleAssociationRepository
+        .getRulesAffectingAnswer(widget._answer.id);
+    final streamOfRulesAffectingAnswer = _answerRuleAssociationRepository
+        .getStreamOfRulesAffectingAnswer(widget._answer.id);
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -103,42 +112,41 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
           ),
           const SizedBox(height: 8),
           StreamBuilder(
-            initialData: _answerPlayerAssociationRepository
-                .getPlayersWhoHaveChosenAnswer(widget._answer.id),
-            stream: _answerPlayerAssociationRepository
-                .getPlayersWhoHaveChosenAnswerStream(widget._answer.id),
+            initialData: playersWhoHaveChosenAnswer,
+            stream: playersWhoHaveChosenAnswerStream,
             builder: (context, snapshot) {
-              final players = snapshot.data!.map((id) {
-                return _playerRepository.getPlayerById(id)!;
-              }).toList()
+              final players = snapshot.data!
+                  .map((id) => _playerRepository.getPlayerById(id)!)
+                  .toList()
                 ..sort((a, b) => a.id.compareTo(b.id));
-              return Wrap(
-                spacing: 4,
-                children: players
-                    .map((p) => PlayerChip(player: p))
-                    .toList(growable: false),
-              );
+
+              final chips = players
+                  .map((p) => PlayerChip(player: p))
+                  .toList(growable: false);
+
+              return Wrap(spacing: 4, children: chips);
             },
           ),
           const SizedBox(height: 8),
           StreamBuilder(
-            initialData: _answerRuleAssociationRepository
-                .getRulesAffectingAnswer(widget._answer.id),
-            stream: _answerRuleAssociationRepository
-                .getStreamOfRulesAffectingAnswer(widget._answer.id),
+            initialData: rulesAffectingAnswer,
+            stream: streamOfRulesAffectingAnswer,
             builder: (context, snapshot) {
               final rules = snapshot.data!
                   .map((id) => _ruleRepository.getRuleById(id))
                   .toList()
                 ..sort((a, b) => a.id.compareTo(b.id));
+
+              final bulletPoints = rules.map((r) {
+                return Text(
+                  '• ${r.text}',
+                  style: bodyStyle(context),
+                );
+              }).toList(growable: false);
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: rules
-                    .map((r) => Text(
-                          '• ${r.text}',
-                          style: bodyStyle(context),
-                        ))
-                    .toList(growable: false),
+                children: bulletPoints,
               );
             },
           ),

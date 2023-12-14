@@ -28,7 +28,16 @@ class _MacHomePageState extends State<MacHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = MacosTheme.of(context);
+    final brightness = MacosTheme.of(context).brightness;
+    final Color contentAreaColor;
+    switch (brightness) {
+      case Brightness.light:
+        contentAreaColor = MacosColors.black;
+      case Brightness.dark:
+        contentAreaColor = MacosColors.white;
+      default:
+        throw StateError('Unexpected brightness $brightness');
+    }
 
     return MacosWindow(
       child: Builder(builder: (context) {
@@ -38,21 +47,6 @@ class _MacHomePageState extends State<MacHomePage> {
             toolBar: ToolBar(
               title: const Text('Friendly Scorer'),
               actions: [
-                // const ToolBarPullDownButton(
-                //   label: 'Clear',
-                //   icon: CupertinoIcons.clear_circled,
-                //   items: [
-                //     MacosPulldownMenuItem(
-                //       title: Text('Clear players'),
-                //     ),
-                //     MacosPulldownMenuItem(
-                //       title: Text('Clear answers'),
-                //     ),
-                //     MacosPulldownMenuItem(
-                //       title: Text('Clear rules'),
-                //     ),
-                //   ],
-                // ),
                 ToolBarIconButton(
                   label: 'Edit',
                   tooltipMessage: 'Edit',
@@ -66,15 +60,12 @@ class _MacHomePageState extends State<MacHomePage> {
             ),
             children: [
               ContentArea(
-                builder: (context, scrollController) => DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: switch (theme.brightness) {
-                      Brightness.dark => MacosColors.black,
-                      Brightness.light => MacosColors.white,
-                    },
-                  ),
-                  child: const HomePageBody(),
-                ),
+                builder: (context, scrollController) {
+                  return DecoratedBox(
+                    decoration: BoxDecoration(color: contentAreaColor),
+                    child: const HomePageBody(),
+                  );
+                },
               ),
             ],
           ),

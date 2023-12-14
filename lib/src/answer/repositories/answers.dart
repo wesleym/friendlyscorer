@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:friendlyscorer/src/answer/data/answer_player_asses.dart';
-import 'package:friendlyscorer/src/answer/data/answer_rule_asses.dart';
+import 'package:friendlyscorer/src/answer/repositories/answer_player_asses.dart';
+import 'package:friendlyscorer/src/answer/repositories/answer_rule_asses.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/defaults.dart';
 

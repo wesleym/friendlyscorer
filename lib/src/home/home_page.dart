@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/answer/column.dart';
-import 'package:friendlyscorer/src/answer/data/answers.dart';
+import 'package:friendlyscorer/src/answer/repositories/answers.dart';
 import 'package:friendlyscorer/src/player/column.dart';
 import 'package:friendlyscorer/src/player/repository.dart';
 import 'package:friendlyscorer/src/rule/column.dart';

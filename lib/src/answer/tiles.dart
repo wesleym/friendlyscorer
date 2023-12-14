@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/answer/data/answer_player_asses.dart';
+import 'package:friendlyscorer/src/answer/data/answer_rule_asses.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
-import 'package:friendlyscorer/src/answer/repository.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/player/chip.dart';

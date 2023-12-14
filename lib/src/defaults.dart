@@ -1,6 +1,7 @@
 import 'package:friendlyscorer/src/answer/models.dart';
+import 'package:friendlyscorer/src/player/id.dart';
 import 'package:friendlyscorer/src/player/models.dart';
-import 'package:friendlyscorer/src/player/palette.dart';
+import 'package:friendlyscorer/src/rule/id.dart';
 import 'package:friendlyscorer/src/rule/models.dart';
 
 Answer answerFromName(String name) {

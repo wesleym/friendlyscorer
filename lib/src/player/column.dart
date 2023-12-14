@@ -4,8 +4,8 @@ import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
+import 'package:friendlyscorer/src/player/id.dart';
 import 'package:friendlyscorer/src/player/models.dart';
-import 'package:friendlyscorer/src/player/palette.dart';
 import 'package:friendlyscorer/src/player/repository.dart';
 import 'package:friendlyscorer/src/player/tiles.dart';
 

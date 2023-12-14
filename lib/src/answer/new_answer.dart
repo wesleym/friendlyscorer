@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answerizer/answerizer.dart';
-import 'package:friendlyscorer/src/answerizer/compact_display.dart';
+import 'package:friendlyscorer/src/answerizer/result_display.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
@@ -55,7 +55,7 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
       ),
       child: Column(
         children: [
-          CompactResultDisplay(
+          ResultDisplay(
             results: _candidates,
             onSelect: _onSelectAnswer,
           ),

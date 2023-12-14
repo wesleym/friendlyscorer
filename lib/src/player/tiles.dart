@@ -38,6 +38,9 @@ class _PlayerTileState extends State<PlayerTile> {
         return false;
       },
       builder: (context, candidateData, rejectedData) {
+        var lightColor = HSLColor.fromColor(color)
+            .withLightness(HSLColor.fromColor(color).lightness + 0.1)
+            .toColor();
         return Container(
           padding: const EdgeInsets.all(16),
           margin: const EdgeInsets.all(2),
@@ -49,9 +52,7 @@ class _PlayerTileState extends State<PlayerTile> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                HSLColor.fromColor(color)
-                    .withLightness(HSLColor.fromColor(color).lightness + 0.1)
-                    .toColor(),
+                lightColor,
                 color,
               ],
             ),

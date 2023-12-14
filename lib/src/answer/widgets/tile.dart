@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/repositories/answer_player_asses.dart';
 import 'package:friendlyscorer/src/answer/repositories/answer_rule_asses.dart';
-import 'package:friendlyscorer/src/answer/models.dart';
+import 'package:friendlyscorer/src/answer/widgets/players.dart';
+import 'package:friendlyscorer/src/answer/widgets/rules.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
-import 'package:friendlyscorer/src/player/chip.dart';
 import 'package:friendlyscorer/src/player/repository.dart';
 import 'package:friendlyscorer/src/rule/repository.dart';
 
@@ -78,15 +79,6 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
       ];
     }
 
-    final playersWhoHaveChosenAnswer = _answerPlayerAssociationRepository
-        .getPlayersWhoHaveChosenAnswer(widget._answer.id);
-    final playersWhoHaveChosenAnswerStream = _answerPlayerAssociationRepository
-        .getPlayersWhoHaveChosenAnswerStream(widget._answer.id);
-    final rulesAffectingAnswer = _answerRuleAssociationRepository
-        .getRulesAffectingAnswer(widget._answer.id);
-    final streamOfRulesAffectingAnswer = _answerRuleAssociationRepository
-        .getStreamOfRulesAffectingAnswer(widget._answer.id);
-
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -112,44 +104,17 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
             ],
           ),
           const SizedBox(height: 8),
-          StreamBuilder(
-            initialData: playersWhoHaveChosenAnswer,
-            stream: playersWhoHaveChosenAnswerStream,
-            builder: (context, snapshot) {
-              final players = snapshot.data!
-                  .map((id) => _playerRepository.getPlayerById(id)!)
-                  .toList()
-                ..sort((a, b) => a.id.compareTo(b.id));
-
-              final chips = players
-                  .map((p) => PlayerChip(player: p))
-                  .toList(growable: false);
-
-              return Wrap(spacing: 4, children: chips);
-            },
+          AnswerTilePlayers(
+            answerId: widget._answer.id,
+            playerRepository: _playerRepository,
+            answerPlayerAssociationRepository:
+                _answerPlayerAssociationRepository,
           ),
           const SizedBox(height: 8),
-          StreamBuilder(
-            initialData: rulesAffectingAnswer,
-            stream: streamOfRulesAffectingAnswer,
-            builder: (context, snapshot) {
-              final rules = snapshot.data!
-                  .map((id) => _ruleRepository.getRuleById(id))
-                  .toList()
-                ..sort((a, b) => a.id.compareTo(b.id));
-
-              final bulletPoints = rules.map((r) {
-                return Text(
-                  '• ${r.text}',
-                  style: bodyStyle(context),
-                );
-              }).toList(growable: false);
-
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: bulletPoints,
-              );
-            },
+          AnswerTileRules(
+            answerId: widget._answer.id,
+            ruleRepository: _ruleRepository,
+            answerRuleAssociationRepository: _answerRuleAssociationRepository,
           ),
         ],
       ),

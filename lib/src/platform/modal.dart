@@ -9,32 +9,18 @@ void presentPlatformModal<T>({
   required BuildContext context,
   required Widget Function(BuildContext) builder,
 }) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    showCupertinoDialog<T>(context: context, builder: builder);
+  } else if (!kIsWeb && Platform.isMacOS) {
+    showMacosSheet<T>(context: context, builder: builder);
+  } else {
     showBottomSheet<T>(
       context: context,
       constraints: const BoxConstraints(maxWidth: 592),
       elevation: 8,
       builder: builder,
     );
-    return;
   }
-
-  if (Platform.isIOS) {
-    showCupertinoDialog<T>(context: context, builder: builder);
-    return;
-  }
-
-  if (Platform.isMacOS) {
-    showMacosSheet<T>(context: context, builder: builder);
-    return;
-  }
-
-  showBottomSheet<T>(
-    context: context,
-    constraints: const BoxConstraints(maxWidth: 592),
-    elevation: 8,
-    builder: builder,
-  );
 }
 
 Future<bool> presentPlatformDestructionConfirmation({
@@ -42,33 +28,7 @@ Future<bool> presentPlatformDestructionConfirmation({
   Widget? title,
   Widget? message,
 }) async {
-  if (kIsWeb) {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: title,
-          content: message,
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Keep'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    return result ?? false;
-  }
-
-  if (Platform.isIOS) {
+  if (!kIsWeb && Platform.isIOS) {
     final result = await showCupertinoModalPopup<bool>(
       context: context,
       builder: (context) {
@@ -91,9 +51,7 @@ Future<bool> presentPlatformDestructionConfirmation({
       },
     );
     return result ?? false;
-  }
-
-  if (Platform.isMacOS) {
+  } else if (!kIsWeb && Platform.isMacOS) {
     final result = await showMacosAlertDialog<bool>(
       context: context,
       builder: (context) {
@@ -118,26 +76,29 @@ Future<bool> presentPlatformDestructionConfirmation({
       },
     );
     return result ?? false;
+  } else {
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: title,
+          content: message,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Keep'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    return result ?? false;
   }
-
-  final result = await showDialog<bool>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: title,
-        content: message,
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Keep'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Delete'),
-          ),
-        ],
-      );
-    },
-  );
-  return result ?? false;
 }

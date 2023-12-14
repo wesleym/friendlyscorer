@@ -17,30 +17,21 @@ class PlatformFilledTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
+    if (!kIsWeb && Platform.isIOS) {
+      return CupertinoButton.filled(
+        onPressed: onPressed,
+        child: child,
+      );
+    } else if (!kIsWeb && Platform.isMacOS) {
+      return PushButton(
+        controlSize: ControlSize.regular,
+        child: child,
+      );
+    } else {
       return FilledButton(
         onPressed: onPressed,
         child: child,
       );
     }
-
-    if (Platform.isIOS) {
-      return CupertinoButton.filled(
-        onPressed: onPressed,
-        child: child,
-      );
-    }
-
-    if (Platform.isMacOS) {
-      return PushButton(
-        controlSize: ControlSize.regular,
-        child: child,
-      );
-    }
-
-    return FilledButton(
-      onPressed: onPressed,
-      child: child,
-    );
   }
 }

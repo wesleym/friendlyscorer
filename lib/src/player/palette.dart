@@ -82,20 +82,14 @@ final materialPlayerColors = [
 ];
 
 List<Color> playerColors(BuildContext context) {
-  if (kIsWeb) {
-    return materialPlayerColors;
-  }
-
-  if (Platform.isIOS) {
+  if (!kIsWeb && Platform.isIOS) {
     return cupertinoPlayerColors;
-  }
-
-  if (Platform.isMacOS) {
+  } else if (!kIsWeb && Platform.isMacOS) {
     return switch (MacosTheme.of(context).brightness) {
       Brightness.dark => darkMacPlayerColors,
       Brightness.light => lightMacPlayerColors,
     };
+  } else {
+    return materialPlayerColors;
   }
-
-  return materialPlayerColors;
 }

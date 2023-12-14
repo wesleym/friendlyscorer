@@ -7,99 +7,43 @@ import 'package:flutter/material.dart';
 class PlatformIcons {
   PlatformIcons._();
 
-  static IconData get delete {
-    if (kIsWeb) {
-      return Icons.close;
-    }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.clear;
-    }
-
-    return Icons.close;
-  }
-
   static IconData get trash {
-    if (kIsWeb) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      return CupertinoIcons.trash;
+    } else {
       return Icons.delete;
     }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.trash;
-    }
-
-    return Icons.delete;
   }
 
   static IconData get add {
-    if (kIsWeb) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      return CupertinoIcons.add;
+    } else {
       return Icons.add;
     }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.add;
-    }
-
-    return Icons.add;
   }
 
   static IconData get specialRules {
-    if (kIsWeb) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      return CupertinoIcons.exclamationmark_square;
+    } else {
       return Icons.assignment_late;
     }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.exclamationmark_square;
-    }
-
-    return Icons.assignment_late;
   }
 
   static IconData get answers {
-    if (kIsWeb) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      return CupertinoIcons.text_bubble;
+    } else {
       return Icons.message;
     }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.text_bubble;
-    }
-
-    return Icons.message;
   }
 
   static IconData get players {
-    if (kIsWeb) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      return CupertinoIcons.person_3;
+    } else {
       return Icons.groups;
     }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.person_3;
-    }
-
-    return Icons.groups;
-  }
-
-  static IconData get chevronDown {
-    if (kIsWeb) {
-      return Icons.expand_more;
-    }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.chevron_down;
-    }
-
-    return Icons.expand_more;
-  }
-
-  static IconData get chevronUp {
-    if (kIsWeb) {
-      return Icons.expand_less;
-    }
-
-    if (Platform.isIOS || Platform.isMacOS) {
-      return CupertinoIcons.chevron_up;
-    }
-
-    return Icons.expand_less;
   }
 }

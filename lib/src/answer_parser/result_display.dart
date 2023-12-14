@@ -20,30 +20,21 @@ class ResultDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
+    if (!kIsWeb && Platform.isIOS) {
+      return CupertinoResultDisplay(
+        results: _results,
+        onSelect: _onSelect,
+      );
+    } else if (!kIsWeb && Platform.isMacOS) {
+      return MacResultDisplay(
+        results: _results,
+        onSelect: _onSelect,
+      );
+    } else {
       return MaterialResultDisplay(
         results: _results,
         onSelect: _onSelect,
       );
     }
-
-    if (Platform.isIOS) {
-      return CupertinoResultDisplay(
-        results: _results,
-        onSelect: _onSelect,
-      );
-    }
-
-    if (Platform.isMacOS) {
-      return MacResultDisplay(
-        results: _results,
-        onSelect: _onSelect,
-      );
-    }
-
-    return MaterialResultDisplay(
-      results: _results,
-      onSelect: _onSelect,
-    );
   }
 }

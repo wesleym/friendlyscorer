@@ -17,23 +17,17 @@ class PlatformButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      return TextButton(onPressed: onPressed, child: child);
-    }
-
-    if (Platform.isIOS) {
+    if (!kIsWeb && Platform.isIOS) {
       return CupertinoButton(onPressed: onPressed, child: child);
-    }
-
-    if (Platform.isMacOS) {
+    } else if (!kIsWeb && Platform.isMacOS) {
       return PushButton(
         controlSize: ControlSize.regular,
         onPressed: onPressed,
         secondary: true,
         child: child,
       );
+    } else {
+      return TextButton(onPressed: onPressed, child: child);
     }
-
-    return TextButton(onPressed: onPressed, child: child);
   }
 }

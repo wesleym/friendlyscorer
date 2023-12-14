@@ -7,21 +7,12 @@ import 'package:friendlyscorer/src/home/mac.dart';
 import 'package:friendlyscorer/src/home/material.dart';
 
 void main() async {
-  if (kIsWeb) {
-    runApp(const FriendlyMaterialApp());
-    return;
-  }
-
-  if (Platform.isIOS) {
+  if (!kIsWeb && Platform.isIOS) {
     runApp(const FriendlyCupertinoApp());
-    return;
-  }
-
-  if (Platform.isMacOS) {
+  } else if (!kIsWeb && Platform.isMacOS) {
     await configureMacosWindowUtils();
     runApp(const FriendlyMacApp());
-    return;
+  } else {
+    runApp(const FriendlyMaterialApp());
   }
-
-  runApp(const FriendlyMaterialApp());
 }

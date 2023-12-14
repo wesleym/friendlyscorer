@@ -22,7 +22,20 @@ class PlatformTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
+    if (!kIsWeb && Platform.isIOS) {
+      return CupertinoTextField(
+        maxLines: maxLines,
+        placeholder: placeholder,
+        onChanged: onChanged,
+        onTapOutside: onTapOutside,
+      );
+    } else if (!kIsWeb && Platform.isMacOS) {
+      return MacosTextField(
+        maxLines: maxLines,
+        placeholder: placeholder,
+        onChanged: onChanged,
+      );
+    } else {
       return TextField(
         maxLines: maxLines,
         decoration: InputDecoration(
@@ -33,32 +46,6 @@ class PlatformTextField extends StatelessWidget {
         onTapOutside: onTapOutside,
       );
     }
-
-    if (Platform.isIOS) {
-      return CupertinoTextField(
-        maxLines: maxLines,
-        placeholder: placeholder,
-        onChanged: onChanged,
-        onTapOutside: onTapOutside,
-      );
-    }
-    if (Platform.isMacOS) {
-      return MacosTextField(
-        maxLines: maxLines,
-        placeholder: placeholder,
-        onChanged: onChanged,
-      );
-    }
-
-    return TextField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        hintText: placeholder,
-        border: const OutlineInputBorder(),
-      ),
-      onChanged: onChanged,
-      onTapOutside: onTapOutside,
-    );
   }
 }
 
@@ -86,18 +73,7 @@ class PlatformInvisibleTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      return TextField(
-        decoration: InputDecoration(hintText: placeholder),
-        maxLines: maxLines,
-        onChanged: onChanged,
-        onTapOutside: onTapOutside,
-        style: style,
-        onSubmitted: _onSubmitted,
-        controller: _controller,
-      );
-    }
-    if (Platform.isIOS) {
+    if (!kIsWeb && Platform.isIOS) {
       return CupertinoTextField(
         maxLines: maxLines,
         placeholder: placeholder,
@@ -108,8 +84,7 @@ class PlatformInvisibleTextField extends StatelessWidget {
         controller: _controller,
         decoration: null,
       );
-    }
-    if (Platform.isMacOS) {
+    } else if (!kIsWeb && Platform.isMacOS) {
       return MacosTextField(
         maxLines: maxLines,
         placeholder: placeholder,
@@ -119,16 +94,16 @@ class PlatformInvisibleTextField extends StatelessWidget {
         controller: _controller,
         decoration: null,
       );
+    } else {
+      return TextField(
+        decoration: InputDecoration(hintText: placeholder),
+        maxLines: maxLines,
+        onChanged: onChanged,
+        onTapOutside: onTapOutside,
+        style: style,
+        onSubmitted: _onSubmitted,
+        controller: _controller,
+      );
     }
-
-    return TextField(
-      decoration: InputDecoration(hintText: placeholder),
-      maxLines: maxLines,
-      onChanged: onChanged,
-      onTapOutside: onTapOutside,
-      style: style,
-      onSubmitted: _onSubmitted,
-      controller: _controller,
-    );
   }
 }

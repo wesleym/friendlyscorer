@@ -6,81 +6,51 @@ import 'package:flutter/material.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 Color platformAnswerColor(BuildContext context) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.systemFill;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosColors.controlBackgroundColor.resolveFrom(context);
+  } else {
     return Theme.of(context).colorScheme.primaryContainer;
   }
-
-  if (Platform.isIOS) {
-    return CupertinoColors.systemFill;
-  }
-
-  if (Platform.isMacOS) {
-    return MacosColors.controlBackgroundColor.resolveFrom(context);
-  }
-
-  return Theme.of(context).colorScheme.primaryContainer;
 }
 
 Color platformCanvasColor(BuildContext context) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.systemBackground;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosTheme.of(context).canvasColor;
+  } else {
     return Theme.of(context).colorScheme.background;
   }
-
-  if (Platform.isIOS) {
-    return CupertinoColors.systemBackground;
-  }
-
-  if (Platform.isMacOS) {
-    return MacosTheme.of(context).canvasColor;
-  }
-
-  return Theme.of(context).colorScheme.background;
 }
 
 Color platformDanger(BuildContext context) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.destructiveRed;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosColors.appleRed;
+  } else {
     return Colors.red;
   }
-
-  if (Platform.isIOS) {
-    return CupertinoColors.destructiveRed;
-  }
-
-  if (Platform.isMacOS) {
-    return MacosColors.appleRed;
-  }
-
-  return Colors.red;
 }
 
 Color ontoPlatformDanger(BuildContext context) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.label;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosColors.labelColor;
+  } else {
     return Theme.of(context).colorScheme.onPrimary;
   }
-
-  if (Platform.isIOS) {
-    return CupertinoColors.label;
-  }
-
-  if (Platform.isMacOS) {
-    return MacosColors.labelColor;
-  }
-
-  return Theme.of(context).colorScheme.onPrimary;
 }
 
 Color ontoPlatformPlayer(BuildContext context) {
-  if (kIsWeb) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.white;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosColors.white;
+  } else {
     return Colors.white;
   }
-
-  if (Platform.isIOS) {
-    return CupertinoColors.white;
-  }
-
-  if (Platform.isMacOS) {
-    return MacosColors.white;
-  }
-
-  return Colors.white;
 }

@@ -17,31 +17,22 @@ class PlatformIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
+    if (!kIsWeb && Platform.isIOS) {
+      return CupertinoButton(
+        onPressed: onPressed,
+        child: Icon(icon),
+      );
+    } else if (!kIsWeb && Platform.isMacOS) {
+      return MacosIconButton(
+        icon: MacosIcon(icon),
+        onPressed: onPressed,
+      );
+    } else {
       return IconButton(
         onPressed: onPressed,
         icon: Icon(icon),
       );
     }
-
-    if (Platform.isIOS) {
-      return CupertinoButton(
-        onPressed: onPressed,
-        child: Icon(icon),
-      );
-    }
-
-    if (Platform.isMacOS) {
-      return MacosIconButton(
-        icon: MacosIcon(icon),
-        onPressed: onPressed,
-      );
-    }
-
-    return IconButton(
-      onPressed: onPressed,
-      icon: Icon(icon),
-    );
   }
 }
 
@@ -57,14 +48,10 @@ class PlatformIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb || Platform.isIOS) {
+    if (!kIsWeb && Platform.isMacOS) {
+      return MacosIcon(icon, color: color);
+    } else {
       return Icon(icon, color: color);
     }
-
-    if (Platform.isMacOS) {
-      return MacosIcon(icon, color: color);
-    }
-
-    return Icon(icon, color: color);
   }
 }

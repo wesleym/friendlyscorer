@@ -33,10 +33,11 @@ class _MaterialHomePageState extends State<MaterialHomePage> {
           title: const Text('Friendly Scorer'),
           actions: [
             TextButton(
-                onPressed: () {
-                  setState(() => _editing = !_editing);
-                },
-                child: const Text('Edit')),
+              onPressed: () {
+                setState(() => _editing = !_editing);
+              },
+              child: const Text('Edit'),
+            ),
           ],
         ),
         body: const HomePageBody(),

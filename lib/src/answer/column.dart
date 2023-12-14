@@ -4,7 +4,7 @@ import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/new_answer.dart';
 import 'package:friendlyscorer/src/answer/tiles.dart';
 import 'package:friendlyscorer/src/answer/trash.dart';
-import 'package:friendlyscorer/src/editing/editing.dart';
+import 'package:friendlyscorer/src/home/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';

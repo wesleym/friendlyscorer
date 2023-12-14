@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/src/editing/editing.dart';
+import 'package:friendlyscorer/src/home/editing.dart';
 import 'package:friendlyscorer/src/home/home_page.dart';
 
 class FriendlyMaterialApp extends StatelessWidget {

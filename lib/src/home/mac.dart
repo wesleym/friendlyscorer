@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/editing/editing.dart';
+import 'package:friendlyscorer/src/home/editing.dart';
 import 'package:friendlyscorer/src/home/home_page.dart';
 import 'package:macos_ui/macos_ui.dart';
 

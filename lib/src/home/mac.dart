@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/src/home/editing.dart';
 import 'package:friendlyscorer/src/home/home_page.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class FriendlyMacApp extends StatelessWidget {
@@ -28,17 +29,6 @@ class _MacHomePageState extends State<MacHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = MacosTheme.of(context).brightness;
-    final Color contentAreaColor;
-    switch (brightness) {
-      case Brightness.light:
-        contentAreaColor = MacosColors.black;
-      case Brightness.dark:
-        contentAreaColor = MacosColors.white;
-      default:
-        throw StateError('Unexpected brightness $brightness');
-    }
-
     return MacosWindow(
       child: Builder(builder: (context) {
         return EditingProvider(
@@ -62,7 +52,9 @@ class _MacHomePageState extends State<MacHomePage> {
               ContentArea(
                 builder: (context, scrollController) {
                   return DecoratedBox(
-                    decoration: BoxDecoration(color: contentAreaColor),
+                    decoration: BoxDecoration(
+                      color: platformCanvasColor(context),
+                    ),
                     child: const HomePageBody(),
                   );
                 },

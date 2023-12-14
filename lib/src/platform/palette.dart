@@ -15,9 +15,7 @@ Color platformAnswerColor(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    // TODO: This isn't exactly appropriate. The background should be white or
-    // black, and these should probably be canvas.
-    return MacosTheme.of(context).dividerColor;
+    return MacosColors.controlBackgroundColor.resolveFrom(context);
   }
 
   return Theme.of(context).colorScheme.primaryContainer;
@@ -33,9 +31,7 @@ Color platformCanvasColor(BuildContext context) {
   }
 
   if (Platform.isMacOS) {
-    // TODO: This isn't exactly appropriate. The background should be white or
-    // black, and these should probably be canvas.
-    return MacosTheme.of(context).dividerColor;
+    return MacosTheme.of(context).canvasColor;
   }
 
   return Theme.of(context).colorScheme.background;

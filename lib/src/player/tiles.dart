@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answer/repositories/answer_player_asses.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/player/models.dart';
@@ -90,9 +91,10 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    var lightInactiveGray = HSLColor.fromColor(CupertinoColors.inactiveGray)
-        .withLightness(
-            HSLColor.fromColor(CupertinoColors.inactiveGray).lightness + 0.1)
+    final tileColor = newPlayerTileColor();
+
+    var lightTileColor = HSLColor.fromColor(tileColor)
+        .withLightness(HSLColor.fromColor(tileColor).lightness + 0.1)
         .toColor();
 
     return Container(
@@ -105,10 +107,7 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            lightInactiveGray,
-            CupertinoColors.inactiveGray,
-          ],
+          colors: [lightTileColor, tileColor],
         ),
       ),
       child: PlatformInvisibleTextField(

@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/src/answer/repositories/answer_rule_asses.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
+import 'package:friendlyscorer/src/answer/repositories/answer_rule_asses.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
 import 'package:friendlyscorer/src/rule/models.dart';
@@ -20,7 +21,7 @@ class _RuleTileState extends State<RuleTile> {
   @override
   Widget build(BuildContext context) {
     final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
+        answerTileHeading(context)?.copyWith(color: ontoPlatformRule(context));
 
     return DragTarget<Answer>(
       onWillAccept: (data) {
@@ -36,13 +37,10 @@ class _RuleTileState extends State<RuleTile> {
             shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            gradient: const LinearGradient(
+            gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                CupertinoColors.systemTeal,
-                CupertinoColors.systemPurple
-              ],
+              colors: ruleTileColors(),
             ),
           ),
           child: Text(
@@ -79,7 +77,7 @@ class _NewRuleTileState extends State<NewRuleTile> {
   @override
   Widget build(BuildContext context) {
     final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: CupertinoColors.white);
+        answerTileHeading(context)?.copyWith(color: ontoPlatformRule(context));
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -88,10 +86,10 @@ class _NewRuleTileState extends State<NewRuleTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [CupertinoColors.systemTeal, CupertinoColors.systemPurple],
+          colors: ruleTileColors(),
         ),
       ),
       child: PlatformInvisibleTextField(

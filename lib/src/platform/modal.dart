@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 void presentPlatformModal<T>({
@@ -63,7 +64,7 @@ Future<bool> presentPlatformDestructionConfirmation({
             onPressed: () => Navigator.of(context).pop(true),
             controlSize: ControlSize.large,
             // Broken in https://github.com/macosui/macos_ui/issues/486.
-            color: CupertinoColors.destructiveRed,
+            color: platformDanger(context),
             child: const Text('Delete'),
           ),
           secondaryButton: PushButton(

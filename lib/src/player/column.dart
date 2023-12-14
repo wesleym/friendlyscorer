@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/home/editing.dart';
 import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/player/id.dart';
 import 'package:friendlyscorer/src/player/models.dart';
 import 'package:friendlyscorer/src/player/repository.dart';
@@ -24,9 +25,9 @@ class PlayerColumn extends StatelessWidget {
     if (editing) {
       clearButton = PlatformButton(
         onPressed: () => _onClearPlayers(context),
-        child: const Text(
+        child: Text(
           'Clear',
-          style: TextStyle(color: CupertinoColors.destructiveRed),
+          style: TextStyle(color: platformDanger(context)),
         ),
       );
     }
@@ -43,7 +44,7 @@ class PlayerColumn extends StatelessWidget {
               children: [
                 PlatformIcon(
                   PlatformIcons.players,
-                  color: CupertinoColors.inactiveGray,
+                  color: sectionHeadingColor(),
                 ),
                 if (clearButton != null) clearButton,
               ],

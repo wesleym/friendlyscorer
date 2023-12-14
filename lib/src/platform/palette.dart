@@ -54,3 +54,33 @@ Color ontoPlatformPlayer(BuildContext context) {
     return Colors.white;
   }
 }
+
+Color ontoPlatformRule(BuildContext context) {
+  if (!kIsWeb && Platform.isIOS) {
+    return CupertinoColors.white;
+  } else if (!kIsWeb && Platform.isMacOS) {
+    return MacosColors.white;
+  } else {
+    return Colors.white;
+  }
+}
+
+Color sectionHeadingColor() => CupertinoColors.inactiveGray;
+
+Color shadowColor() => CupertinoColors.systemGrey;
+
+Color newPlayerTileColor() => CupertinoColors.inactiveGray;
+
+List<Color> answerCandidateChipColors() {
+  return [
+    CupertinoColors.systemGreen,
+    CupertinoColors.activeOrange,
+  ];
+}
+
+List<Color> ruleTileColors() {
+  return [
+    CupertinoColors.systemGreen,
+    CupertinoColors.activeOrange,
+  ];
+}

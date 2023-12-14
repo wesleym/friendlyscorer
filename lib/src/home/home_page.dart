@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answer/repositories/answers.dart';
 import 'package:friendlyscorer/src/answer/widgets/column.dart';
 import 'package:friendlyscorer/src/player/column.dart';

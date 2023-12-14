@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/repositories/answers.dart';
 import 'package:friendlyscorer/src/answer/widgets/new_answer.dart';
@@ -9,6 +9,7 @@ import 'package:friendlyscorer/src/platform/button.dart';
 import 'package:friendlyscorer/src/platform/icon_button.dart';
 import 'package:friendlyscorer/src/platform/icons.dart';
 import 'package:friendlyscorer/src/platform/modal.dart';
+import 'package:friendlyscorer/src/platform/palette.dart';
 
 class AnswerColumn extends StatelessWidget {
   final AnswerRepository _answerRepository;
@@ -27,9 +28,9 @@ class AnswerColumn extends StatelessWidget {
     if (editing.editing) {
       clearButton = PlatformButton(
         onPressed: () => _onClearAnswers(context),
-        child: const Text(
+        child: Text(
           'Clear',
-          style: TextStyle(color: CupertinoColors.destructiveRed),
+          style: TextStyle(color: platformDanger(context)),
         ),
       );
       onDelete = _onDeleteAnswer;
@@ -66,7 +67,7 @@ class AnswerColumn extends StatelessWidget {
               children: [
                 PlatformIcon(
                   PlatformIcons.answers,
-                  color: CupertinoColors.inactiveGray,
+                  color: sectionHeadingColor(),
                 ),
                 if (clearButton != null) clearButton,
               ],

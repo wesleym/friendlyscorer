@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/src/answer/models.dart';
 import 'package:friendlyscorer/src/answer/repositories/answer_player_asses.dart';
 import 'package:friendlyscorer/src/answer/repositories/answer_rule_asses.dart';
@@ -70,11 +70,11 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
   Widget build(BuildContext context) {
     List<BoxShadow>? shadows;
     if (widget.floating) {
-      shadows = const [
+      shadows = [
         BoxShadow(
           blurRadius: 4,
-          offset: Offset(0, 2),
-          color: CupertinoColors.systemGrey,
+          offset: const Offset(0, 2),
+          color: shadowColor(),
         ),
       ];
     }

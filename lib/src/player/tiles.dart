@@ -106,8 +106,6 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            // TODO: Interpolate between different system greys instead of
-            // calculating this manually.
             lightInactiveGray,
             CupertinoColors.inactiveGray,
           ],

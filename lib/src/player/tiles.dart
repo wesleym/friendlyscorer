@@ -89,6 +89,11 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
 
   @override
   Widget build(BuildContext context) {
+    var lightInactiveGray = HSLColor.fromColor(CupertinoColors.inactiveGray)
+        .withLightness(
+            HSLColor.fromColor(CupertinoColors.inactiveGray).lightness + 0.1)
+        .toColor();
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(2),
@@ -100,11 +105,9 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            HSLColor.fromColor(CupertinoColors.inactiveGray)
-                .withLightness(
-                    HSLColor.fromColor(CupertinoColors.inactiveGray).lightness +
-                        0.1)
-                .toColor(),
+            // TODO: Interpolate between different system greys instead of
+            // calculating this manually.
+            lightInactiveGray,
             CupertinoColors.inactiveGray,
           ],
         ),

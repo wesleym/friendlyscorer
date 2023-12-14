@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/src/answerizer/answerizer.dart';
-import 'package:friendlyscorer/src/answerizer/result_display.dart';
+import 'package:friendlyscorer/src/answer_parser/answer_parser.dart';
+import 'package:friendlyscorer/src/answer_parser/result_display.dart';
 import 'package:friendlyscorer/src/platform/palette.dart';
 import 'package:friendlyscorer/src/platform/text_field.dart';
 import 'package:friendlyscorer/src/platform/typography.dart';
@@ -27,7 +27,7 @@ class _NewInnerAnswerTileState extends State<NewInnerAnswerTile> {
     super.initState();
     _controller.addListener(() {
       setState(() {
-        _candidates = answerizer(_controller.value.text);
+        _candidates = parseAnswers(_controller.value.text);
       });
     });
   }

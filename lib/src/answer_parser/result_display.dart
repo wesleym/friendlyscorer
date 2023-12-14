@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/src/answerizer/cupertino.dart';
-import 'package:friendlyscorer/src/answerizer/mac.dart';
-import 'package:friendlyscorer/src/answerizer/material.dart';
+import 'package:friendlyscorer/src/answer_parser/cupertino.dart';
+import 'package:friendlyscorer/src/answer_parser/mac.dart';
+import 'package:friendlyscorer/src/answer_parser/material.dart';
 
 class ResultDisplay extends StatelessWidget {
   final List<List<String>> _results;

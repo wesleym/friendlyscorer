@@ -1,38 +1,39 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:friendlyscorer/src/answerizer/answerizer.dart';
+import 'package:friendlyscorer/src/answer_parser/answer_parser.dart';
 
 void main() {
-  test('answerizer parses empty string as no results', () {
+  test('answer parser parses empty string as no results', () {
     const input = '';
     const expected = <List<String>>[];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses whitespace as no results', () {
+  test('answer parser parses whitespace as no results', () {
     const input = ' ';
     const expected = <List<String>>[];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer splits string with no other separators on spaces', () {
+  test('answer parser splits string with no other separators on spaces', () {
     const input = 'Britney Spears';
     const expected = [
       ['Britney', 'Spears'],
       ['Britney Spears'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer does not splits string with other separators on spaces', () {
+  test('answer parser does not splits string with other separators on spaces',
+      () {
     const input = 'Britney Spears,';
     const expected = [
       ['Britney Spears'],
       ['Britney Spears,'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses answers on multiple lines correctly', () {
+  test('answer parser parses answers on multiple lines correctly', () {
     const input = '''
 Britney Spears
 Charles Barkley
@@ -41,10 +42,10 @@ Eddie Murphy''';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses answers on multiple lines with blank lines', () {
+  test('answer parser parses answers on multiple lines with blank lines', () {
     const input = '''
 Britney Spears
 
@@ -56,10 +57,10 @@ Eddie Murphy''';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses answers on multiple lines by trimming lines', () {
+  test('answer parser parses answers on multiple lines by trimming lines', () {
     const input = '''
 Britney Spears
 
@@ -71,10 +72,10 @@ Eddie Murphy  ''';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses answers on multiple lines with bullets', () {
+  test('answer parser parses answers on multiple lines with bullets', () {
     const input = '''
 * Britney Spears
 
@@ -92,11 +93,11 @@ Eddie Murphy  ''';
         'Eddie Murphy',
       ],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
   test(
-      'answerizer parses answers on multiple lines with bullets and whitespace',
+      'answer parser parses answers on multiple lines with bullets and whitespace',
       () {
     const input = '''
   * Britney Spears
@@ -115,10 +116,11 @@ Eddie Murphy  ''';
         'Eddie Murphy',
       ],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses answers on multiple lines with numbered lines', () {
+  test('answer parser parses answers on multiple lines with numbered lines',
+      () {
     const input = '''
 1. Britney Spears
 
@@ -136,11 +138,11 @@ Eddie Murphy  ''';
         'Eddie Murphy',
       ],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
   test(
-      'answerizer parses answers on multiple lines with numbered lines and whitespace',
+      'answer parser parses answers on multiple lines with numbered lines and whitespace',
       () {
     const input = '''
   1. Britney Spears
@@ -159,11 +161,11 @@ Eddie Murphy  ''';
         'Eddie Murphy',
       ],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
   test(
-      'answerizer parses answers on multiple lines with both numbered lines and bullets',
+      'answer parser parses answers on multiple lines with both numbered lines and bullets',
       () {
     const input = '''
 1. Britney Spears
@@ -179,47 +181,47 @@ Eddie Murphy  ''';
         '* Eddie Murphy',
       ],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses comma-separated answers', () {
+  test('answer parser parses comma-separated answers', () {
     const input = 'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses semicolon-separated answers', () {
+  test('answer parser parses semicolon-separated answers', () {
     const input = 'Britney Spears; Charles Barkley; Chevy Chase; Eddie Murphy';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears; Charles Barkley; Chevy Chase; Eddie Murphy'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses period-separated answers', () {
+  test('answer parser parses period-separated answers', () {
     const input = 'Britney Spears. Charles Barkley. Chevy Chase. Eddie Murphy.';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears. Charles Barkley. Chevy Chase. Eddie Murphy.'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses multiple separators', () {
+  test('answer parser parses multiple separators', () {
     const input = 'Britney Spears, Charles Barkley; Chevy Chase. Eddie Murphy.';
     const expected = [
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase. Eddie Murphy.'],
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears, Charles Barkley; Chevy Chase. Eddie Murphy.'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 
-  test('answerizer parses single line with trailing newline', () {
+  test('answer parser parses single line with trailing newline', () {
     const input =
         'Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy.  \n';
     const expected = [
@@ -227,6 +229,6 @@ Eddie Murphy  ''';
       ['Britney Spears', 'Charles Barkley', 'Chevy Chase', 'Eddie Murphy'],
       ['Britney Spears, Charles Barkley, Chevy Chase, Eddie Murphy.'],
     ];
-    expect(answerizer(input), equals(expected));
+    expect(parseAnswers(input), equals(expected));
   });
 }

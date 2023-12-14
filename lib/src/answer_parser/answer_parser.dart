@@ -1,18 +1,18 @@
-List<List<String>> answerizer(String answer) {
+List<List<String>> parseAnswers(String answer) {
   answer = answer.trim();
 
   if (answer.isEmpty) return [];
 
   if (answer.contains('\n')) {
     final lines = answer.split('\n');
-    return _answerizerMultiline(lines);
+    return _parseAnswersMultiline(lines);
   } else {
     final line = answer.trim();
-    return _answerizerSingleLine(line);
+    return _parseAnswersSingleLine(line);
   }
 }
 
-List<List<String>> _answerizerSingleLine(String answer) {
+List<List<String>> _parseAnswersSingleLine(String answer) {
   final results = <List<String>>[];
 
   if (answer.contains(RegExp(r'[,;]'))) {
@@ -98,7 +98,7 @@ List<List<String>> _answerizerSingleLine(String answer) {
   return results;
 }
 
-List<List<String>> _answerizerMultiline(List<String> rawLines) {
+List<List<String>> _parseAnswersMultiline(List<String> rawLines) {
   final results = <List<String>>[];
   final rawResults = rawLines
       .map((e) => e.trim())

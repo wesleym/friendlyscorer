@@ -4,9 +4,12 @@ import 'package:friendlyscorer/src/player/models.dart';
 import 'package:friendlyscorer/src/rule/id.dart';
 import 'package:friendlyscorer/src/rule/models.dart';
 
-Answer answerFromName(String name) {
-  return Answer(id: name, text: name);
-}
+// Data to prepopulate the scoreboard at launch. This data represents round 2 of
+// Game Show episode 214: Pity Points.
+//
+// See <https://www.theincomparable.com/gameshow/214/>.
+
+Answer answerFromName(String name) => Answer(id: name, text: name);
 
 final steveMartin = answerFromName('Steve Martin');
 final taylorSwift = answerFromName('Taylor Swift');
@@ -52,7 +55,7 @@ final defaultAnswers = [
   magnusCarlsen,
 ].toList();
 
-Player fromName(String name) {
+Player playerFromName(String name) {
   final nextId = PlayerIdVendor().next();
   return Player(
     id: nextId.toString(),
@@ -60,11 +63,11 @@ Player fromName(String name) {
   );
 }
 
-final chip = fromName('Chip');
-final brian = fromName('Brian');
-final shelley = fromName('Shelley');
-final kathy = fromName('Kathy');
-final carlGpt = fromName('CarlGPT');
+final chip = playerFromName('Chip');
+final brian = playerFromName('Brian');
+final shelley = playerFromName('Shelley');
+final kathy = playerFromName('Kathy');
+final carlGpt = playerFromName('CarlGPT');
 
 final defaultPlayers = [
   brian,

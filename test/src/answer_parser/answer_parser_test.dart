@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:friendlyscorer/src/answer_parser/answer_parser.dart';
+import 'package:friendlyscorer/answer_parser/answer_parser.dart';
 
 void main() {
   test('answer parser parses empty string as no results', () {

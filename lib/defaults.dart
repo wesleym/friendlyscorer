@@ -9,53 +9,53 @@ import 'package:friendlyscorer/rule/models.dart';
 //
 // See <https://www.theincomparable.com/gameshow/214/>.
 
-Answer answerFromName(String name) => Answer(id: name, text: name);
+Answer _answerFromName(String name) => Answer(id: name, text: name);
 
-final steveMartin = answerFromName('Steve Martin');
-final taylorSwift = answerFromName('Taylor Swift');
-final eddieMurphy = answerFromName('Eddie Murphy');
-final chevyChase = answerFromName('Chevy Chase');
+final _steveMartin = _answerFromName('Steve Martin');
+final _taylorSwift = _answerFromName('Taylor Swift');
+final _eddieMurphy = _answerFromName('Eddie Murphy');
+final _chevyChase = _answerFromName('Chevy Chase');
 
-final robertDowneyJr = answerFromName('Robert Downey Jr.');
-final linManuelMiranda = answerFromName('Lin-Manuel Miranda');
-final paulGiamatti = answerFromName('Paul Giamatti');
-final justinTimberlake = answerFromName('Justin Timberlake');
+final _robertDowneyJr = _answerFromName('Robert Downey Jr.');
+final _linManuelMiranda = _answerFromName('Lin-Manuel Miranda');
+final _paulGiamatti = _answerFromName('Paul Giamatti');
+final _justinTimberlake = _answerFromName('Justin Timberlake');
 
-final tinaFey = answerFromName('Tina Fey');
-final paulSimon = answerFromName('Paul Simon');
-final tomHanks = answerFromName('Tom Hanks');
+final _tinaFey = _answerFromName('Tina Fey');
+final _paulSimon = _answerFromName('Paul Simon');
+final _tomHanks = _answerFromName('Tom Hanks');
 
-final taylorLautner = answerFromName('Taylor Lautner');
-final britneySpears = answerFromName('Britney Spears');
-final hughJackman = answerFromName('Hugh Jackman');
+final _taylorLautner = _answerFromName('Taylor Lautner');
+final _britneySpears = _answerFromName('Britney Spears');
+final _hughJackman = _answerFromName('Hugh Jackman');
 
-final elonMusk = answerFromName('Elon Musk');
-final ruthGordon = answerFromName('Ruth Gordon');
-final charlesBarkley = answerFromName('Charles Barkley');
-final magnusCarlsen = answerFromName('Magnus Carlsen');
+final _elonMusk = _answerFromName('Elon Musk');
+final _ruthGordon = _answerFromName('Ruth Gordon');
+final _charlesBarkley = _answerFromName('Charles Barkley');
+final _magnusCarlsen = _answerFromName('Magnus Carlsen');
 
 final defaultAnswers = [
-  steveMartin,
-  taylorSwift,
-  eddieMurphy,
-  chevyChase,
-  robertDowneyJr,
-  linManuelMiranda,
-  paulGiamatti,
-  justinTimberlake,
-  tinaFey,
-  paulSimon,
-  tomHanks,
-  taylorLautner,
-  britneySpears,
-  hughJackman,
-  elonMusk,
-  ruthGordon,
-  charlesBarkley,
-  magnusCarlsen,
+  _steveMartin,
+  _taylorSwift,
+  _eddieMurphy,
+  _chevyChase,
+  _robertDowneyJr,
+  _linManuelMiranda,
+  _paulGiamatti,
+  _justinTimberlake,
+  _tinaFey,
+  _paulSimon,
+  _tomHanks,
+  _taylorLautner,
+  _britneySpears,
+  _hughJackman,
+  _elonMusk,
+  _ruthGordon,
+  _charlesBarkley,
+  _magnusCarlsen,
 ].toList();
 
-Player playerFromName(String name) {
+Player _playerFromName(String name) {
   final nextId = PlayerIdVendor().next();
   return Player(
     id: nextId.toString(),
@@ -63,54 +63,54 @@ Player playerFromName(String name) {
   );
 }
 
-final chip = playerFromName('Chip');
-final brian = playerFromName('Brian');
-final shelley = playerFromName('Shelley');
-final kathy = playerFromName('Kathy');
-final carlGpt = playerFromName('CarlGPT');
+final _chip = _playerFromName('Chip');
+final _brian = _playerFromName('Brian');
+final _shelley = _playerFromName('Shelley');
+final _kathy = _playerFromName('Kathy');
+final _carlGpt = _playerFromName('CarlGPT');
 
 final defaultPlayers = [
-  brian,
-  chip,
-  kathy,
-  shelley,
-  carlGpt,
+  _brian,
+  _chip,
+  _kathy,
+  _shelley,
+  _carlGpt,
 ].toList();
 
 final defaultAnswerPlayerAssociations = [
-  AnswerPlayerAssociation(playerId: chip.id, answerId: steveMartin.id),
-  AnswerPlayerAssociation(playerId: chip.id, answerId: taylorSwift.id),
-  AnswerPlayerAssociation(playerId: chip.id, answerId: eddieMurphy.id),
-  AnswerPlayerAssociation(playerId: chip.id, answerId: chevyChase.id),
-  AnswerPlayerAssociation(playerId: brian.id, answerId: robertDowneyJr.id),
-  AnswerPlayerAssociation(playerId: brian.id, answerId: linManuelMiranda.id),
-  AnswerPlayerAssociation(playerId: brian.id, answerId: paulGiamatti.id),
-  AnswerPlayerAssociation(playerId: brian.id, answerId: justinTimberlake.id),
-  AnswerPlayerAssociation(playerId: shelley.id, answerId: steveMartin.id),
-  AnswerPlayerAssociation(playerId: shelley.id, answerId: tinaFey.id),
-  AnswerPlayerAssociation(playerId: shelley.id, answerId: paulSimon.id),
-  AnswerPlayerAssociation(playerId: shelley.id, answerId: tomHanks.id),
-  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorSwift.id),
-  AnswerPlayerAssociation(playerId: kathy.id, answerId: taylorLautner.id),
-  AnswerPlayerAssociation(playerId: kathy.id, answerId: britneySpears.id),
-  AnswerPlayerAssociation(playerId: kathy.id, answerId: hughJackman.id),
-  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: elonMusk.id),
-  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: ruthGordon.id),
-  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: charlesBarkley.id),
-  AnswerPlayerAssociation(playerId: carlGpt.id, answerId: magnusCarlsen.id),
+  AnswerPlayerAssociation(playerId: _chip.id, answerId: _steveMartin.id),
+  AnswerPlayerAssociation(playerId: _chip.id, answerId: _taylorSwift.id),
+  AnswerPlayerAssociation(playerId: _chip.id, answerId: _eddieMurphy.id),
+  AnswerPlayerAssociation(playerId: _chip.id, answerId: _chevyChase.id),
+  AnswerPlayerAssociation(playerId: _brian.id, answerId: _robertDowneyJr.id),
+  AnswerPlayerAssociation(playerId: _brian.id, answerId: _linManuelMiranda.id),
+  AnswerPlayerAssociation(playerId: _brian.id, answerId: _paulGiamatti.id),
+  AnswerPlayerAssociation(playerId: _brian.id, answerId: _justinTimberlake.id),
+  AnswerPlayerAssociation(playerId: _shelley.id, answerId: _steveMartin.id),
+  AnswerPlayerAssociation(playerId: _shelley.id, answerId: _tinaFey.id),
+  AnswerPlayerAssociation(playerId: _shelley.id, answerId: _paulSimon.id),
+  AnswerPlayerAssociation(playerId: _shelley.id, answerId: _tomHanks.id),
+  AnswerPlayerAssociation(playerId: _kathy.id, answerId: _taylorSwift.id),
+  AnswerPlayerAssociation(playerId: _kathy.id, answerId: _taylorLautner.id),
+  AnswerPlayerAssociation(playerId: _kathy.id, answerId: _britneySpears.id),
+  AnswerPlayerAssociation(playerId: _kathy.id, answerId: _hughJackman.id),
+  AnswerPlayerAssociation(playerId: _carlGpt.id, answerId: _elonMusk.id),
+  AnswerPlayerAssociation(playerId: _carlGpt.id, answerId: _ruthGordon.id),
+  AnswerPlayerAssociation(playerId: _carlGpt.id, answerId: _charlesBarkley.id),
+  AnswerPlayerAssociation(playerId: _carlGpt.id, answerId: _magnusCarlsen.id),
 ];
 
-final alecBaldwinOrSteveMartin =
-    ruleFromName('Alec Baldwin or Steve Martin +1');
-final athleteRule = ruleFromName('Athlete -2');
+final _alecBaldwinOrSteveMartin =
+    _ruleFromName('Alec Baldwin or Steve Martin +1');
+final _athleteRule = _ruleFromName('Athlete -2');
 
 final defaultRules = [
-  ruleFromName('Buck Henry +2'),
-  alecBaldwinOrSteveMartin,
-  athleteRule,
+  _ruleFromName('Buck Henry +2'),
+  _alecBaldwinOrSteveMartin,
+  _athleteRule,
 ];
 
-Rule ruleFromName(String r) {
+Rule _ruleFromName(String r) {
   final id = RuleIdVendor().next();
   return Rule(
     id: id.toString(),
@@ -120,11 +120,11 @@ Rule ruleFromName(String r) {
 
 final defaultAnswerRuleAssociations = [
   AnswerRuleAssociation(
-    ruleId: alecBaldwinOrSteveMartin.id,
-    answerId: steveMartin.id,
+    ruleId: _alecBaldwinOrSteveMartin.id,
+    answerId: _steveMartin.id,
   ),
   AnswerRuleAssociation(
-    ruleId: athleteRule.id,
-    answerId: charlesBarkley.id,
+    ruleId: _athleteRule.id,
+    answerId: _charlesBarkley.id,
   ),
 ];

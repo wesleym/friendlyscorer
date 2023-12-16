@@ -1,19 +1,19 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/home/editing.dart';
+import 'package:friendlyscorer/scoreboard/src/home/editing.dart';
 import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/platform/src/icon.dart';
-import 'package:friendlyscorer/player/id.dart';
-import 'package:friendlyscorer/player/models.dart';
-import 'package:friendlyscorer/player/repository.dart';
-import 'package:friendlyscorer/player/tiles.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/id.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/models.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/repository.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/tiles.dart';
 
-class PlayerColumn extends StatelessWidget {
-  final PlayerRepository _playerRepository;
-
-  const PlayerColumn({
+class RuleColumn extends StatelessWidget {
+  const RuleColumn({
     super.key,
-    required PlayerRepository playerRepository,
-  }) : _playerRepository = playerRepository;
+    required RuleRepository ruleRepository,
+  }) : _ruleRepository = ruleRepository;
+
+  final RuleRepository _ruleRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PlayerColumn extends StatelessWidget {
     Widget? clearButton;
     if (editing) {
       clearButton = PlatformButton(
-        onPressed: () => _onClearPlayers(context),
+        onPressed: () => _onClearRules(context),
         child: Text(
           'Clear',
           style: TextStyle(color: PlatformColors.platformDanger),
@@ -30,8 +30,8 @@ class PlayerColumn extends StatelessWidget {
     }
 
     return StreamBuilder(
-      initialData: _playerRepository.players,
-      stream: _playerRepository.playerStream,
+      initialData: _ruleRepository.rules,
+      stream: _ruleRepository.ruleStream,
       builder: (context, snapshot) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,7 +40,7 @@ class PlayerColumn extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 PlatformIcon(
-                  PlatformIcons.players,
+                  PlatformIcons.specialRules,
                   color: PlatformColors.sectionHeadingColor,
                 ),
                 if (clearButton != null) clearButton,
@@ -48,32 +48,31 @@ class PlayerColumn extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ...snapshot.data!.map(
-              (p) => Expanded(
-                child: PlayerTile(player: p),
+              (r) => Expanded(
+                child: RuleTile(rule: r),
               ),
             ),
-            if (!editing) NewPlayerTile(onCreatePlayer: _onCreatePlayer),
+            if (!editing) NewRuleTile(onCreateRule: _onCreateRule),
           ],
         );
       },
     );
   }
 
-  void _onClearPlayers(BuildContext context) async {
+  void _onClearRules(BuildContext context) async {
     final delete = await presentPlatformDestructionConfirmation(
       context: context,
-      title: const Text('Delete all players'),
+      title: const Text('Delete all special rules?'),
     );
     if (delete) {
-      _playerRepository.clear();
+      _ruleRepository.clear();
     }
   }
 
-  void _onCreatePlayer(String name) {
-    final id = PlayerIdVendor().next();
-    _playerRepository.add(Player(
-      id: id.toString(),
-      name: name,
-    ));
+  void _onCreateRule(String name) {
+    final id = RuleIdVendor().next();
+    _ruleRepository.add(
+      Rule(id: id.toString(), text: name),
+    );
   }
 }

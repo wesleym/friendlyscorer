@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/home/editing.dart';
-import 'package:friendlyscorer/home/home_page.dart';
+import 'package:friendlyscorer/scoreboard/src/home/editing.dart';
+import 'package:friendlyscorer/scoreboard/src/home/home_page.dart';
 
 class FriendlyMaterialApp extends StatelessWidget {
   const FriendlyMaterialApp({super.key});

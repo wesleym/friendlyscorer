@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
-import 'package:friendlyscorer/player/chip.dart';
-import 'package:friendlyscorer/player/repository.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_player_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/player/chip.dart';
+import 'package:friendlyscorer/scoreboard/src/player/repository.dart';
 
 class AnswerTilePlayers extends StatelessWidget {
   final String answerId;

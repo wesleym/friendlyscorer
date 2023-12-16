@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:friendlyscorer/defaults.dart';
-import 'package:friendlyscorer/player/models.dart';
+import 'package:friendlyscorer/scoreboard/src/player/models.dart';
 
 class PlayerRepository {
   static PlayerRepository? _instance;

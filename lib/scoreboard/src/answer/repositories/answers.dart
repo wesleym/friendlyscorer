@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
-import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_player_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_rule_asses.dart';
 import 'package:friendlyscorer/defaults.dart';
 
 class AnswerRepository {

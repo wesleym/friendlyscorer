@@ -7,6 +7,10 @@ import 'package:friendlyscorer/answer_parser/src/cupertino.dart';
 import 'package:friendlyscorer/answer_parser/src/mac.dart';
 import 'package:friendlyscorer/answer_parser/src/material.dart';
 
+/// A picker that presents the user with sets of parsed answers.
+///
+/// The user can choose the set of answers that represents the intended parsing
+/// of the input.
 class ResultDisplay extends StatelessWidget {
   final List<List<String>> _results;
   final void Function(List<String> answerCandidates)? _onSelect;

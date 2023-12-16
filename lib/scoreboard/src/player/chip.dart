@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/platform/platform.dart';
-import 'package:friendlyscorer/player/models.dart';
-import 'package:friendlyscorer/player/palette.dart';
+import 'package:friendlyscorer/scoreboard/src/player/models.dart';
+import 'package:friendlyscorer/scoreboard/src/player/palette.dart';
 
 class PlayerChip extends StatelessWidget {
   final Player _player;

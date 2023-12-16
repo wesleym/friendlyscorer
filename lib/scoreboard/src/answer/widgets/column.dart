@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/answer/repositories/answers.dart';
-import 'package:friendlyscorer/answer/widgets/new_answer.dart';
-import 'package:friendlyscorer/answer/widgets/tile.dart';
-import 'package:friendlyscorer/answer/widgets/trash.dart';
-import 'package:friendlyscorer/home/editing.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answers.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/widgets/new_answer.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/widgets/tile.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/widgets/trash.dart';
+import 'package:friendlyscorer/scoreboard/src/home/editing.dart';
 import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/platform/src/icon.dart';
 

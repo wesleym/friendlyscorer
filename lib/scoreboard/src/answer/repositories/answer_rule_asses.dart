@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:friendlyscorer/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
 import 'package:friendlyscorer/defaults.dart';
 
 class AnswerRuleAssociationRepository {

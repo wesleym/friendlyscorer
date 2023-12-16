@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_rule_asses.dart';
 import 'package:friendlyscorer/platform/platform.dart';
-import 'package:friendlyscorer/rule/models.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/models.dart';
 
 class RuleTile extends StatefulWidget {
   final Rule _rule;

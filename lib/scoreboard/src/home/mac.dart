@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/home/editing.dart';
-import 'package:friendlyscorer/home/home_page.dart';
+import 'package:friendlyscorer/scoreboard/src/home/editing.dart';
+import 'package:friendlyscorer/scoreboard/src/home/home_page.dart';
 import 'package:friendlyscorer/platform/platform.dart';
 import 'package:macos_ui/macos_ui.dart';
 

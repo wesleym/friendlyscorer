@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
-import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
-import 'package:friendlyscorer/answer/widgets/players.dart';
-import 'package:friendlyscorer/answer/widgets/rules.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_player_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_rule_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/widgets/players.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/widgets/rules.dart';
 import 'package:friendlyscorer/platform/platform.dart';
-import 'package:friendlyscorer/player/repository.dart';
-import 'package:friendlyscorer/rule/repository.dart';
+import 'package:friendlyscorer/scoreboard/src/player/repository.dart';
+import 'package:friendlyscorer/scoreboard/src/rule/repository.dart';
 
 class _AnswerTileKey extends ValueKey<String> {
   const _AnswerTileKey(super.value);

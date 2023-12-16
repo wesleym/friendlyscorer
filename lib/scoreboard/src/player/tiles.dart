@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
+import 'package:friendlyscorer/scoreboard/src/answer/repositories/answer_player_asses.dart';
 import 'package:friendlyscorer/platform/platform.dart';
-import 'package:friendlyscorer/player/models.dart';
-import 'package:friendlyscorer/player/palette.dart';
+import 'package:friendlyscorer/scoreboard/src/player/models.dart';
+import 'package:friendlyscorer/scoreboard/src/player/palette.dart';
 
 class PlayerTile extends StatefulWidget {
   final Player _player;

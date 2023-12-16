@@ -3,9 +3,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/answer/models.dart';
-import 'package:friendlyscorer/platform/icon_button.dart';
-import 'package:friendlyscorer/platform/icons.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
+import 'package:friendlyscorer/platform/src/icon.dart';
 
 class TrashTile extends StatefulWidget {
   final void Function(String candidate) _onDeleteAnswer;
@@ -65,7 +64,7 @@ class _TrashTileState extends State<TrashTile>
           decoration: ShapeDecoration(
             shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.circular(16)),
-            color: platformDanger(context),
+            color: PlatformColors.platformDanger,
             shadows: shadows,
           ),
           alignment: Alignment.center,

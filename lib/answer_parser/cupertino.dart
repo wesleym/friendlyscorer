@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:friendlyscorer/platform/palette.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 
 class CupertinoAnswerCandidateChip extends StatelessWidget {
   final String answer;
@@ -13,12 +12,12 @@ class CupertinoAnswerCandidateChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: ShapeDecoration(
-        shape: const StadiumBorder(),
+      decoration: const ShapeDecoration(
+        shape: StadiumBorder(),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: answerCandidateChipColors(),
+          colors: PlatformColors.answerCandidateChipColors,
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

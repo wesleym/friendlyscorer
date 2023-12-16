@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/player/models.dart';
 import 'package:friendlyscorer/player/palette.dart';
 

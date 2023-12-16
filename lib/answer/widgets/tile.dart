@@ -4,8 +4,7 @@ import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
 import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
 import 'package:friendlyscorer/answer/widgets/players.dart';
 import 'package:friendlyscorer/answer/widgets/rules.dart';
-import 'package:friendlyscorer/platform/palette.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/player/repository.dart';
 import 'package:friendlyscorer/rule/repository.dart';
 
@@ -71,10 +70,10 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
     List<BoxShadow>? shadows;
     if (widget.floating) {
       shadows = [
-        BoxShadow(
+        const BoxShadow(
           blurRadius: 4,
-          offset: const Offset(0, 2),
-          color: shadowColor(),
+          offset: Offset(0, 2),
+          color: PlatformColors.shadowColor,
         ),
       ];
     }
@@ -87,7 +86,7 @@ class _InnerAnswerTileState extends State<InnerAnswerTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        color: platformAnswerColor(context),
+        color: PlatformColors.platformAnswerColor(context),
         shadows: shadows,
       ),
       child: Column(

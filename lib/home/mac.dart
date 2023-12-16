@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/home/editing.dart';
 import 'package:friendlyscorer/home/home_page.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class FriendlyMacApp extends StatelessWidget {
@@ -53,7 +53,7 @@ class _MacHomePageState extends State<MacHomePage> {
                 builder: (context, scrollController) {
                   return DecoratedBox(
                     decoration: BoxDecoration(
-                      color: platformCanvasColor(context),
+                      color: PlatformColors.platformCanvasColor(context),
                     ),
                     child: const HomePageBody(),
                   );

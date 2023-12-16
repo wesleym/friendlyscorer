@@ -3,27 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:macos_ui/macos_ui.dart';
 
-void presentPlatformModal<T>({
-  required BuildContext context,
-  required Widget Function(BuildContext) builder,
-}) {
-  if (!kIsWeb && Platform.isIOS) {
-    showCupertinoDialog<T>(context: context, builder: builder);
-  } else if (!kIsWeb && Platform.isMacOS) {
-    showMacosSheet<T>(context: context, builder: builder);
-  } else {
-    showBottomSheet<T>(
-      context: context,
-      constraints: const BoxConstraints(maxWidth: 592),
-      elevation: 8,
-      builder: builder,
-    );
-  }
-}
-
+/// Presents an appropriate confirmation modal that requests confirmation from
+/// the user before performing a destructive answer.
 Future<bool> presentPlatformDestructionConfirmation({
   required BuildContext context,
   Widget? title,
@@ -64,7 +48,7 @@ Future<bool> presentPlatformDestructionConfirmation({
             onPressed: () => Navigator.of(context).pop(true),
             controlSize: ControlSize.large,
             // Broken in https://github.com/macosui/macos_ui/issues/486.
-            color: platformDanger(context),
+            color: PlatformColors.platformDanger,
             child: const Text('Delete'),
           ),
           secondaryButton: PushButton(

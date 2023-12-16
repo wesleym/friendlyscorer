@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:friendlyscorer/home/editing.dart';
 import 'package:friendlyscorer/home/home_page.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 
 class FriendlyCupertinoApp extends StatelessWidget {
   const FriendlyCupertinoApp({super.key});
@@ -39,7 +39,7 @@ class _CupertinoHomePageState extends State<CupertinoHomePage> {
               },
               child: const Icon(CupertinoIcons.pencil)),
         ),
-        backgroundColor: platformCanvasColor(context),
+        backgroundColor: PlatformColors.platformCanvasColor(context),
         child: const HomePageBody(),
       ),
     );

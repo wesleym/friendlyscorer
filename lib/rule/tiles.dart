@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/answer/models.dart';
 import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
-import 'package:friendlyscorer/platform/palette.dart';
-import 'package:friendlyscorer/platform/text_field.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/rule/models.dart';
 
 class RuleTile extends StatefulWidget {
@@ -20,8 +18,8 @@ class _RuleTileState extends State<RuleTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: ontoPlatformRule(context));
+    final tileTextStyle = answerTileHeading(context)
+        ?.copyWith(color: PlatformColors.ontoPlatformRule);
 
     return DragTarget<Answer>(
       onWillAccept: (data) {
@@ -37,10 +35,10 @@ class _RuleTileState extends State<RuleTile> {
             shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: ruleTileColors(),
+              colors: PlatformColors.ruleTileColors,
             ),
           ),
           child: Text(
@@ -76,8 +74,8 @@ class _NewRuleTileState extends State<NewRuleTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileTextStyle =
-        answerTileHeading(context)?.copyWith(color: ontoPlatformRule(context));
+    final tileTextStyle = answerTileHeading(context)
+        ?.copyWith(color: PlatformColors.ontoPlatformRule);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -86,10 +84,10 @@ class _NewRuleTileState extends State<NewRuleTile> {
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: ruleTileColors(),
+          colors: PlatformColors.ruleTileColors,
         ),
       ),
       child: PlatformInvisibleTextField(

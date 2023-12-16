@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 class MacAnswerCandidateChip extends StatelessWidget {
@@ -13,12 +13,12 @@ class MacAnswerCandidateChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: ShapeDecoration(
-        shape: const StadiumBorder(),
+      decoration: const ShapeDecoration(
+        shape: StadiumBorder(),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: answerCandidateChipColors(),
+          colors: PlatformColors.answerCandidateChipColors,
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

@@ -1,9 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/answer/models.dart';
 import 'package:friendlyscorer/answer/repositories/answer_player_asses.dart';
-import 'package:friendlyscorer/platform/palette.dart';
-import 'package:friendlyscorer/platform/text_field.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/player/models.dart';
 import 'package:friendlyscorer/player/palette.dart';
 
@@ -91,7 +89,7 @@ class _NewPlayerTileState extends State<NewPlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    final tileColor = newPlayerTileColor();
+    const tileColor = PlatformColors.newPlayerTileColor;
 
     var lightTileColor = HSLColor.fromColor(tileColor)
         .withLightness(HSLColor.fromColor(tileColor).lightness + 0.1)

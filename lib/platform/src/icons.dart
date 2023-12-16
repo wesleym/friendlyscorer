@@ -4,6 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Icon content suitable for each platform.
+///
+/// Because each icon is selected for its purpose in Friendly Scorer, the icon
+/// selected for each platform may not otherwise have the same idiomatic usage
+/// on the platform.
 class PlatformIcons {
   PlatformIcons._();
 
@@ -23,6 +28,8 @@ class PlatformIcons {
     }
   }
 
+  /// Section header for the special rules that may apply to the submitted
+  /// answers.
   static IconData get specialRules {
     if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       return CupertinoIcons.exclamationmark_square;
@@ -31,6 +38,7 @@ class PlatformIcons {
     }
   }
 
+  /// Section header for the answers submitted in the round.
   static IconData get answers {
     if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       return CupertinoIcons.text_bubble;
@@ -39,6 +47,7 @@ class PlatformIcons {
     }
   }
 
+  /// Section header for the players taking part in the round.
   static IconData get players {
     if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       return CupertinoIcons.person_3;

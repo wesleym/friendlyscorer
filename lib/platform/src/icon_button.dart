@@ -3,8 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/platform/src/button.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+/// A button labeled with an icon in an appropriate style for the current
+/// platform.
+///
+/// This button may be bordered or not, and its style may or may not match
+/// text-labeled buttons like [PlatformButton].
 class PlatformIconButton extends StatelessWidget {
   final void Function()? onPressed;
   final IconData icon;
@@ -32,26 +38,6 @@ class PlatformIconButton extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(icon),
       );
-    }
-  }
-}
-
-class PlatformIcon extends StatelessWidget {
-  final IconData icon;
-  final Color? color;
-
-  const PlatformIcon(
-    this.icon, {
-    super.key,
-    this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!kIsWeb && Platform.isMacOS) {
-      return MacosIcon(icon, color: color);
-    } else {
-      return Icon(icon, color: color);
     }
   }
 }

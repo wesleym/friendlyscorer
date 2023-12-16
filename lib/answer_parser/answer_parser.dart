@@ -1,13 +1,18 @@
-List<List<String>> parseAnswers(String answer) {
-  answer = answer.trim();
+/// Parses [input] into different possible sets of answers.
+///
+/// This method will try to guess different ways that the input string
+/// represents different answers. Each element of the returned list represents
+/// one interpretation of the input. See the unit tests for examples.
+List<List<String>> parseAnswers(String input) {
+  input = input.trim();
 
-  if (answer.isEmpty) return [];
+  if (input.isEmpty) return [];
 
-  if (answer.contains('\n')) {
-    final lines = answer.split('\n');
+  if (input.contains('\n')) {
+    final lines = input.split('\n');
     return _parseAnswersMultiline(lines);
   } else {
-    final line = answer.trim();
+    final line = input.trim();
     return _parseAnswersSingleLine(line);
   }
 }

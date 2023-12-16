@@ -5,11 +5,8 @@ import 'package:friendlyscorer/answer/widgets/new_answer.dart';
 import 'package:friendlyscorer/answer/widgets/tile.dart';
 import 'package:friendlyscorer/answer/widgets/trash.dart';
 import 'package:friendlyscorer/home/editing.dart';
-import 'package:friendlyscorer/platform/button.dart';
-import 'package:friendlyscorer/platform/icon_button.dart';
-import 'package:friendlyscorer/platform/icons.dart';
-import 'package:friendlyscorer/platform/modal.dart';
-import 'package:friendlyscorer/platform/palette.dart';
+import 'package:friendlyscorer/platform/platform.dart';
+import 'package:friendlyscorer/platform/src/icon.dart';
 
 class AnswerColumn extends StatelessWidget {
   final AnswerRepository _answerRepository;
@@ -30,7 +27,7 @@ class AnswerColumn extends StatelessWidget {
         onPressed: () => _onClearAnswers(context),
         child: Text(
           'Clear',
-          style: TextStyle(color: platformDanger(context)),
+          style: TextStyle(color: PlatformColors.platformDanger),
         ),
       );
       onDelete = _onDeleteAnswer;
@@ -67,7 +64,7 @@ class AnswerColumn extends StatelessWidget {
               children: [
                 PlatformIcon(
                   PlatformIcons.answers,
-                  color: sectionHeadingColor(),
+                  color: PlatformColors.sectionHeadingColor,
                 ),
                 if (clearButton != null) clearButton,
               ],

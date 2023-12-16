@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/answer/repositories/answer_rule_asses.dart';
-import 'package:friendlyscorer/platform/typography.dart';
+import 'package:friendlyscorer/platform/platform.dart';
 import 'package:friendlyscorer/rule/repository.dart';
 
 class AnswerTileRules extends StatelessWidget {

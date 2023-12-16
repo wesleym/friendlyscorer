@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/answer_parser/answer_parser.dart';
-import 'package:friendlyscorer/answer_parser/result_display.dart';
 import 'package:friendlyscorer/platform/platform.dart';
 
 class NewInnerAnswerTile extends StatefulWidget {

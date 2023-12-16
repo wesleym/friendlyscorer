@@ -1,3 +1,6 @@
+/// Widgets that render differently based on the current platform.
+library;
+
 export 'package:friendlyscorer/platform/src/button.dart';
 export 'package:friendlyscorer/platform/src/filled_button.dart';
 export 'package:friendlyscorer/platform/src/icon_button.dart';

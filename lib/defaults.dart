@@ -1,8 +1,8 @@
-import 'package:friendlyscorer/scoreboard/src/answer/models.dart';
-import 'package:friendlyscorer/scoreboard/src/player/id.dart';
-import 'package:friendlyscorer/scoreboard/src/player/models.dart';
-import 'package:friendlyscorer/scoreboard/src/rule/id.dart';
-import 'package:friendlyscorer/scoreboard/src/rule/models.dart';
+import 'package:friendlyscorer/src/scoreboard/answer/models.dart';
+import 'package:friendlyscorer/src/scoreboard/player/id.dart';
+import 'package:friendlyscorer/src/scoreboard/player/models.dart';
+import 'package:friendlyscorer/src/scoreboard/rule/id.dart';
+import 'package:friendlyscorer/src/scoreboard/rule/models.dart';
 
 // Data to prepopulate the scoreboard at launch. This data represents round 2 of
 // Game Show episode 214: Pity Points.

@@ -69,8 +69,8 @@ class AnswerPlayerAssociationRepository {
     _streamController.add(_associations);
   }
 
-  void clear() {
-    _associations.clear();
-    _streamController.add(_associations);
+  void close() {
+    _streamController.close();
+    _instance = null;
   }
 }

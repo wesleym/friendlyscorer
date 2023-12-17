@@ -1,13 +1,14 @@
+/// Data to prepopulate the scoreboard at launch.
+///
+/// This data represents round 2 of Game Show episode 214: Pity Points. See
+/// <https://www.theincomparable.com/gameshow/214/>.
+library;
+
 import 'package:friendlyscorer/src/scoreboard/answer/models.dart';
 import 'package:friendlyscorer/src/scoreboard/player/id.dart';
 import 'package:friendlyscorer/src/scoreboard/player/models.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/id.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/models.dart';
-
-// Data to prepopulate the scoreboard at launch. This data represents round 2 of
-// Game Show episode 214: Pity Points.
-//
-// See <https://www.theincomparable.com/gameshow/214/>.
 
 Answer _answerFromName(String name) => Answer(id: name, text: name);
 

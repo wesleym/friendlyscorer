@@ -1,3 +1,4 @@
+/// The classes that represent the parts of the game.
 library;
 
 export 'package:friendlyscorer/src/models/association.dart';

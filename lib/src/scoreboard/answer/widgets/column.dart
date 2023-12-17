@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:friendlyscorer/models.dart';
 import 'package:friendlyscorer/platform.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/models.dart';
 import 'package:friendlyscorer/src/scoreboard/answer/repositories/answers.dart';
 import 'package:friendlyscorer/src/scoreboard/answer/widgets/new_answer.dart';
 import 'package:friendlyscorer/src/scoreboard/answer/widgets/tile.dart';

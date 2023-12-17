@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/platform.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/models.dart';
+import 'package:friendlyscorer/src/models/answer.dart';
 
 class TrashTile extends StatefulWidget {
   final void Function(String candidate) _onDeleteAnswer;

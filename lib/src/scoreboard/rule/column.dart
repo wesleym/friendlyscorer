@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:friendlyscorer/models.dart';
 import 'package:friendlyscorer/platform.dart';
 import 'package:friendlyscorer/src/scoreboard/home/editing.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/id.dart';
-import 'package:friendlyscorer/src/scoreboard/rule/models.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/repository.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/tiles.dart';
 

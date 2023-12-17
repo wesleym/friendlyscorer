@@ -4,11 +4,9 @@
 /// <https://www.theincomparable.com/gameshow/214/>.
 library;
 
-import 'package:friendlyscorer/src/scoreboard/answer/models.dart';
+import 'package:friendlyscorer/models.dart';
 import 'package:friendlyscorer/src/scoreboard/player/id.dart';
-import 'package:friendlyscorer/src/scoreboard/player/models.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/id.dart';
-import 'package:friendlyscorer/src/scoreboard/rule/models.dart';
 
 Answer _answerFromName(String name) => Answer(id: name, text: name);
 

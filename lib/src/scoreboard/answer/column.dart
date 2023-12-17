@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/models.dart';
 import 'package:friendlyscorer/platform.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/repositories/answers.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/widgets/new_answer.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/widgets/tile.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/widgets/trash.dart';
+import 'package:friendlyscorer/src/repositories/answers.dart';
+import 'package:friendlyscorer/src/scoreboard/answer/new_answer.dart';
+import 'package:friendlyscorer/src/scoreboard/answer/tile.dart';
+import 'package:friendlyscorer/src/scoreboard/answer/trash.dart';
 import 'package:friendlyscorer/src/scoreboard/home/editing.dart';
 
 class AnswerColumn extends StatelessWidget {

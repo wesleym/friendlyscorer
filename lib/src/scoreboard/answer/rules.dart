@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:friendlyscorer/platform.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/repositories/answer_rule_asses.dart';
-import 'package:friendlyscorer/src/scoreboard/rule/repository.dart';
+import 'package:friendlyscorer/repositories.dart';
 
 class AnswerTileRules extends StatelessWidget {
   final String answerId;

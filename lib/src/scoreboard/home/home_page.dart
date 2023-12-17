@@ -1,10 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/repositories/answers.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/widgets/column.dart';
+import 'package:friendlyscorer/repositories.dart';
+import 'package:friendlyscorer/src/scoreboard/answer/column.dart';
 import 'package:friendlyscorer/src/scoreboard/player/column.dart';
-import 'package:friendlyscorer/src/scoreboard/player/repository.dart';
 import 'package:friendlyscorer/src/scoreboard/rule/column.dart';
-import 'package:friendlyscorer/src/scoreboard/rule/repository.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({super.key});

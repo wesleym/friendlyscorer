@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:friendlyscorer/defaults.dart';
 import 'package:friendlyscorer/models.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/repositories/answer_player_asses.dart';
-import 'package:friendlyscorer/src/scoreboard/answer/repositories/answer_rule_asses.dart';
+import 'package:friendlyscorer/repositories.dart';
 
 class AnswerRepository {
   static AnswerRepository? _instance;

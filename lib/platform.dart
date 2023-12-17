@@ -8,5 +8,6 @@ export 'package:friendlyscorer/src/platform/icon_button.dart';
 export 'package:friendlyscorer/src/platform/icons.dart';
 export 'package:friendlyscorer/src/platform/modal.dart';
 export 'package:friendlyscorer/src/platform/palette.dart';
+export 'package:friendlyscorer/src/platform/provider.dart';
 export 'package:friendlyscorer/src/platform/text_field.dart';
 export 'package:friendlyscorer/src/platform/typography.dart';

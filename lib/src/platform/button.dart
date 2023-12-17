@@ -1,8 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyscorer/platform.dart';
 import 'package:macos_ui/macos_ui.dart';
 
 /// A bordered push button labeled with text in an appropriate style for the
@@ -21,17 +19,20 @@ class PlatformButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!kIsWeb && Platform.isIOS) {
-      return CupertinoButton(onPressed: onPressed, child: child);
-    } else if (!kIsWeb && Platform.isMacOS) {
-      return PushButton(
-        controlSize: ControlSize.regular,
-        onPressed: onPressed,
-        secondary: true,
-        child: child,
-      );
-    } else {
-      return TextButton(onPressed: onPressed, child: child);
+    final platform = PlatformProvider.of(context).platform;
+
+    switch (platform) {
+      case FriendlyPlatform.iOS:
+        return CupertinoButton(onPressed: onPressed, child: child);
+      case FriendlyPlatform.macOS:
+        return PushButton(
+          controlSize: ControlSize.regular,
+          onPressed: onPressed,
+          secondary: true,
+          child: child,
+        );
+      default:
+        return TextButton(onPressed: onPressed, child: child);
     }
   }
 }

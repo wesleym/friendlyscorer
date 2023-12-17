@@ -34,4 +34,9 @@ class AnswerRepository {
     _answers.clear();
     _streamController.add(_answers);
   }
+
+  void close() {
+    _streamController.close();
+    _instance = null;
+  }
 }

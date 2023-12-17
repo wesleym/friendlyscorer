@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:friendlyscorer/models.dart';
 import 'package:friendlyscorer/repositories.dart';
 
 void main() {
@@ -80,6 +81,59 @@ void main() {
 
       expectLater(stream, emitsThrough([]));
       repository.toggleAssociation(playerId: playerId, answerId: answerId);
+
+      expectLater(stream, emitsDone);
+      repository.close();
+    });
+  });
+
+  group('answer repository', () {
+    const answerId = 'UNUSED_ANSWER_ID_FOR_TESTING';
+
+    test('starts with no answer with answer ID', () {
+      final repository = AnswerRepository();
+      expect(repository.answers.where((a) => a.id == answerId), isEmpty);
+
+      repository.close();
+    });
+
+    test('emits the updated result when an answer is added', () {
+      const text = 'Ernest Borgnine';
+      const id = text;
+      final answer = Answer(id: id, text: text);
+      final repository = AnswerRepository();
+
+      final stream = repository.answerStream;
+
+      expectLater(stream, emits(contains(answer)));
+      repository.add(answer);
+
+      expectLater(stream, emitsDone);
+      repository.close();
+    });
+
+    test('returns answers when one is added', () {
+      final repository = AnswerRepository();
+      const text = 'Ernest Borgnine';
+      const id = text;
+      final answer = Answer(id: id, text: text);
+
+      repository.add(answer);
+      expect(repository.answers, contains(answer));
+
+      repository.close();
+    });
+
+    test('emits the updated result when an answer is removed', () {
+      final repository = AnswerRepository();
+      final stream = repository.answerStream;
+      const text = 'Ernest Borgnine';
+      const id = text;
+      final answer = Answer(id: id, text: text);
+      repository.add(answer);
+
+      expectLater(stream, emitsThrough(isNot(contains(answer))));
+      repository.remove(id);
 
       expectLater(stream, emitsDone);
       repository.close();

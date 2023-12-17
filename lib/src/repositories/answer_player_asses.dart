@@ -68,4 +68,9 @@ class AnswerPlayerAssociationRepository {
     _associations.removeWhere((a) => a.answerId == answerId);
     _streamController.add(_associations);
   }
+
+  void clear() {
+    _associations.clear();
+    _streamController.add(_associations);
+  }
 }
